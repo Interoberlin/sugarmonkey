@@ -2,6 +2,7 @@ package de.interoberlin.sugarmonkey.view.panels;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
@@ -75,6 +76,15 @@ public class DrawingPanel extends SurfaceView implements Runnable
 
 		SugarMonkeyController.setCanvasHeight(canvasHeight);
 		SugarMonkeyController.setCanvasWidth(canvasWidth);
+
+		/**
+		 * Actual drawing
+		 */
+
+		Paint green = new Paint();
+		green.setARGB(255, 50, 200, 50);
+
+		canvas.drawRect(50, 50, canvasWidth - 50, canvasHeight - 50, green);
 
 		surfaceHolder.unlockCanvasAndPost(canvas);
 	    }
