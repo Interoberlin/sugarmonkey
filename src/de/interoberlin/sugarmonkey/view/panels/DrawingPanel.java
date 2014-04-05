@@ -1,11 +1,17 @@
 package de.interoberlin.sugarmonkey.view.panels;
 
+import java.io.IOException;
+
+import org.xmlpull.v1.XmlPullParserException;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
+import de.interoberlin.sugarmonkey.controller.parser.SvgHandler;
+import de.interoberlin.sugarmonkey.model.svg.SVG;
 
 public class DrawingPanel extends SurfaceView implements Runnable
 {
@@ -13,7 +19,7 @@ public class DrawingPanel extends SurfaceView implements Runnable
     SurfaceHolder	  surfaceHolder;
     private static boolean running = false;
 
-    // private static Context c;
+    private static Context c;
 
     // private static Resources r;
 
@@ -22,8 +28,8 @@ public class DrawingPanel extends SurfaceView implements Runnable
 	super(context);
 	surfaceHolder = getHolder();
 
-	// c = (Context) SVGDemoController.getContext();
-	// r = c.getResou<rces();
+	c = (Context) SugarMonkeyController.getContext();
+	// r = c.getResources();
     }
 
     public void onChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3)
@@ -86,8 +92,38 @@ public class DrawingPanel extends SurfaceView implements Runnable
 
 		canvas.drawRect(50, 50, canvasWidth - 50, canvasHeight - 50, green);
 
+		SVG svg = getSVGFromAsset(c, "rectangle.svg");
+
+		// s1.parseFromFile("rect.svg");
+		// s1.renderToCanvas(canvas);
+
+		// for (Element e : s1.getElementsByZIndex())
+		// {
+		// e.render();
+		// }
+
 		surfaceHolder.unlockCanvasAndPost(canvas);
 	    }
+
 	}
+
+    }
+
+    private SVG getSVGFromAsset(Context c, String svgPath)
+    {
+	try
+	{
+	    return SvgHandler.getSVGFromAsset(c.getAssets(), svgPath);
+	} catch (IOException e)
+	{
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} catch (XmlPullParserException e)
+	{
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+
+	return null;
     }
 }
