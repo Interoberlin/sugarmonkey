@@ -1,21 +1,27 @@
 package de.interoberlin.sugarmonkey.model.svg;
 
+import java.util.List;
+
+import de.interoberlin.sugarmonkey.model.svg.elements.AElement;
+import de.interoberlin.sugarmonkey.model.svg.elements.EElement;
+import de.interoberlin.sugarmonkey.model.svg.elements.G;
+
 public class SVG
 {
-    private static String   name = "svg";
+    private static String name = "svg";
 
-    private String   xmlns_dc;
-    private String   xmlns_cc;
-    private String   xmlns_rdf;
-    private String   xmlns_svg;
-    private String   xmlns;
-    private String   version;
-    private int      width;
-    private int      height;
-    private String   id;
-    private Defs     defs;
-    private Metadata metadata;
-    private G	g;
+    private String	xmlns_dc;
+    private String	xmlns_cc;
+    private String	xmlns_rdf;
+    private String	xmlns_svg;
+    private String	xmlns;
+    private String	version;
+    private int	   width;
+    private int	   height;
+    private String	id;
+    private Defs	  defs;
+    private Metadata      metadata;
+    private G	     g;
 
     public static String getName()
     {
@@ -140,6 +146,24 @@ public class SVG
     public void setG(G g)
     {
 	this.g = g;
+    }
+
+    private List<AElement> getAllElements()
+    {
+	return g.getSubelements();
+    }
+
+    public AElement getElementById(EElement type, String id)
+    {
+	for (AElement e : getAllElements())
+	{
+	    if (e.getId().equals(id))
+	    {
+		return e;
+	    }
+	}
+
+	return null;
     }
 
 }

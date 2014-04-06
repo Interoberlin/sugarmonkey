@@ -1,7 +1,8 @@
-package de.interoberlin.sugarmonkey.model.svg;
+package de.interoberlin.sugarmonkey.model.svg.elements;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class G extends AElement
 {

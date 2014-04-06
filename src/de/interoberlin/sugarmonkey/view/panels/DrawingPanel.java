@@ -12,6 +12,10 @@ import android.view.SurfaceView;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 import de.interoberlin.sugarmonkey.controller.parser.SvgHandler;
 import de.interoberlin.sugarmonkey.model.svg.SVG;
+import de.interoberlin.sugarmonkey.model.svg.elements.AElement;
+import de.interoberlin.sugarmonkey.model.svg.elements.EElement;
+import de.interoberlin.sugarmonkey.model.svg.elements.G;
+import de.interoberlin.sugarmonkey.model.svg.elements.Rect;
 
 public class DrawingPanel extends SurfaceView implements Runnable
 {
@@ -69,6 +73,9 @@ public class DrawingPanel extends SurfaceView implements Runnable
     @Override
     public void run()
     {
+	// Load SVG from file
+	SVG svg = getSVGFromAsset(c, "rectangle.svg");
+
 	while (running)
 	{
 	    if (surfaceHolder.getSurface().isValid())
@@ -84,29 +91,53 @@ public class DrawingPanel extends SurfaceView implements Runnable
 		SugarMonkeyController.setCanvasWidth(canvasWidth);
 
 		/**
+		 * Clear canvas
+		 */
+
+		Paint backgroundPaint = new Paint();
+		backgroundPaint.setARGB(255, 255, 255, 255);
+		canvas.drawRect(0, 0, canvasWidth, canvasHeight, backgroundPaint);
+
+		/**
 		 * Actual drawing
 		 */
 
-		Paint green = new Paint();
-		green.setARGB(255, 50, 200, 50);
+		// Manipulate SVG
+		Rect r = (Rect) svg.getElementById(EElement.RECT, "rect2985");
+		r.setWidth(r.getWidth() - 1);
 
-		canvas.drawRect(50, 50, canvasWidth - 50, canvasHeight - 50, green);
-
-		SVG svg = getSVGFromAsset(c, "rectangle.svg");
-
-		// s1.parseFromFile("rect.svg");
-		// s1.renderToCanvas(canvas);
-
-		// for (Element e : s1.getElementsByZIndex())
-		// {
-		// e.render();
-		// }
+		// Render SVG
+		canvas = renderSVG(canvas, svg);
 
 		surfaceHolder.unlockCanvasAndPost(canvas);
 	    }
 
 	}
 
+    }
+
+    public Canvas renderSVG(Canvas canvas, SVG svg)
+    {
+	G g = svg.getG();
+
+	for (AElement e : g.getSubelements())
+	{
+	    if (e.getType() == EElement.RECT)
+	    {
+		Rect r = (Rect) e;
+		float width = r.getWidth();
+		float height = r.getHeight();
+		float x = r.getX();
+		float y = r.getY();
+
+		Paint p = new Paint();
+		p.setARGB(255, 150, 150, 150);
+
+		canvas.drawRect(x, y, x + width, y + height, p);
+	    }
+	}
+
+	return canvas;
     }
 
     private SVG getSVGFromAsset(Context c, String svgPath)

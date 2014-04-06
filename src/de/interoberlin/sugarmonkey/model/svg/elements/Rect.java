@@ -1,18 +1,29 @@
-package de.interoberlin.sugarmonkey.model.svg;
+package de.interoberlin.sugarmonkey.model.svg.elements;
 
 public class Rect extends AElement
 {
     private static String name = "rect";
+    private EElement      type = EElement.RECT;
 
     private float	 width;
     private float	 height;
     private float	 x;
     private float	 y;
-    private String style;
+    private String	style;
 
     public static String getName()
     {
 	return name;
+    }
+
+    public EElement getType()
+    {
+	return type;
+    }
+
+    public void setType(EElement type)
+    {
+	this.type = type;
     }
 
     public float getWidth()
@@ -22,7 +33,10 @@ public class Rect extends AElement
 
     public void setWidth(float width)
     {
-	this.width = width;
+	if (width > 0)
+	{
+	    this.width = width;
+	}
     }
 
     public float getHeight()

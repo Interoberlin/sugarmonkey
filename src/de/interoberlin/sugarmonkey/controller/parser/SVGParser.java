@@ -9,15 +9,15 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import android.util.Xml;
-import de.interoberlin.sugarmonkey.model.svg.AElement;
 import de.interoberlin.sugarmonkey.model.svg.CC_Work;
 import de.interoberlin.sugarmonkey.model.svg.DC_Type;
 import de.interoberlin.sugarmonkey.model.svg.Defs;
-import de.interoberlin.sugarmonkey.model.svg.G;
 import de.interoberlin.sugarmonkey.model.svg.Metadata;
 import de.interoberlin.sugarmonkey.model.svg.RDF_RDF;
-import de.interoberlin.sugarmonkey.model.svg.Rect;
 import de.interoberlin.sugarmonkey.model.svg.SVG;
+import de.interoberlin.sugarmonkey.model.svg.elements.AElement;
+import de.interoberlin.sugarmonkey.model.svg.elements.G;
+import de.interoberlin.sugarmonkey.model.svg.elements.Rect;
 
 public class SVGParser
 {
@@ -428,6 +428,7 @@ public class SVGParser
 	String height = "";
 	String x = "";
 	String y = "";
+	String id = "";
 	String style = "";
 
 	// Read attributes
@@ -435,6 +436,7 @@ public class SVGParser
 	height = parser.getAttributeValue(null, "height");
 	x = parser.getAttributeValue(null, "x");
 	y = parser.getAttributeValue(null, "y");
+	id = parser.getAttributeValue(null, "id");
 	style = parser.getAttributeValue(null, "style");
 
 	// Read subelements
@@ -453,6 +455,7 @@ public class SVGParser
 	rect.setHeight(Float.parseFloat(height));
 	rect.setX(Float.parseFloat(x));
 	rect.setY(Float.parseFloat(y));
+	rect.setId(id);
 	rect.setStyle(style);
 	return rect;
     }
