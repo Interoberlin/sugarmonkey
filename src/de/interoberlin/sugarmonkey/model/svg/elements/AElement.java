@@ -2,9 +2,16 @@ package de.interoberlin.sugarmonkey.model.svg.elements;
 
 public abstract class AElement
 {
+    private static String   name;
     private EElement type;
+
     private String   id;
     private int      zIndex;
+
+    public static String getName()
+    {
+	return name;
+    }
 
     public EElement getType()
     {
@@ -35,5 +42,4 @@ public abstract class AElement
     {
 	this.zIndex = zIndex;
     }
-
 }

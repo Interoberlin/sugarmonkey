@@ -1,6 +1,7 @@
 package de.interoberlin.sugarmonkey.view.panels;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -13,8 +14,8 @@ import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 import de.interoberlin.sugarmonkey.controller.parser.SvgHandler;
 import de.interoberlin.sugarmonkey.model.svg.SVG;
 import de.interoberlin.sugarmonkey.model.svg.elements.AElement;
+import de.interoberlin.sugarmonkey.model.svg.elements.Circle;
 import de.interoberlin.sugarmonkey.model.svg.elements.EElement;
-import de.interoberlin.sugarmonkey.model.svg.elements.G;
 import de.interoberlin.sugarmonkey.model.svg.elements.Rect;
 
 public class DrawingPanel extends SurfaceView implements Runnable
@@ -104,7 +105,23 @@ public class DrawingPanel extends SurfaceView implements Runnable
 
 		// Manipulate SVG
 		Rect r = (Rect) svg.getElementById(EElement.RECT, "rect2985");
-		r.setWidth(r.getWidth() - 1);
+		Circle c = (Circle) svg.getElementById(EElement.CIRCLE, "circle1010");
+
+		if (r.getWidth() > 0)
+		{
+		    r.setWidth(r.getWidth() - 2);
+		} else
+		{
+		    r.setWidth(510);
+		}
+
+		if (c.getR() > 0)
+		{
+		    c.setR(c.getR() - 1);
+		} else
+		{
+		    c.setR(100);
+		}
 
 		// Render SVG
 		canvas = renderSVG(canvas, svg);
@@ -118,22 +135,37 @@ public class DrawingPanel extends SurfaceView implements Runnable
 
     public Canvas renderSVG(Canvas canvas, SVG svg)
     {
-	G g = svg.getG();
+	List<AElement> all = svg.getAllSubElements();
 
-	for (AElement e : g.getSubelements())
+	for (AElement e : all)
 	{
-	    if (e.getType() == EElement.RECT)
+	    switch (e.getType())
 	    {
-		Rect r = (Rect) e;
-		float width = r.getWidth();
-		float height = r.getHeight();
-		float x = r.getX();
-		float y = r.getY();
+		case RECT:
+		{
+		    Rect r = (Rect) e;
+		    float width = r.getWidth();
+		    float height = r.getHeight();
+		    float x = r.getX();
+		    float y = r.getY();
 
-		Paint p = new Paint();
-		p.setARGB(255, 150, 150, 150);
+		    Paint p = new Paint(r.getFill());
 
-		canvas.drawRect(x, y, x + width, y + height, p);
+		    canvas.drawRect(x, y, x + width, y + height, p);
+		    break;
+		}
+		case CIRCLE:
+		{
+		    Circle c = (Circle) e;
+		    float cx = c.getCx();
+		    float cy = c.getCy();
+		    float r = c.getR();
+
+		    Paint p = new Paint(c.getFill());
+
+		    canvas.drawCircle(cx, cy, r, p);
+		    break;
+		}
 	    }
 	}
 
@@ -147,11 +179,11 @@ public class DrawingPanel extends SurfaceView implements Runnable
 	    return SvgHandler.getSVGFromAsset(c.getAssets(), svgPath);
 	} catch (IOException e)
 	{
-	    // TODO Auto-generated catch block
+	    System.out.println(e.toString());
 	    e.printStackTrace();
 	} catch (XmlPullParserException e)
 	{
-	    // TODO Auto-generated catch block
+	    System.out.println(e.toString());
 	    e.printStackTrace();
 	}
 

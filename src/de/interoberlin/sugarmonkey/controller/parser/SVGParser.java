@@ -8,6 +8,7 @@ import java.util.List;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import android.graphics.Paint;
 import android.util.Xml;
 import de.interoberlin.sugarmonkey.model.svg.CC_Work;
 import de.interoberlin.sugarmonkey.model.svg.DC_Type;
@@ -16,6 +17,7 @@ import de.interoberlin.sugarmonkey.model.svg.Metadata;
 import de.interoberlin.sugarmonkey.model.svg.RDF_RDF;
 import de.interoberlin.sugarmonkey.model.svg.SVG;
 import de.interoberlin.sugarmonkey.model.svg.elements.AElement;
+import de.interoberlin.sugarmonkey.model.svg.elements.Circle;
 import de.interoberlin.sugarmonkey.model.svg.elements.G;
 import de.interoberlin.sugarmonkey.model.svg.elements.Rect;
 
@@ -86,7 +88,7 @@ public class SVGParser
 	String id = "";
 	Defs defs = null;
 	Metadata metadata = null;
-	G g = null;
+	List<AElement> subelements = new ArrayList<AElement>();
 
 	// Read attributes
 	xmlns_dc = parser.getAttributeValue(null, "dc");
@@ -118,7 +120,13 @@ public class SVGParser
 		metadata = (readMetadata(parser));
 	    } else if (name.equals("g"))
 	    {
-		g = (readG(parser));
+		subelements.add(readG(parser));
+	    } else if (name.equals("rect"))
+	    {
+		subelements.add(readRect(parser));
+	    } else if (name.equals("circle"))
+	    {
+		subelements.add(readCircle(parser));
 	    } else
 	    {
 		skip(parser);
@@ -137,7 +145,7 @@ public class SVGParser
 	svg.setId(id);
 	svg.setDefs(defs);
 	svg.setMetadata(metadata);
-	svg.setG(g);
+	svg.setSubelements(subelements);
 
 	return svg;
     }
@@ -397,6 +405,9 @@ public class SVGParser
 	    } else if (name.equals("rect"))
 	    {
 		subelements.add(readRect(parser));
+	    } else if (name.equals("circle"))
+	    {
+		subelements.add(readCircle(parser));
 	    } else
 	    {
 		skip(parser);
@@ -429,6 +440,8 @@ public class SVGParser
 	String x = "";
 	String y = "";
 	String id = "";
+	String fill = "";
+	String opacity = "";
 	String style = "";
 
 	// Read attributes
@@ -437,6 +450,8 @@ public class SVGParser
 	x = parser.getAttributeValue(null, "x");
 	y = parser.getAttributeValue(null, "y");
 	id = parser.getAttributeValue(null, "id");
+	fill = parser.getAttributeValue(null, "fill");
+	opacity = parser.getAttributeValue(null, "opacity");
 	style = parser.getAttributeValue(null, "style");
 
 	// Read subelements
@@ -456,8 +471,137 @@ public class SVGParser
 	rect.setX(Float.parseFloat(x));
 	rect.setY(Float.parseFloat(y));
 	rect.setId(id);
-	rect.setStyle(style);
+
+	// Remove invalid characters
+	if (fill != null)
+	{
+	    fill = fill.replaceAll("#", "");
+	}
+
+	// Evaluate style
+	if (style != null)
+	{
+	    if (style.contains("opacity"))
+	    {
+		opacity = style.replaceAll(".*opacity:", "").replaceAll(";.*", "");
+	    }
+
+	    if (style.contains("fill"))
+	    {
+		fill = style.replaceAll(".*fill:#", "").replaceAll(";.*", "");
+	    }
+	}
+
+	// Set defaults
+	if (fill == null)
+	{
+	    fill = "FFFFFF";
+	}
+	if (opacity == null)
+	{
+	    opacity = "1";
+	}
+
+	int colorA = (int) Float.parseFloat(opacity) * 255;
+	int colorR = Integer.parseInt(fill.substring(0, 2), 16);
+	int colorG = Integer.parseInt(fill.substring(2, 4), 16);
+	int colorB = Integer.parseInt(fill.substring(4, 6), 16);
+
+	Paint paintFill = new Paint();
+	paintFill.setARGB(colorA, colorR, colorG, colorB);
+	rect.setFill(paintFill);
+
 	return rect;
+    }
+
+    /**
+     * Returns a Circle element
+     * 
+     * @param parser
+     * @return
+     * @throws XmlPullParserException
+     * @throws IOException
+     */
+    private Circle readCircle(XmlPullParser parser) throws XmlPullParserException, IOException
+    {
+	String name = null;
+	parser.require(XmlPullParser.START_TAG, null, Circle.getName());
+
+	// Initialize attributes and subelements
+	String cx = "";
+	String cy = "";
+	String r = "";
+	String id = "";
+	String fill = "";
+	String opacity = "";
+	String style = "";
+
+	// Read attributes
+	cx = parser.getAttributeValue(null, "cx");
+	cy = parser.getAttributeValue(null, "cy");
+	r = parser.getAttributeValue(null, "r");
+	id = parser.getAttributeValue(null, "id");
+	fill = parser.getAttributeValue(null, "fill");
+	opacity = parser.getAttributeValue(null, "opacity");
+	style = parser.getAttributeValue(null, "style");
+
+	// Read subelements
+	while (parser.next() != XmlPullParser.END_TAG)
+	{
+	    if (parser.getEventType() != XmlPullParser.START_TAG)
+	    {
+		continue;
+	    }
+
+	    name = parser.getName();
+	}
+
+	Circle circle = new Circle();
+	circle.setCx(Integer.parseInt(cx));
+	circle.setCy(Integer.parseInt(cy));
+	circle.setR(Integer.parseInt(r));
+	circle.setId(id);
+
+	// Remove invalid characters
+	if (fill != null)
+	{
+	    fill = fill.replaceAll("#", "");
+	}
+
+	// Evaluate style
+	if (style != null)
+	{
+	    if (style.contains("opacity"))
+	    {
+		opacity = style.replaceAll(".*opacity:", "").replaceAll(";.*", "");
+	    }
+
+	    if (style.contains("fill"))
+	    {
+		fill = style.replaceAll(".*fill:#", "").replaceAll(";.*", "");
+	    }
+	}
+
+	// Set defaults
+	if (fill == null)
+	{
+	    fill = "FFFFFF";
+	}
+	if (opacity == null)
+	{
+	    opacity = "1";
+	}
+
+	int colorA = (int) Float.parseFloat(opacity) * 255;
+	int colorR = Integer.parseInt(fill.substring(0, 2), 16);
+	int colorG = Integer.parseInt(fill.substring(2, 4), 16);
+	int colorB = Integer.parseInt(fill.substring(4, 6), 16);
+
+	Paint paintFill = new Paint();
+	paintFill.setARGB(colorA, colorR, colorG, colorB);
+	circle.setFill(paintFill);
+
+	return circle;
     }
 
     /**

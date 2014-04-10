@@ -1,15 +1,14 @@
 package de.interoberlin.sugarmonkey.model.svg.elements;
 
-public class Rect extends AElement
+public class Rect extends AGeometric
 {
-    private static String name = "rect";
-    private EElement      type = EElement.RECT;
+    private static String name   = "rect";
+    private EElement      type   = EElement.RECT;
 
-    private float	 width;
-    private float	 height;
-    private float	 x;
-    private float	 y;
-    private String	style;
+    private float	 width  = 0;
+    private float	 height = 0;
+    private float	 x      = 0;
+    private float	 y      = 0;
 
     public static String getName()
     {
@@ -33,7 +32,7 @@ public class Rect extends AElement
 
     public void setWidth(float width)
     {
-	if (width > 0)
+	if (width >= 0)
 	{
 	    this.width = width;
 	}
@@ -46,7 +45,10 @@ public class Rect extends AElement
 
     public void setHeight(float height)
     {
-	this.height = height;
+	if (height >= 0)
+	{
+	    this.height = height;
+	}
     }
 
     public float getX()
@@ -56,7 +58,10 @@ public class Rect extends AElement
 
     public void setX(float x)
     {
-	this.x = x;
+	if (x >= 0)
+	{
+	    this.x = x;
+	}
     }
 
     public float getY()
@@ -66,16 +71,9 @@ public class Rect extends AElement
 
     public void setY(float y)
     {
-	this.y = y;
-    }
-
-    public String getStyle()
-    {
-	return style;
-    }
-
-    public void setStyle(String style)
-    {
-	this.style = style;
+	if (y >= 0)
+	{
+	    this.y = y;
+	}
     }
 }
