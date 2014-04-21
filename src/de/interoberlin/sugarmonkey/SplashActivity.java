@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -47,6 +50,21 @@ public class SplashActivity extends Activity
     {
 	super.onResume();
 	panel.onResume();
+
+//	panel.setOnClickListener(new OnClickListener()
+//	{
+//	    @Override
+//	    public void onClick(View v)
+//	    {
+//		if (panel.isRunning())
+//		{
+//		    panel.onResume();
+//		} else
+//		{
+//		    panel.onPause();
+//		}
+//	    }
+//	});
     }
 
     @Override

@@ -1,192 +1,153 @@
 package de.interoberlin.sugarmonkey.view.panels;
 
-import java.io.IOException;
 import java.util.List;
 
-import org.xmlpull.v1.XmlPullParserException;
-
+import de.interoberlin.sauvignon.model.svg.elements.AElement;
+import de.interoberlin.sauvignon.model.svg.elements.Circle;
+import de.interoberlin.sauvignon.model.svg.elements.EElement;
+import de.interoberlin.sauvignon.model.svg.elements.Path;
+import de.interoberlin.sauvignon.model.svg.elements.Rect;
+import de.interoberlin.sauvignon.model.util.Vector2;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import de.interoberlin.sauvignon.controller.loader.SvgLoader;
+import de.interoberlin.sauvignon.controller.renderer.SvgRenderer;
+import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
-import de.interoberlin.sugarmonkey.controller.parser.SvgHandler;
-import de.interoberlin.sugarmonkey.model.svg.SVG;
-import de.interoberlin.sugarmonkey.model.svg.elements.AElement;
-import de.interoberlin.sugarmonkey.model.svg.elements.Circle;
-import de.interoberlin.sugarmonkey.model.svg.elements.EElement;
-import de.interoberlin.sugarmonkey.model.svg.elements.Rect;
 
 public class DrawingPanel extends SurfaceView implements Runnable
 {
-    Thread		 thread  = null;
-    SurfaceHolder	  surfaceHolder;
-    private static boolean running = false;
+	Thread					thread	= null;
+	SurfaceHolder			surfaceHolder;
+	private static boolean	running	= false;
 
-    private static Context c;
+	private static Context	c;
 
-    // private static Resources r;
+	// private static Resources r;
 
-    public DrawingPanel(Context context)
-    {
-	super(context);
-	surfaceHolder = getHolder();
-
-	c = (Context) SugarMonkeyController.getContext();
-	// r = c.getResources();
-    }
-
-    public void onChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3)
-    {
-    }
-
-    public void onResume()
-    {
-	running = true;
-	thread = new Thread(this);
-	thread.start();
-    }
-
-    public void onPause()
-    {
-	boolean retry = true;
-	running = false;
-
-	while (retry)
+	public DrawingPanel(Context context)
 	{
-	    try
-	    {
-		thread.join();
-		retry = false;
-	    } catch (InterruptedException e)
-	    {
-		e.printStackTrace();
-	    }
-	}
-    }
+		super(context);
+		surfaceHolder = getHolder();
 
-    public static boolean isRunning()
-    {
-	return running;
-    }
-
-    @Override
-    public void run()
-    {
-	// Load SVG from file
-	SVG svg = getSVGFromAsset(c, "rectangle.svg");
-
-	while (running)
-	{
-	    if (surfaceHolder.getSurface().isValid())
-	    {
-		// Lock canvas
-		Canvas canvas = surfaceHolder.lockCanvas();
-
-		// Set dimensions
-		int canvasWidth = canvas.getWidth();
-		int canvasHeight = canvas.getHeight();
-
-		SugarMonkeyController.setCanvasHeight(canvasHeight);
-		SugarMonkeyController.setCanvasWidth(canvasWidth);
-
-		/**
-		 * Clear canvas
-		 */
-
-		Paint backgroundPaint = new Paint();
-		backgroundPaint.setARGB(255, 255, 255, 255);
-		canvas.drawRect(0, 0, canvasWidth, canvasHeight, backgroundPaint);
-
-		/**
-		 * Actual drawing
-		 */
-
-		// Manipulate SVG
-		Rect r = (Rect) svg.getElementById(EElement.RECT, "rect2985");
-		Circle c = (Circle) svg.getElementById(EElement.CIRCLE, "circle1010");
-
-		if (r.getWidth() > 0)
-		{
-		    r.setWidth(r.getWidth() - 2);
-		} else
-		{
-		    r.setWidth(510);
-		}
-
-		if (c.getR() > 0)
-		{
-		    c.setR(c.getR() - 1);
-		} else
-		{
-		    c.setR(100);
-		}
-
-		// Render SVG
-		canvas = renderSVG(canvas, svg);
-
-		surfaceHolder.unlockCanvasAndPost(canvas);
-	    }
-
+		c = (Context) SugarMonkeyController.getContext();
+		// r = c.getResources();
 	}
 
-    }
-
-    public Canvas renderSVG(Canvas canvas, SVG svg)
-    {
-	List<AElement> all = svg.getAllSubElements();
-
-	for (AElement e : all)
+	public void onChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3)
 	{
-	    switch (e.getType())
-	    {
-		case RECT:
-		{
-		    Rect r = (Rect) e;
-		    float width = r.getWidth();
-		    float height = r.getHeight();
-		    float x = r.getX();
-		    float y = r.getY();
-
-		    Paint p = new Paint(r.getFill());
-
-		    canvas.drawRect(x, y, x + width, y + height, p);
-		    break;
-		}
-		case CIRCLE:
-		{
-		    Circle c = (Circle) e;
-		    float cx = c.getCx();
-		    float cy = c.getCy();
-		    float r = c.getR();
-
-		    Paint p = new Paint(c.getFill());
-
-		    canvas.drawCircle(cx, cy, r, p);
-		    break;
-		}
-	    }
 	}
 
-	return canvas;
-    }
-
-    private SVG getSVGFromAsset(Context c, String svgPath)
-    {
-	try
+	public void onResume()
 	{
-	    return SvgHandler.getSVGFromAsset(c.getAssets(), svgPath);
-	} catch (IOException e)
-	{
-	    System.out.println(e.toString());
-	    e.printStackTrace();
-	} catch (XmlPullParserException e)
-	{
-	    System.out.println(e.toString());
-	    e.printStackTrace();
+		running = true;
+		thread = new Thread(this);
+		thread.start();
 	}
 
-	return null;
-    }
+	public void onPause()
+	{
+		boolean retry = true;
+		running = false;
+
+		while (retry)
+		{
+			try
+			{
+				thread.join();
+				retry = false;
+			} catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public boolean isRunning()
+	{
+		return running;
+	}
+
+	@Override
+	public void run()
+	{
+		// Load SVG from file
+		SVG svg = SvgLoader.getSVGFromAsset(c, "rectangle.svg");
+
+		while (running)
+		{
+			if (surfaceHolder.getSurface().isValid())
+			{
+				// Lock canvas
+				Canvas canvas = surfaceHolder.lockCanvas();
+
+				// Set dimensions
+				int canvasWidth = canvas.getWidth();
+				int canvasHeight = canvas.getHeight();
+
+				SugarMonkeyController.setCanvasHeight(canvasHeight);
+				SugarMonkeyController.setCanvasWidth(canvasWidth);
+
+				/**
+				 * Clear canvas
+				 */
+
+				canvas.drawRGB(255, 255, 255);
+
+				/**
+				 * Actual drawing
+				 */
+
+				// Manipulate SVG
+				Rect rectRed1 = (Rect) svg.getElementById(EElement.RECT, "rectRed1");
+				Rect rectRed2 = (Rect) svg.getElementById(EElement.RECT, "rectRed2");
+				Rect rectRed3 = (Rect) svg.getElementById(EElement.RECT, "rectRed3");
+
+				Rect rectGreen1 = (Rect) svg.getElementById(EElement.RECT, "rectGreen1");
+				Rect rectGreen2 = (Rect) svg.getElementById(EElement.RECT, "rectGreen2");
+				Rect rectGreen3 = (Rect) svg.getElementById(EElement.RECT, "rectGreen3");
+
+				Rect rectBlue1 = (Rect) svg.getElementById(EElement.RECT, "rectBlue1");
+				Rect rectBlue2 = (Rect) svg.getElementById(EElement.RECT, "rectBlue2");
+				Rect rectBlue3 = (Rect) svg.getElementById(EElement.RECT, "rectBlue3");
+
+				Rect rectGrey = (Rect) svg.getElementById(EElement.RECT, "rectGrey");
+
+				rectRed1.setFillR(rectRed1.getFillR() + 1);
+				rectRed2.setFillG(rectRed2.getFillG() + 1);
+				rectRed3.setFillB(rectRed3.getFillB() + 1);
+
+				rectGreen1.setFillR(rectGreen1.getFillR() + 1);
+				rectGreen2.setFillG(rectGreen2.getFillG() + 1);
+				rectGreen3.setFillB(rectGreen3.getFillB() + 1);
+
+				rectBlue1.setFillR(rectBlue1.getFillR() + 1);
+				rectBlue2.setFillG(rectBlue2.getFillG() + 1);
+				rectBlue3.setFillB(rectBlue3.getFillB() + 1);
+
+				if (rectGrey.getWidth() > 0)
+				{
+					rectGrey.setWidth(rectGrey.getWidth() - 1);
+				} else
+				{
+					rectGrey.setWidth(720);
+				}
+
+				rectGrey.setFillR(rectGrey.getFillR() + 1);
+				rectGrey.setFillG(rectGrey.getFillG() + 1);
+				rectGrey.setFillB(rectGrey.getFillB() + 1);
+
+				// Render SVG
+				canvas = SvgRenderer.renderToCanvas(canvas, svg);
+
+				surfaceHolder.unlockCanvasAndPost(canvas);
+			}
+
+		}
+
+	}
 }

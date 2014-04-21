@@ -7,6 +7,7 @@ public class SugarMonkeyController extends Application
 {
     private static Context context;
     // private static Resources resources;
+    private static boolean running = true;
 
     private static int     canvasHeight;
     private static int     canvasWidth;
@@ -42,5 +43,20 @@ public class SugarMonkeyController extends Application
     public static void setCanvasWidth(int canvasWidth)
     {
 	SugarMonkeyController.canvasWidth = canvasWidth;
+    }
+
+    public static void start()
+    {
+	running = true;
+    }
+
+    public static void stop()
+    {
+	running = false;
+    }
+
+    public static boolean isRunning()
+    {
+	return running;
     }
 }

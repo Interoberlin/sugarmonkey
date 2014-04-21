@@ -10,13 +10,14 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   width="800"
-   height="600"
+   width="720"
+   height="1280"
    id="svg2"
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="rectangle.svg">
   <defs
-     id="defs4" />
+     id="defs4">
+  </defs>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -30,22 +31,86 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(0,-452.36218)"
+     transform="translate(0,1.63782)"
      id="layer1">
     <rect
-       width="510"
-       height="288"
-       x="154"
-       y="600.36218"
-       id="rect2985"
+       width="240"
+       height="240"
+       x="0"
+       y="0"
+       id="rectRed1"
+       style="opacity:0.7;fill:#ff0000;fill-opacity:1;stroke:none" />
+    <rect
+       width="240"
+       height="240"
+       x="240"
+       y="0"
+       id="rectGreen1"
        style="opacity:0.7;fill:#00ff00;fill-opacity:1;stroke:none" />
-    <circle
-       cx="300"
-       cy="600"
-       r="100"
-       id="circle1010"
-       stroke="black"
-       stroke-width="3"
-       fill="#0000ff" />
-       </g>
+    <rect
+       width="240"
+       height="240"
+       x="480"
+       y="0"
+       id="rectBlue1"
+       style="opacity:0.7;fill:#0000ff;fill-opacity:1;stroke:none" />
+    <rect
+       width="240"
+       height="240"
+       x="0"
+       y="240"
+       id="rectRed2"
+       style="opacity:0.7;fill:#ff0000;fill-opacity:1;stroke:none" />
+    <rect
+       width="240"
+       height="240"
+       x="240"
+       y="240"
+       id="rectGreen2"
+       style="opacity:0.7;fill:#00ff00;fill-opacity:1;stroke:none" />
+    <rect
+       width="240"
+       height="240"
+       x="480"
+       y="240"
+       id="rectBlue2"
+       style="opacity:0.7;fill:#0000ff;fill-opacity:1;stroke:none" />
+    <rect
+       width="240"
+       height="240"
+       x="0"
+       y="480"
+       id="rectRed3"
+       style="opacity:0.7;fill:#ff0000;fill-opacity:1;stroke:none" />
+    <rect
+       width="240"
+       height="240"
+       x="240"
+       y="480"
+       id="rectGreen3"
+       style="opacity:0.7;fill:#00ff00;fill-opacity:1;stroke:none" />
+    <rect
+       width="240"
+       height="240"
+       x="480"
+       y="480"
+       id="rectBlue3"
+       style="opacity:0.7;fill:#0000ff;fill-opacity:1;stroke:none" />
+    <rect
+       width="720"
+       height="340"
+       x="0"
+       y="720"
+	   rx="150"
+	   ry="50"
+       id="rectGrey"
+       style="opacity:0.7;fill:#000000;fill-opacity:1;stroke:none" />
+    <line
+       x1="0"
+       y1="720"
+       x2="720"
+       y2="1060"
+       style="stroke:#FFFF00;stroke-width:20"
+       id="line18" />
+  </g>
 </svg>
