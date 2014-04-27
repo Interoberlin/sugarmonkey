@@ -1,22 +1,17 @@
 package de.interoberlin.sugarmonkey.view.panels;
 
-import java.util.List;
-
-import de.interoberlin.sauvignon.model.svg.elements.AElement;
-import de.interoberlin.sauvignon.model.svg.elements.Circle;
-import de.interoberlin.sauvignon.model.svg.elements.EElement;
-import de.interoberlin.sauvignon.model.svg.elements.Path;
-import de.interoberlin.sauvignon.model.svg.elements.Rect;
-import de.interoberlin.sauvignon.model.util.Vector2;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.RectF;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import de.interoberlin.sauvignon.controller.loader.SvgLoader;
 import de.interoberlin.sauvignon.controller.renderer.SvgRenderer;
+import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
+import de.interoberlin.sauvignon.model.svg.elements.Circle;
+import de.interoberlin.sauvignon.model.svg.elements.EElement;
+import de.interoberlin.sauvignon.model.svg.elements.Line;
+import de.interoberlin.sauvignon.model.svg.elements.Rect;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
 public class DrawingPanel extends SurfaceView implements Runnable
@@ -102,7 +97,11 @@ public class DrawingPanel extends SurfaceView implements Runnable
 				 * Actual drawing
 				 */
 
-				// Manipulate SVG
+				// Scale
+				svg.setScaleMode(EScaleMode.FIT);
+				svg.scale(canvasWidth, canvasHeight);
+
+				// Load elements
 				Rect rectRed1 = (Rect) svg.getElementById(EElement.RECT, "rectRed1");
 				Rect rectRed2 = (Rect) svg.getElementById(EElement.RECT, "rectRed2");
 				Rect rectRed3 = (Rect) svg.getElementById(EElement.RECT, "rectRed3");
@@ -115,31 +114,31 @@ public class DrawingPanel extends SurfaceView implements Runnable
 				Rect rectBlue2 = (Rect) svg.getElementById(EElement.RECT, "rectBlue2");
 				Rect rectBlue3 = (Rect) svg.getElementById(EElement.RECT, "rectBlue3");
 
-				Rect rectGrey = (Rect) svg.getElementById(EElement.RECT, "rectGrey");
+				Circle circle = (Circle) svg.getElementById(EElement.CIRCLE, "circle");
+				Line line = (Line) svg.getElementById(EElement.LINE, "line18");
 
-				rectRed1.setFillR(rectRed1.getFillR() + 1);
+				// Manipulate elements
+				rectRed1.setFillR(rectRed1.getFillR() - 1);
 				rectRed2.setFillG(rectRed2.getFillG() + 1);
 				rectRed3.setFillB(rectRed3.getFillB() + 1);
 
 				rectGreen1.setFillR(rectGreen1.getFillR() + 1);
-				rectGreen2.setFillG(rectGreen2.getFillG() + 1);
+				rectGreen2.setFillG(rectGreen2.getFillG() - 1);
 				rectGreen3.setFillB(rectGreen3.getFillB() + 1);
 
 				rectBlue1.setFillR(rectBlue1.getFillR() + 1);
 				rectBlue2.setFillG(rectBlue2.getFillG() + 1);
-				rectBlue3.setFillB(rectBlue3.getFillB() + 1);
+				rectBlue3.setFillB(rectBlue3.getFillB() - 1);
 
-				if (rectGrey.getWidth() > 0)
+				if (circle.getR() > 0)
 				{
-					rectGrey.setWidth(rectGrey.getWidth() - 1);
+					circle.setR(circle.getR() - 1);
 				} else
 				{
-					rectGrey.setWidth(720);
+					circle.setR(360);
 				}
 
-				rectGrey.setFillR(rectGrey.getFillR() + 1);
-				rectGrey.setFillG(rectGrey.getFillG() + 1);
-				rectGrey.setFillB(rectGrey.getFillB() + 1);
+				circle.setFillA(circle.getFillA() - 1);
 
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);
