@@ -9,9 +9,10 @@ import de.interoberlin.sauvignon.controller.renderer.SvgRenderer;
 import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sauvignon.model.svg.elements.Circle;
-import de.interoberlin.sauvignon.model.svg.elements.EElement;
 import de.interoberlin.sauvignon.model.svg.elements.Line;
 import de.interoberlin.sauvignon.model.svg.elements.Rect;
+import de.interoberlin.sugarmonkey.R;
+import de.interoberlin.sugarmonkey.SplashActivity;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
 public class DrawingPanel extends SurfaceView implements Runnable
@@ -102,20 +103,20 @@ public class DrawingPanel extends SurfaceView implements Runnable
 				svg.scale(canvasWidth, canvasHeight);
 
 				// Load elements
-				Rect rectRed1 = (Rect) svg.getElementById(EElement.RECT, "rectRed1");
-				Rect rectRed2 = (Rect) svg.getElementById(EElement.RECT, "rectRed2");
-				Rect rectRed3 = (Rect) svg.getElementById(EElement.RECT, "rectRed3");
+				Rect rectRed1 = (Rect) svg.getElementById("rectRed1");
+				Rect rectRed2 = (Rect) svg.getElementById("rectRed2");
+				Rect rectRed3 = (Rect) svg.getElementById("rectRed3");
 
-				Rect rectGreen1 = (Rect) svg.getElementById(EElement.RECT, "rectGreen1");
-				Rect rectGreen2 = (Rect) svg.getElementById(EElement.RECT, "rectGreen2");
-				Rect rectGreen3 = (Rect) svg.getElementById(EElement.RECT, "rectGreen3");
+				Rect rectGreen1 = (Rect) svg.getElementById("rectGreen1");
+				Rect rectGreen2 = (Rect) svg.getElementById("rectGreen2");
+				Rect rectGreen3 = (Rect) svg.getElementById("rectGreen3");
 
-				Rect rectBlue1 = (Rect) svg.getElementById(EElement.RECT, "rectBlue1");
-				Rect rectBlue2 = (Rect) svg.getElementById(EElement.RECT, "rectBlue2");
-				Rect rectBlue3 = (Rect) svg.getElementById(EElement.RECT, "rectBlue3");
+				Rect rectBlue1 = (Rect) svg.getElementById("rectBlue1");
+				Rect rectBlue2 = (Rect) svg.getElementById("rectBlue2");
+				Rect rectBlue3 = (Rect) svg.getElementById("rectBlue3");
 
-				Circle circle = (Circle) svg.getElementById(EElement.CIRCLE, "circle");
-				Line line = (Line) svg.getElementById(EElement.LINE, "line18");
+				Circle circle = (Circle) svg.getElementById("circle");
+				Line line = (Line) svg.getElementById("line18");
 
 				// Manipulate elements
 				rectRed1.setFillR(rectRed1.getFillR() - 1);
