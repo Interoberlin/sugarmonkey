@@ -1,2 +1,8 @@
-bin/jarlist.cache
+*/*.jar
+*/*.class
+*/*.cache
+*/*.*~
+bin/*
+gen/*
 /bin
+/gen

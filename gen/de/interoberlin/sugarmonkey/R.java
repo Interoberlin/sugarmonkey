@@ -27,15 +27,18 @@ public final class R {
     }
     public static final class id {
         public static final int container=0x7f070000;
+        public static final int tableLayout=0x7f070001;
     }
     public static final class layout {
-        public static final int activity_splash=0x7f030000;
-        public static final int fragment_splash=0x7f030001;
+        public static final int activity_drawing=0x7f030000;
+        public static final int activity_splash=0x7f030001;
+        public static final int fragment_splash=0x7f030002;
     }
     public static final class string {
-        public static final int action_settings=0x7f040002;
+        public static final int action_settings=0x7f040003;
         public static final int app_name=0x7f040000;
-        public static final int hello_world=0x7f040001;
+        public static final int default_fill=0x7f040001;
+        public static final int hello_world=0x7f040002;
     }
     public static final class style {
         /**  All customizations that are NOT specific to a particular API-level can go here. 

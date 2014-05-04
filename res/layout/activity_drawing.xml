@@ -4,13 +4,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="de.interoberlin.sugarmonkey.SplashActivity"
-    tools:ignore="MergeRootFrame" >
+    tools:ignore="MergeRootFrame" />
 
-    <TableLayout
-        android:id="@+id/tableLayout"
-        android:padding="20px"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </TableLayout>
-
-</FrameLayout>
