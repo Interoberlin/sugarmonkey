@@ -127,6 +127,7 @@
        id="path2987"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
+    <!--
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 81,630.36218 35,-101 133,-52"
@@ -142,5 +143,6 @@
        inkscape:original-d="m 444,643.36218 c 39.08904,-3.48859 83.13951,2.94568 102,-41 23.96328,-55.83537 14.53891,-84.49361 7,-126"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="csc" />
+       -->
   </g>
 </svg>
