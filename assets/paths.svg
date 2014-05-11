@@ -9,15 +9,16 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="744.09448819"
-   height="1052.3622047"
+   width="500"
+   height="400"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="New document 1"
-    onload="load();"
-   >
- <script type="text/javascript"><![CDATA[
+   sodipodi:docname="paths.svg"
+   onload="load();">
+  <script
+     type="text/javascript"
+     id="script3">
 
     parsePathData = function(path) {
         if (typeof(path)!='object' || !path.hasAttribute('d'))
@@ -53,7 +54,7 @@
         var commands = [];
         for (i in sequence) {
             var firstLetter = sequence[i].substr(0,1);
-            if (isNaN(firstLetter) && firstLetter!='-') {
+            if (isNaN(firstLetter) &amp;&amp; firstLetter!='-') {
                 // it's a character, so append a new command array to the list of commands
                 commands.push( [sequence[i]] );
             } else {
@@ -70,8 +71,8 @@
             parsePathData(paths[i]);
     };
 
-  ]]></script>
-    <defs
+  </script>
+  <defs
      id="defs4">
     <inkscape:path-effect
        effect="spiro"
@@ -89,16 +90,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="375"
-     inkscape:cy="514.28571"
+     inkscape:zoom="0.41019649"
+     inkscape:cx="726.44845"
+     inkscape:cy="-210.15132"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1024"
-     inkscape:window-height="549"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="1912"
+     inkscape:window-y="304"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -108,41 +109,54 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(0,0)">
+    <rect
+       style="fill:#ff1b1b;fill-opacity:1;stroke:none"
+       id="rect2989"
+       width="250"
+       height="200"
+       x="0"
+       y="0" />
+    <rect
+       style="fill:#ff1b1b;fill-opacity:1;stroke:none"
+       id="rect2989-1"
+       width="250"
+       height="200"
+       x="250"
+       y="200" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 181,628.36218 193,-193"
+       style="fill:none;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 102.53257,253.34302 193,-193"
        id="path2985"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m304,601.36218c99.78455,-4.17818 136.48963,-59.17039 140.5,-140.5"
+       style="fill:none;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 186.29885,287.15528 c 99.78455,-4.17818 136.48963,-59.17039 140.5,-140.5"
        id="path2987"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
-    <!--
     <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 81,630.36218 35,-101 133,-52"
+       style="fill:none;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 42.226054,212.1093 35,-101 133.000006,-52"
        id="path2991"
        inkscape:path-effect="#path-effect2993"
-       inkscape:original-d="m 81,630.36218 35,-101 133,-52"
+       inkscape:original-d="m 42.226054,212.1093 35,-101 133.000006,-52"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 444,643.36218 c 18.99466,2.68787 38.68411,0.29752 56.48384,-6.85728 C 518.28357,629.35011 534.14985,617.44845 546,602.36218 559.83508,584.74893 568.10304,562.82745 569.34541,540.4647 570.58779,518.10195 564.79893,495.39954 553,476.36218"
+       style="fill:none;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 316.49042,360.54225 c 18.99466,2.68787 38.68411,0.29752 56.48384,-6.85728 17.79973,-7.15479 33.66601,-19.05645 45.51616,-34.14272 13.83508,-17.61325 22.10304,-39.53473 23.34541,-61.89748 1.24238,-22.36275 -4.54648,-45.06516 -16.34541,-64.10252"
        id="path2995"
        inkscape:path-effect="#path-effect2997"
-       inkscape:original-d="m 444,643.36218 c 39.08904,-3.48859 83.13951,2.94568 102,-41 23.96328,-55.83537 14.53891,-84.49361 7,-126"
+       inkscape:original-d="m 316.49042,360.54225 c 39.08904,-3.48859 83.13951,2.94568 102,-41 23.96328,-55.83537 14.53891,-84.49361 7,-126"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="csc" />
-       -->
   </g>
 </svg>
