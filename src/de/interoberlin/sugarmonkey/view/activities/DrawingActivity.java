@@ -10,6 +10,7 @@ import android.widget.Toast;
 import de.interoberlin.sugarmonkey.R;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 import de.interoberlin.sugarmonkey.view.panels.APanel;
+import de.interoberlin.sugarmonkey.view.panels.LymboPanel;
 import de.interoberlin.sugarmonkey.view.panels.MonkeyPanel;
 import de.interoberlin.sugarmonkey.view.panels.PathsPanel;
 import de.interoberlin.sugarmonkey.view.panels.TestPanel;
@@ -54,6 +55,11 @@ public class DrawingActivity extends Activity
 			case PATHS:
 			{
 				panel = new PathsPanel(activity);
+				break;
+			}
+			case LYMBO:
+			{
+				panel = new LymboPanel(activity);
 				break;
 			}
 
