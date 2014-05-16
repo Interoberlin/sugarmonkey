@@ -1,11 +1,53 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="12cm" height="5.25cm" viewBox="0 0 1200 400" version="1.1">
-  <title>Example arcs01 - arc commands in path data</title>
-  <desc>Picture of a pie chart with two pie wedges and
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="744.09448"
+   height="1052.3622"
+   viewBox="0 0 2100 2262.8571"
+   id="svg2">
+  <title
+     id="title4">Example arcs01 - arc commands in path data</title>
+  <desc
+     id="desc6">Picture of a pie chart with two pie wedges and
         a picture of a line with arc blips</desc>
-  <rect x="1" y="1" width="1198" height="398" fill="none" stroke="blue" stroke-width="1"/>
-
-  <path d="M300,200 h-150 a150,150 0 1,0 150,-150 z" fill="red" stroke="blue" stroke-width="5"/>
-  <path d="M275,175 v-150 a150,150 0 0,0 -150,150 z" fill="yellow" stroke="blue" stroke-width="5"/>
-
-  <path xmlns="http://www.w3.org/2000/svg" d="M600,350 l 50,-25  a20,20 90 1,1 50,-25  l 50,-25  a25,50 -30 0,1 50,-25 l 50,-25   a25,75 -30 0,1 50,-25 l 50,-25  a25,100 -30 0,1 50,-25 l 50,-25" fill="none" stroke="red" stroke-width="5"/>
+  <metadata
+     id="metadata20">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Example arcs01 - arc commands in path data</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs18" />
+  <rect
+     width="1198"
+     height="398"
+     x="442.49792"
+     y="894.53894"
+     id="rect8"
+     style="fill:none;stroke:#0000ff;stroke-width:1" />
+  <path
+     d="m 741.49794,1093.539 h -150 a 150,150 0 1 0 150,-150.00007 z"
+     id="path10"
+     style="fill:#ff0000;stroke:#0000ff;stroke-width:5" />
+  <path
+     d="M 716.49794,1068.539 V 918.53893 a 150,150 0 0 0 -150,150.00007 z"
+     id="path12"
+     style="fill:#ffff00;stroke:#0000ff;stroke-width:5" />
+  <path
+     d="m 1041.4979,1243.539 50,-25 a 27.95085,27.95085 0 1 1 50,-25 l 50,-25 a 55.826394,27.913197 60 0 1 50,-25 l 50,-25 a 83.718657,27.906219 60 0 1 50,-25 l 50,-25 a 111.6151,27.903776 60 0 1 50,-25 l 50,-25"
+     id="path14"
+     style="fill:none;stroke:#ff0000;stroke-width:5" />
 </svg>
