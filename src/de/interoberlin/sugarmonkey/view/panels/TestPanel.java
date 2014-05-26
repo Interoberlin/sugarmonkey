@@ -7,8 +7,8 @@ import de.interoberlin.sauvignon.controller.loader.SvgLoader;
 import de.interoberlin.sauvignon.controller.renderer.SvgRenderer;
 import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
-import de.interoberlin.sauvignon.model.svg.elements.SVGCircle;
-import de.interoberlin.sauvignon.model.svg.elements.SVGRect;
+import de.interoberlin.sauvignon.model.svg.elements.circle.SVGCircle;
+import de.interoberlin.sauvignon.model.svg.elements.rect.SVGRect;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
 public class TestPanel extends APanel
@@ -95,7 +95,7 @@ public class TestPanel extends APanel
 				 */
 
 				// Scale
-				svg.setScaleMode(EScaleMode.FIT);
+				svg.setCanvasScaleMode(EScaleMode.FIT);
 				svg.scale(canvasWidth, canvasHeight);
 
 				// Load elements

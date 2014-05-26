@@ -8,7 +8,7 @@ import de.interoberlin.sauvignon.controller.loader.SvgLoader;
 import de.interoberlin.sauvignon.controller.renderer.SvgRenderer;
 import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
-import de.interoberlin.sauvignon.model.svg.elements.SVGCircle;
+import de.interoberlin.sauvignon.model.svg.elements.circle.SVGCircle;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
 public class TouchPanel extends APanel
@@ -124,14 +124,14 @@ public class TouchPanel extends APanel
 				 */
 
 				// Scale
-				svg.setScaleMode(EScaleMode.FIT);
+				svg.setCanvasScaleMode(EScaleMode.FIT);
 				svg.scale(canvasWidth, canvasHeight);
 
 				// Manipulate elements
 				if (super.getTouch() != null)
 				{
-					cBlue.setCx(super.getTouch().getX() / svg.getScaleX());
-					cBlue.setCy(super.getTouch().getY() / svg.getScaleY());
+					cBlue.setCx(super.getTouch().getX() / svg.getCanvasScaleX());
+					cBlue.setCy(super.getTouch().getY() / svg.getCanvasScaleY());
 				}
 
 //				cRed.setCx(SugarMonkeyController.getAccelerometerX() / 10 * canvasWidth);
