@@ -3,11 +3,13 @@ package de.interoberlin.sugarmonkey.view.panels;
 import android.content.Context;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import de.interoberlin.sauvignon.model.util.Vector2;
 
 public class APanel extends SurfaceView implements Runnable
 {
-	Thread					thread	= null;
-	SurfaceHolder			surfaceHolder;
+	private Thread			thread	= null;
+	private SurfaceHolder	surfaceHolder;
+	private Vector2			touch;
 	private static boolean	running	= false;
 
 	// private static Context c;
@@ -60,5 +62,15 @@ public class APanel extends SurfaceView implements Runnable
 	public void run()
 	{
 
+	}
+
+	public Vector2 getTouch()
+	{
+		return touch;
+	}
+
+	public void setTouch(Vector2 v)
+	{
+		touch = new Vector2(v);
 	}
 }

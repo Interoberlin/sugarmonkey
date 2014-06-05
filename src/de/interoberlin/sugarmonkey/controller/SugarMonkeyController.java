@@ -1,5 +1,6 @@
 package de.interoberlin.sugarmonkey.controller;
 
+import de.interoberlin.sugarmonkey.controller.accelerometer.AcceleratorListener;
 import de.interoberlin.sugarmonkey.view.panels.EPanel;
 import android.app.Application;
 import android.content.Context;
@@ -71,5 +72,15 @@ public class SugarMonkeyController extends Application
 	public static void setCurrentPanel(EPanel currentPanel)
 	{
 		SugarMonkeyController.currentPanel = currentPanel;
+	}
+
+	public static float getAccelerometerX()
+	{
+		return AcceleratorListener.getDataX();
+	}
+
+	public static float getAccelerometerY()
+	{
+		return AcceleratorListener.getDataY();
 	}
 }

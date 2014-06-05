@@ -2,14 +2,16 @@ package de.interoberlin.sugarmonkey.view.panels;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.view.SurfaceHolder;
 import de.interoberlin.sauvignon.controller.loader.SvgLoader;
 import de.interoberlin.sauvignon.controller.renderer.SvgRenderer;
 import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
+import de.interoberlin.sauvignon.model.svg.elements.circle.SVGCircle;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
-public class MonkeyPanel extends APanel
+public class TouchPanel extends APanel
 {
 	Thread					thread	= null;
 	SurfaceHolder			surfaceHolder;
@@ -19,7 +21,7 @@ public class MonkeyPanel extends APanel
 
 	// private static Resources r;
 
-	public MonkeyPanel(Context context)
+	public TouchPanel(Context context)
 	{
 		super(context);
 		surfaceHolder = getHolder();
@@ -66,7 +68,36 @@ public class MonkeyPanel extends APanel
 	public void run()
 	{
 		// Load SVG from file
-		SVG svg = SvgLoader.getSVGFromAsset(c, "yay.svg");
+		SVG svg = SvgLoader.getSVGFromAsset(c, "dot.svg");
+
+		// Load elements
+		SVGCircle cBlue = (SVGCircle) svg.getElementById("dot");
+
+		// Clone elements
+//		SVGCircle cRed = null;
+//		cRed = new SVGCircle(cBlue, "newCircle");
+//		svg.addSubelement(cRed);
+
+//		Paint red = new Paint();
+//		red.setARGB(255, 255, 0, 0);
+//		cRed.setFill(red);
+
+		Paint blue = new Paint();
+		blue.setARGB(255, 0, 0, 255);
+		cBlue.setFill(blue);
+
+		// Add other elements
+//		SVGPath pBlue = new SVGPath();
+//		pBlue.setFill(blue);
+//		pBlue.setStroke(blue);
+//		pBlue.addAbsoluteMoveTo(new Vector2(cBlue.getCx(), cBlue.getCy()));
+//		svg.addSubelement(pBlue);
+
+//		SVGPath pRed = new SVGPath();
+//		pRed.setFill(red);
+//		pRed.setStroke(red);
+//		pRed.addAbsoluteMoveTo(new Vector2(cRed.getCx(), cRed.getCy()));
+//		svg.addSubelement(pRed);
 
 		while (running)
 		{
@@ -96,17 +127,24 @@ public class MonkeyPanel extends APanel
 				svg.setCanvasScaleMode(EScaleMode.FIT);
 				svg.scale(canvasWidth, canvasHeight);
 
-				// Load elements
-				// SVGGElement gArmLeft = (SVGGElement) svg.getElementById("gArmLeft");
-
 				// Manipulate elements
+				if (super.getTouch() != null)
+				{
+					cBlue.setCx(super.getTouch().getX() / svg.getCanvasScaleX());
+					cBlue.setCy(super.getTouch().getY() / svg.getCanvasScaleY());
+				}
+
+//				cRed.setCx(SugarMonkeyController.getAccelerometerX() / 10 * canvasWidth);
+//				cRed.setCy(SugarMonkeyController.getAccelerometerY() / 10 * canvasHeight);
+//
+//				pBlue.addAbsoluteLineTo(new Vector2(cBlue.getCx(), cBlue.getCy()));
+//				pRed.addAbsoluteLineTo(new Vector2(cRed.getCx(), cRed.getCy()));
 
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);
 
 				surfaceHolder.unlockCanvasAndPost(canvas);
 			}
-
 		}
 
 	}

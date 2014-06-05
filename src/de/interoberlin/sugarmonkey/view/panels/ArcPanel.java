@@ -9,7 +9,7 @@ import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
-public class MonkeyPanel extends APanel
+public class ArcPanel extends APanel
 {
 	Thread					thread	= null;
 	SurfaceHolder			surfaceHolder;
@@ -19,7 +19,7 @@ public class MonkeyPanel extends APanel
 
 	// private static Resources r;
 
-	public MonkeyPanel(Context context)
+	public ArcPanel(Context context)
 	{
 		super(context);
 		surfaceHolder = getHolder();
@@ -66,7 +66,7 @@ public class MonkeyPanel extends APanel
 	public void run()
 	{
 		// Load SVG from file
-		SVG svg = SvgLoader.getSVGFromAsset(c, "yay.svg");
+		SVG svg = SvgLoader.getSVGFromAsset(c, "arcs.svg");
 
 		while (running)
 		{
@@ -97,9 +97,6 @@ public class MonkeyPanel extends APanel
 				svg.scale(canvasWidth, canvasHeight);
 
 				// Load elements
-				// SVGGElement gArmLeft = (SVGGElement) svg.getElementById("gArmLeft");
-
-				// Manipulate elements
 
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);
