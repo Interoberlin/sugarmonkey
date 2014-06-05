@@ -7,6 +7,12 @@ import de.interoberlin.sauvignon.controller.loader.SvgLoader;
 import de.interoberlin.sauvignon.controller.renderer.SvgRenderer;
 import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
+import de.interoberlin.sauvignon.model.svg.attributes.SVGTransform;
+import de.interoberlin.sauvignon.model.svg.attributes.SVGTransformRotate;
+import de.interoberlin.sauvignon.model.svg.attributes.SVGTransformScale;
+import de.interoberlin.sauvignon.model.svg.attributes.SVGTransformTranslate;
+import de.interoberlin.sauvignon.model.svg.elements.SVGGElement;
+import de.interoberlin.sauvignon.model.util.Matrix;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
 public class MonkeyPanel extends APanel
@@ -67,7 +73,7 @@ public class MonkeyPanel extends APanel
 	{
 		// Load SVG from file
 		SVG svg = SvgLoader.getSVGFromAsset(c, "yay.svg");
-
+		
 		while (running)
 		{
 			if (surfaceHolder.getSurface().isValid())
@@ -96,11 +102,15 @@ public class MonkeyPanel extends APanel
 				svg.setCanvasScaleMode(EScaleMode.FIT);
 				svg.scale(canvasWidth, canvasHeight);
 
-				// Load elements
-				// SVGGElement gArmLeft = (SVGGElement) svg.getElementById("gArmLeft");
+				((SVGGElement) svg.getElementById("gArmLeft"))
+					.animate( new SVGTransformRotate(2f,2f,-0.1f) );
 
-				// Manipulate elements
+				((SVGGElement) svg.getElementById("gArmRight"))
+					.animate( new SVGTransformRotate(2f,2f,0.1f) );
 
+				((SVGGElement) svg.getElementById("gBody"))
+					.animate( new SVGTransformScale(0.995f) );
+				
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);
 
