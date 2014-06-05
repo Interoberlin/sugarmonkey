@@ -4,6 +4,7 @@ public enum EPanel
 {
 	TEST,
 	MONKEY,
+	MONKEY_TAIL,
 	PATHS,
 	LYMBO,
 	TOUCH,
