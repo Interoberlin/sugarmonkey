@@ -3,8 +3,6 @@ package de.interoberlin.sugarmonkey.controller.accelerometer;
 import java.util.Observable;
 import java.util.Observer;
 
-import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
-
 import android.app.Activity;
 
 public class AcceleratorListener implements Observer

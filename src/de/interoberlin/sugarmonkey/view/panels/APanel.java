@@ -8,7 +8,6 @@ import de.interoberlin.sauvignon.model.util.Vector2;
 public class APanel extends SurfaceView implements Runnable
 {
 	private Thread			thread	= null;
-	private SurfaceHolder	surfaceHolder;
 	private Vector2			touch;
 	private static boolean	running	= false;
 
@@ -18,10 +17,6 @@ public class APanel extends SurfaceView implements Runnable
 	public APanel(Context context)
 	{
 		super(context);
-		surfaceHolder = getHolder();
-
-		// c = (Context) SugarMonkeyController.getContext();
-		// r = c.getResources();
 	}
 
 	public void onChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3)
