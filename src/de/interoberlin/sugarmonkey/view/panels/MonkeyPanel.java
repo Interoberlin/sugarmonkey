@@ -103,14 +103,17 @@ public class MonkeyPanel extends APanel
 				svg.scale(canvasWidth, canvasHeight);
 
 				((SVGGElement) svg.getElementById("gArmLeft"))
-					.animate( new SVGTransformRotate(2f,2f,-0.1f) );
+					.animate( new SVGTransformRotate(2f,2f,-0.01f) );
 
 				((SVGGElement) svg.getElementById("gArmRight"))
-					.animate( new SVGTransformRotate(2f,2f,0.1f) );
+					.animate( new SVGTransformRotate(2f,2f,0.01f) );
 
-				((SVGGElement) svg.getElementById("gBody"))
-					.animate( new SVGTransformScale(0.995f) );
-				
+				((SVGGElement) svg.getElementById("gHead"))
+					.animate( new SVGTransformScale(0.9995f) );
+
+				((SVGGElement) svg.getElementById("gTail"))
+					.animate( new SVGTransformRotate(5f,7f,0.2f) );
+
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);
 
