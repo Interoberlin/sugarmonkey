@@ -7,23 +7,23 @@ import de.interoberlin.sauvignon.controller.loader.SvgLoader;
 import de.interoberlin.sauvignon.controller.renderer.SvgRenderer;
 import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
-import de.interoberlin.sauvignon.model.svg.attributes.SVGTransform;
 import de.interoberlin.sauvignon.model.svg.attributes.SVGTransformRotate;
 import de.interoberlin.sauvignon.model.svg.attributes.SVGTransformScale;
-import de.interoberlin.sauvignon.model.svg.attributes.SVGTransformTranslate;
 import de.interoberlin.sauvignon.model.svg.elements.SVGGElement;
-import de.interoberlin.sauvignon.model.util.Matrix;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
+import de.interoberlin.sugarmonkey.view.activities.DrawingActivity;
 
 public class MonkeyPanel extends APanel
 {
-	Thread					thread	= null;
+	Thread					thread			= null;
+	Thread					animateThread	= null;
+
 	SurfaceHolder			surfaceHolder;
-	private static boolean	running	= false;
+	private static boolean	running			= false;
 
 	private static Context	c;
 
-	// private static Resources r;
+	private SVG				svg;
 
 	public MonkeyPanel(Context context)
 	{
@@ -31,7 +31,12 @@ public class MonkeyPanel extends APanel
 		surfaceHolder = getHolder();
 
 		c = (Context) SugarMonkeyController.getContext();
-		// r = c.getResources();
+	}
+
+	private void loadElements()
+	{
+		// Load SVG from file
+		svg = SvgLoader.getSVGFromAsset(c, "yay.svg");
 	}
 
 	public void onChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3)
@@ -40,9 +45,68 @@ public class MonkeyPanel extends APanel
 
 	public void onResume()
 	{
+		loadElements();
+
+		SugarMonkeyController.setFps(60);
+
 		running = true;
 		thread = new Thread(this);
 		thread.start();
+
+		animateThread = new Thread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				int fps = SugarMonkeyController.getFps();
+				long millisBefore = 0;
+				long millisAfter = 0;
+				long millisFrame = 1000 / fps;
+
+				while (running)
+				{
+					if (millisAfter - millisBefore != 0)
+					{
+						SugarMonkeyController.setCurrentFps((int) (1000 / (millisAfter - millisBefore)));
+						DrawingActivity.uiDraw();
+					}
+
+					millisBefore = System.currentTimeMillis();
+
+					if (svg != null)
+					{
+						synchronized (svg)
+						{
+							// Load elements
+							SVGGElement gArmLeft = ((SVGGElement) svg.getElementById("gArmLeft"));
+							SVGGElement gArmRight = ((SVGGElement) svg.getElementById("gArmRight"));
+							SVGGElement gBody = ((SVGGElement) svg.getElementById("gBody"));
+
+							// Animate
+							gArmLeft.animate(new SVGTransformRotate(2f, 2f, -0.1f));
+							gArmRight.animate(new SVGTransformRotate(2f, 2f, 0.1f));
+							gBody.animate(new SVGTransformScale(0.995f));
+						}
+					}
+
+					millisAfter = System.currentTimeMillis();
+
+					if (millisAfter - millisBefore < millisFrame)
+					{
+						try
+						{
+							Thread.sleep(millisFrame - (millisAfter - millisBefore));
+						} catch (InterruptedException e)
+						{
+							e.printStackTrace();
+						}
+					}
+
+					millisAfter = System.currentTimeMillis();
+				}
+			}
+		});
+		animateThread.start();
 	}
 
 	public void onPause()
@@ -71,11 +135,18 @@ public class MonkeyPanel extends APanel
 	@Override
 	public void run()
 	{
-		// Load SVG from file
-		SVG svg = SvgLoader.getSVGFromAsset(c, "yay.svg");
-		
+		int fps = SugarMonkeyController.getFps();
+		long millisBefore = 0;
+		long millisAfter = 0;
+		long millisFrame = 1000 / fps;
+
+		// Set scale mode
+		svg.setCanvasScaleMode(EScaleMode.FIT);
+
 		while (running)
 		{
+			millisBefore = System.currentTimeMillis();
+
 			if (surfaceHolder.getSurface().isValid())
 			{
 				// Lock canvas
@@ -99,25 +170,31 @@ public class MonkeyPanel extends APanel
 				 */
 
 				// Scale
-				svg.setCanvasScaleMode(EScaleMode.FIT);
 				svg.scale(canvasWidth, canvasHeight);
 
-				((SVGGElement) svg.getElementById("gArmLeft"))
-					.animate( new SVGTransformRotate(2f,2f,-0.1f) );
-
-				((SVGGElement) svg.getElementById("gArmRight"))
-					.animate( new SVGTransformRotate(2f,2f,0.1f) );
-
-				((SVGGElement) svg.getElementById("gBody"))
-					.animate( new SVGTransformScale(0.995f) );
-				
 				// Render SVG
-				canvas = SvgRenderer.renderToCanvas(canvas, svg);
+				synchronized (svg)
+				{
+					canvas = SvgRenderer.renderToCanvas(canvas, svg);
+				}
 
 				surfaceHolder.unlockCanvasAndPost(canvas);
 			}
 
-		}
+			millisAfter = System.currentTimeMillis();
 
+			if (millisAfter - millisBefore < millisFrame)
+			{
+				try
+				{
+					Thread.sleep(millisFrame - (millisAfter - millisBefore));
+				} catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
+			}
+
+			millisAfter = System.currentTimeMillis();
+		}
 	}
 }

@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import de.interoberlin.sauvignon.model.util.Vector2;
 import de.interoberlin.sugarmonkey.R;
@@ -36,6 +38,9 @@ public class DrawingActivity extends Activity
 	private static Display			display;
 
 	private static APanel			panel;
+	private static LinearLayout		lnr;
+	private static TextView			tvLabel;
+	private static TextView			tvValue;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -114,6 +119,13 @@ public class DrawingActivity extends Activity
 			}
 		});
 
+		lnr = new LinearLayout(activity);
+		tvLabel = new TextView(activity);
+		tvValue = new TextView(activity);
+		lnr.addView(tvLabel, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
+		lnr.addView(tvValue, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
+		activity.addContentView(lnr, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
 		// Get controller
 		// controller = (SugarMonkeyController) getApplicationContext();
 	}
@@ -148,6 +160,19 @@ public class DrawingActivity extends Activity
 	public SensorManager getSensorManager()
 	{
 		return sensorManager;
+	}
+
+	public static void uiDraw()
+	{
+		activity.runOnUiThread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				tvLabel.setText(R.string.fps);
+				tvValue.setText(String.valueOf(SugarMonkeyController.getCurrentFps()));
+			}
+		});
 	}
 
 	public static void uiToast(final String message)

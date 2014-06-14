@@ -16,6 +16,9 @@ public class SugarMonkeyController extends Application
 
 	private static EPanel	currentPanel;
 
+	private static int		fps;
+	private static int		currentFps;
+
 	@Override
 	public void onCreate()
 	{
@@ -82,5 +85,25 @@ public class SugarMonkeyController extends Application
 	public static float getAccelerometerY()
 	{
 		return AcceleratorListener.getDataY();
+	}
+
+	public static int getFps()
+	{
+		return fps;
+	}
+
+	public static void setFps(int fps)
+	{
+		SugarMonkeyController.fps = fps;
+	}
+
+	public static int getCurrentFps()
+	{
+		return currentFps;
+	}
+
+	public static void setCurrentFps(int currentFps)
+	{
+		SugarMonkeyController.currentFps = currentFps;
 	}
 }
