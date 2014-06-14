@@ -94,7 +94,7 @@ public class PathsPanel extends APanel
 
 				// Scale
 				svg.setCanvasScaleMode(EScaleMode.FIT);
-				svg.scale(canvasWidth, canvasHeight);
+				svg.scaleTo(canvasWidth, canvasHeight);
 
 				// Load elements
 

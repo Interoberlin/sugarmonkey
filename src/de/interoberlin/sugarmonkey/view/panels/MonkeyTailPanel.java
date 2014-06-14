@@ -94,7 +94,7 @@ public class MonkeyTailPanel extends APanel
 
 				// Scale
 				svg.setCanvasScaleMode(EScaleMode.FIT);
-				svg.scale(canvasWidth, canvasHeight);
+				svg.scaleTo(canvasWidth, canvasHeight);
 
 				// Load elements
 				// SVGGElement gArmLeft = (SVGGElement) svg.getElementById("gArmLeft");
