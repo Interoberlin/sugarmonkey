@@ -72,7 +72,7 @@ public class MonkeyPanel extends APanel
 		// Load SVG from file
 		SVG svg = SvgLoader.getSVGFromAsset(c, "yay.svg");
 
-		// Set dimensions
+		// Set dimensions to fullscreen
 		Canvas canvas = surfaceHolder.lockCanvas();
 
 		int canvasWidth = canvas.getWidth();
@@ -82,7 +82,7 @@ public class MonkeyPanel extends APanel
 		SugarMonkeyController.setCanvasWidth(canvasWidth);
 
 		svg.setCanvasScaleMode(EScaleMode.FIT);
-		//svg.scaleTo(canvasWidth, canvasHeight);
+		svg.scaleTo(canvasWidth, canvasHeight);
 
 		surfaceHolder.unlockCanvasAndPost(canvas);
 		
