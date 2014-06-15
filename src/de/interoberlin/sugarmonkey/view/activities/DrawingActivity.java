@@ -22,7 +22,7 @@ import de.interoberlin.sugarmonkey.view.panels.APanel;
 import de.interoberlin.sugarmonkey.view.panels.ArcPanel;
 import de.interoberlin.sugarmonkey.view.panels.LymboPanel;
 import de.interoberlin.sugarmonkey.view.panels.MonkeyPanel;
-import de.interoberlin.sugarmonkey.view.panels.MonkeyTailPanel;
+import de.interoberlin.sugarmonkey.view.panels.DebugPanel;
 import de.interoberlin.sugarmonkey.view.panels.PathsPanel;
 import de.interoberlin.sugarmonkey.view.panels.TestPanel;
 import de.interoberlin.sugarmonkey.view.panels.TouchPanel;
@@ -69,9 +69,9 @@ public class DrawingActivity extends Activity
 				panel = new MonkeyPanel(activity);
 				break;
 			}
-			case MONKEY_TAIL:
+			case DEBUG:
 			{
-				panel = new MonkeyTailPanel(activity);
+				panel = new DebugPanel(activity);
 				break;
 			}
 			case PATHS:
