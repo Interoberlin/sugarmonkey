@@ -9,6 +9,8 @@ import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sauvignon.model.svg.attributes.SVGTransformRotate;
 import de.interoberlin.sauvignon.model.svg.elements.SVGGElement;
+import de.interoberlin.sauvignon.model.util.Matrix;
+import de.interoberlin.sauvignon.model.util.Vector2;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
 public class MonkeyPanel extends APanel
@@ -69,44 +71,51 @@ public class MonkeyPanel extends APanel
 	{
 		// Load SVG from file
 		SVG svg = SvgLoader.getSVGFromAsset(c, "yay.svg");
+
+		// Set dimensions
+		Canvas canvas = surfaceHolder.lockCanvas();
+
+		int canvasWidth = canvas.getWidth();
+		int canvasHeight = canvas.getHeight();
+
+		SugarMonkeyController.setCanvasHeight(canvasHeight);
+		SugarMonkeyController.setCanvasWidth(canvasWidth);
+
+		svg.setCanvasScaleMode(EScaleMode.FIT);
+		svg.scaleTo(canvasWidth, canvasHeight);
+
+		surfaceHolder.unlockCanvasAndPost(canvas);
+		
+		// Rotate SVG
+		Vector2 v = new Vector2(183f, 185f);//.applyCTM(svg.getCTM());
+		Matrix animation = new SVGTransformRotate(v.getX(),v.getY(),0.01f).getResultingMatrix();
 		
 		while (running)
 		{
 			if (surfaceHolder.getSurface().isValid())
 			{
 				// Lock canvas
-				Canvas canvas = surfaceHolder.lockCanvas();
-
-				// Set dimensions
-				int canvasWidth = canvas.getWidth();
-				int canvasHeight = canvas.getHeight();
-
-				SugarMonkeyController.setCanvasHeight(canvasHeight);
-				SugarMonkeyController.setCanvasWidth(canvasWidth);
+				canvas = surfaceHolder.lockCanvas();
 
 				/**
 				 * Clear canvas
 				 */
-
 				canvas.drawRGB(255, 255, 255);
 
-				/**
-				 * Actual drawing
-				 */
-
-				// Scale
-				svg.setCanvasScaleMode(EScaleMode.FIT);
-				svg.scaleTo(canvasWidth, canvasHeight);
-
+				//svg.setCTM(svg.getCTM().multiply(animation));
+				
 				((SVGGElement) svg.getElementById("gArmLeft"))
-					.animate( new SVGTransformRotate(2f,2f,-0.01f) );
+					.animate( new SVGTransformRotate(280f,370-211f,-0.01f) );
 
 				((SVGGElement) svg.getElementById("gArmRight"))
-					.animate( new SVGTransformRotate(2f,2f,0.01f) );
+					.animate( new SVGTransformRotate(134f,370-211f,0.01f) );
 
-				((SVGGElement) svg.getElementById("gTail"))
-					.animate( new SVGTransformRotate(5f,7f,0.2f) );
+				((SVGGElement) svg.getElementById("gLeftEye"))
+					.animate( new SVGTransformRotate(231f,370-283f,0.05f) );
 
+				((SVGGElement) svg.getElementById("gRightEye"))
+					.animate( new SVGTransformRotate(178f,370-283f,-0.05f) );
+				
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);
 
