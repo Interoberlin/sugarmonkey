@@ -125,13 +125,13 @@ public class TouchPanel extends APanel
 
 				// Scale
 				svg.setCanvasScaleMode(EScaleMode.FIT);
-				svg.scale(canvasWidth, canvasHeight);
+				svg.scaleTo(canvasWidth, canvasHeight);
 
 				// Manipulate elements
 				if (super.getTouch() != null)
 				{
-					cBlue.setCx(super.getTouch().getX() / svg.getCanvasScaleX());
-					cBlue.setCy(super.getTouch().getY() / svg.getCanvasScaleY());
+					cBlue.setCx(super.getTouch().getX());
+					cBlue.setCy(super.getTouch().getY());
 				}
 
 //				cRed.setCx(SugarMonkeyController.getAccelerometerX() / 10 * canvasWidth);

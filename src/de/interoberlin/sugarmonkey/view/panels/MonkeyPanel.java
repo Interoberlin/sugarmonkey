@@ -10,6 +10,8 @@ import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sauvignon.model.svg.attributes.SVGTransformRotate;
 import de.interoberlin.sauvignon.model.svg.attributes.SVGTransformScale;
 import de.interoberlin.sauvignon.model.svg.elements.SVGGElement;
+import de.interoberlin.sauvignon.model.util.Matrix;
+import de.interoberlin.sauvignon.model.util.Vector2;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 import de.interoberlin.sugarmonkey.view.activities.DrawingActivity;
 
@@ -140,9 +142,43 @@ public class MonkeyPanel extends APanel
 		long millisAfter = 0;
 		long millisFrame = 1000 / fps;
 
+		// Load SVG from file
+		SVG svg = SvgLoader.getSVGFromAsset(c, "yay.svg");
+
+		// Set dimensions to fullscreen
+		Canvas canvas = surfaceHolder.lockCanvas();
+
+		int canvasWidth = canvas.getWidth();
+		int canvasHeight = canvas.getHeight();
+
+		SugarMonkeyController.setCanvasHeight(canvasHeight);
+		SugarMonkeyController.setCanvasWidth(canvasWidth);
+
 		// Set scale mode
 		svg.setCanvasScaleMode(EScaleMode.FIT);
+		svg.scaleTo(canvasWidth, canvasHeight);
 
+		surfaceHolder.unlockCanvasAndPost(canvas);
+		
+		// Rotate SVG
+		Vector2 v = new Vector2(183f, 185f);//.applyCTM(svg.getCTM());
+		Matrix animation = new SVGTransformRotate(v.getX(),v.getY(),0.01f).getResultingMatrix();
+
+		// Rotate arms und eyes
+		SVGGElement gArmLeft, gArmRight, gEyeLeft, gEyeRight;
+		
+		gArmLeft = (SVGGElement) svg.getElementById("gArmLeft");
+		gArmLeft.animate( new SVGTransformRotate(279f,370-211f,-0.01f) );
+
+		gArmRight = (SVGGElement) svg.getElementById("gArmRight");
+		gArmRight.animate( new SVGTransformRotate(128f,370-205f,0.01f) );
+
+		gEyeLeft = (SVGGElement) svg.getElementById("gEyeLeft");
+		gEyeLeft.animate( new SVGTransformRotate(231f,370-282f,0.05f) );
+
+		gEyeRight = (SVGGElement) svg.getElementById("gEyeRight");
+		gEyeRight.animate( new SVGTransformRotate(179f,370-283f,-0.05f) );
+		
 		while (running)
 		{
 			millisBefore = System.currentTimeMillis();
@@ -150,28 +186,24 @@ public class MonkeyPanel extends APanel
 			if (surfaceHolder.getSurface().isValid())
 			{
 				// Lock canvas
-				Canvas canvas = surfaceHolder.lockCanvas();
-
-				// Set dimensions
-				int canvasWidth = canvas.getWidth();
-				int canvasHeight = canvas.getHeight();
-
-				SugarMonkeyController.setCanvasHeight(canvasHeight);
-				SugarMonkeyController.setCanvasWidth(canvasWidth);
+				canvas = surfaceHolder.lockCanvas();
 
 				/**
 				 * Clear canvas
 				 */
-
 				canvas.drawRGB(255, 255, 255);
 
 				/**
 				 * Actual drawing
 				 */
 
-				// Scale
-				svg.scale(canvasWidth, canvasHeight);
-
+				//svg.setCTM(svg.getCTM().multiply(animation));
+				
+				gArmLeft.animateAgain();
+				gArmRight.animateAgain();
+				gEyeLeft.animateAgain();
+				gEyeRight.animateAgain();
+				
 				// Render SVG
 				synchronized (svg)
 				{

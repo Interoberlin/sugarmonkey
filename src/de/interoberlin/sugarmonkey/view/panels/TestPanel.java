@@ -96,7 +96,7 @@ public class TestPanel extends APanel
 
 				// Scale
 				svg.setCanvasScaleMode(EScaleMode.FIT);
-				svg.scale(canvasWidth, canvasHeight);
+				svg.scaleTo(canvasWidth, canvasHeight);
 
 				// Load elements
 				SVGRect rectRed1 = (SVGRect) svg.getElementById("rectRed1");
