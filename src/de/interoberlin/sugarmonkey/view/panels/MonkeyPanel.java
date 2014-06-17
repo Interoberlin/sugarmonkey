@@ -8,10 +8,7 @@ import de.interoberlin.sauvignon.controller.renderer.SvgRenderer;
 import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sauvignon.model.svg.attributes.SVGTransformRotate;
-import de.interoberlin.sauvignon.model.svg.attributes.SVGTransformScale;
 import de.interoberlin.sauvignon.model.svg.elements.SVGGElement;
-import de.interoberlin.sauvignon.model.util.Matrix;
-import de.interoberlin.sauvignon.model.util.Vector2;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 import de.interoberlin.sugarmonkey.view.activities.DrawingActivity;
 
@@ -35,20 +32,12 @@ public class MonkeyPanel extends APanel
 		c = (Context) SugarMonkeyController.getContext();
 	}
 
-	private void loadElements()
-	{
-		// Load SVG from file
-		svg = SvgLoader.getSVGFromAsset(c, "yay.svg");
-	}
-
 	public void onChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3)
 	{
 	}
 
 	public void onResume()
 	{
-		loadElements();
-
 		SugarMonkeyController.setFps(60);
 
 		running = true;
@@ -65,57 +54,89 @@ public class MonkeyPanel extends APanel
 				long millisAfter = 0;
 				long millisFrame = 1000 / fps;
 
-				while (running)
-				{
-					if (millisAfter - millisBefore != 0)
-					{
-						SugarMonkeyController.setCurrentFps((int) (1000 / (millisAfter - millisBefore)));
-						DrawingActivity.uiDraw();
-					}
-
-					millisBefore = System.currentTimeMillis();
-
-					if (svg != null)
-					{
-						synchronized (svg)
-						{
-							// Load elements
-							SVGGElement gArmLeft = ((SVGGElement) svg.getElementById("gArmLeft"));
-							SVGGElement gArmRight = ((SVGGElement) svg.getElementById("gArmRight"));
-							SVGGElement gBody = ((SVGGElement) svg.getElementById("gBody"));
-
-							// Animate
-							gArmLeft.animate(new SVGTransformRotate(2f, 2f, -0.1f));
-							gArmRight.animate(new SVGTransformRotate(2f, 2f, 0.1f));
-							gBody.animate(new SVGTransformScale(0.995f));
-						}
-					}
-
-					millisAfter = System.currentTimeMillis();
-
-					if (millisAfter - millisBefore < millisFrame)
+				// Rotate arms und eyes
+				SVGGElement gArmLeft, gArmRight, gEyeLeft, gEyeRight;
+				
+				// wait for svg
+				if (svg == null)
+					while (running)
 					{
 						try
 						{
-							Thread.sleep(millisFrame - (millisAfter - millisBefore));
-						} catch (InterruptedException e)
+							Thread.sleep(millisFrame);
+						}
+						catch (InterruptedException e)
 						{
 							e.printStackTrace();
 						}
 					}
-
-					millisAfter = System.currentTimeMillis();
-				}
-			}
-		});
+				
+				if (svg != null)
+				{
+					// Define animations
+					
+					gArmLeft = (SVGGElement) svg.getElementById("gArmLeft");
+					gArmLeft.animate( new SVGTransformRotate(279f,370-211f,-0.01f) );
+	
+					gArmRight = (SVGGElement) svg.getElementById("gArmRight");
+					gArmRight.animate( new SVGTransformRotate(128f,370-205f,0.01f) );
+	
+					gEyeLeft = (SVGGElement) svg.getElementById("gEyeLeft");
+					gEyeLeft.animate( new SVGTransformRotate(231f,370-282f,0.05f) );
+	
+					gEyeRight = (SVGGElement) svg.getElementById("gEyeRight");
+					gEyeRight.animate( new SVGTransformRotate(179f,370-283f,-0.05f) );
+					
+					// Execute animations
+					
+					while (running)
+					{
+						if (millisAfter - millisBefore != 0)
+						{
+							SugarMonkeyController.setCurrentFps((int) (1000 / (millisAfter - millisBefore)));
+							DrawingActivity.uiDraw();
+						}
+	
+						millisBefore = System.currentTimeMillis();
+	
+						if (svg != null)
+						{
+							synchronized (svg)
+							{
+								gArmLeft.animateAgain();
+								gArmRight.animateAgain();
+								gEyeLeft.animateAgain();
+								gEyeRight.animateAgain();
+							}
+						}
+	
+						millisAfter = System.currentTimeMillis();
+	
+						if (millisAfter - millisBefore < millisFrame)
+						{
+							try
+							{
+								Thread.sleep(millisFrame - (millisAfter - millisBefore));
+							} catch (InterruptedException e)
+							{
+								e.printStackTrace();
+							}
+						}
+	
+						millisAfter = System.currentTimeMillis();
+					} // while running
+				} // svg != null
+			} // run()
+		}); // animateThread
+		
 		animateThread.start();
 	}
 
 	public void onPause()
 	{
-		boolean retry = true;
 		running = false;
 
+		boolean retry = true;
 		while (retry)
 		{
 			try
@@ -142,8 +163,7 @@ public class MonkeyPanel extends APanel
 		long millisAfter = 0;
 		long millisFrame = 1000 / fps;
 
-		// Load SVG from file
-		SVG svg = SvgLoader.getSVGFromAsset(c, "yay.svg");
+		svg = SvgLoader.getSVGFromAsset(c, "yay.svg");
 
 		// Set dimensions to fullscreen
 		Canvas canvas = surfaceHolder.lockCanvas();
@@ -160,73 +180,49 @@ public class MonkeyPanel extends APanel
 
 		surfaceHolder.unlockCanvasAndPost(canvas);
 		
-		// Rotate SVG
-		Vector2 v = new Vector2(183f, 185f);//.applyCTM(svg.getCTM());
-		Matrix animation = new SVGTransformRotate(v.getX(),v.getY(),0.01f).getResultingMatrix();
-
-		// Rotate arms und eyes
-		SVGGElement gArmLeft, gArmRight, gEyeLeft, gEyeRight;
-		
-		gArmLeft = (SVGGElement) svg.getElementById("gArmLeft");
-		gArmLeft.animate( new SVGTransformRotate(279f,370-211f,-0.01f) );
-
-		gArmRight = (SVGGElement) svg.getElementById("gArmRight");
-		gArmRight.animate( new SVGTransformRotate(128f,370-205f,0.01f) );
-
-		gEyeLeft = (SVGGElement) svg.getElementById("gEyeLeft");
-		gEyeLeft.animate( new SVGTransformRotate(231f,370-282f,0.05f) );
-
-		gEyeRight = (SVGGElement) svg.getElementById("gEyeRight");
-		gEyeRight.animate( new SVGTransformRotate(179f,370-283f,-0.05f) );
-		
 		while (running)
 		{
-			millisBefore = System.currentTimeMillis();
-
-			if (surfaceHolder.getSurface().isValid())
+			if (svg.needsRedraw() && surfaceHolder.getSurface().isValid())
 			{
-				// Lock canvas
+				millisBefore = System.currentTimeMillis();
+
 				canvas = surfaceHolder.lockCanvas();
 
-				/**
-				 * Clear canvas
-				 */
+				// Clear canvas
 				canvas.drawRGB(255, 255, 255);
 
-				/**
-				 * Actual drawing
-				 */
-
-				//svg.setCTM(svg.getCTM().multiply(animation));
-				
-				gArmLeft.animateAgain();
-				gArmRight.animateAgain();
-				gEyeLeft.animateAgain();
-				gEyeRight.animateAgain();
-				
 				// Render SVG
 				synchronized (svg)
 				{
 					canvas = SvgRenderer.renderToCanvas(canvas, svg);
+					svg.wasRedrawn();
 				}
 
 				surfaceHolder.unlockCanvasAndPost(canvas);
-			}
 
-			millisAfter = System.currentTimeMillis();
+				millisAfter = System.currentTimeMillis();
 
-			if (millisAfter - millisBefore < millisFrame)
-			{
+				if (millisAfter - millisBefore < millisFrame)
+				{
+					try
+					{
+						Thread.sleep(millisFrame - (millisAfter - millisBefore));
+					} catch (InterruptedException e)
+					{
+						e.printStackTrace();
+					}
+				}
+
+				millisAfter = System.currentTimeMillis();
+			} else {
 				try
 				{
-					Thread.sleep(millisFrame - (millisAfter - millisBefore));
+					Thread.sleep(millisFrame);
 				} catch (InterruptedException e)
 				{
 					e.printStackTrace();
 				}
 			}
-
-			millisAfter = System.currentTimeMillis();
 		}
 	}
 }
