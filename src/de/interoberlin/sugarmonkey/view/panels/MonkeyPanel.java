@@ -100,12 +100,10 @@ public class MonkeyPanel extends APanel
 							
 							// Define animations
 							
-							/*
 							gArmLeft.animate( new SVGTransformRotate(279f,370-211f,-0.01f) );
 							gArmRight.animate( new SVGTransformRotate(128f,370-205f,0.01f) );
 							gEyeLeft.animate( new SVGTransformRotate(231f,370-282f,0.05f) );
 							gEyeRight.animate( new SVGTransformRotate(179f,370-283f,-0.05f) );
-							*/
 							
 							// Execute animations
 							
@@ -123,11 +121,10 @@ public class MonkeyPanel extends APanel
 								{
 									synchronized (svg)
 									{
-	/*									gArmLeft.animateAgain();
+										gArmLeft.animateAgain();
 										gArmRight.animateAgain();
 										gEyeLeft.animateAgain();
 										gEyeRight.animateAgain();
-										*/
 									}
 								}
 			
