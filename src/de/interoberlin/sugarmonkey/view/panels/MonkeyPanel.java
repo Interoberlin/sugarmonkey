@@ -7,10 +7,9 @@ import de.interoberlin.sauvignon.controller.loader.SvgLoader;
 import de.interoberlin.sauvignon.controller.renderer.SvgRenderer;
 import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
-import de.interoberlin.sauvignon.model.svg.attributes.SVGTransformRotate;
+import de.interoberlin.sauvignon.model.svg.transform.SVGTransformRotate;
 import de.interoberlin.sauvignon.model.svg.elements.SVGGElement;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
-import de.interoberlin.sugarmonkey.view.activities.DrawingActivity;
 
 public class MonkeyPanel extends APanel
 {
