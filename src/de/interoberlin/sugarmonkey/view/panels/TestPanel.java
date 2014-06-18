@@ -114,17 +114,17 @@ public class TestPanel extends APanel
 				SVGCircle circle = (SVGCircle) svg.getElementById("circle");
 
 				// Manipulate elements
-				rectRed1.setFillR(rectRed1.getFillR() - 1);
-				rectRed2.setFillG(rectRed2.getFillG() + 1);
-				rectRed3.setFillB(rectRed3.getFillB() + 1);
+				rectRed1.getStyle().setFillR(rectRed1.getStyle().getFillR() - 1);
+				rectRed2.getStyle().setFillG(rectRed2.getStyle().getFillG() + 1);
+				rectRed3.getStyle().setFillB(rectRed3.getStyle().getFillB() + 1);
 
-				rectGreen1.setFillR(rectGreen1.getFillR() + 1);
-				rectGreen2.setFillG(rectGreen2.getFillG() - 1);
-				rectGreen3.setFillB(rectGreen3.getFillB() + 1);
+				rectGreen1.getStyle().setFillR(rectGreen1.getStyle().getFillR() + 1);
+				rectGreen2.getStyle().setFillG(rectGreen2.getStyle().getFillG() - 1);
+				rectGreen3.getStyle().setFillB(rectGreen3.getStyle().getFillB() + 1);
 
-				rectBlue1.setFillR(rectBlue1.getFillR() + 1);
-				rectBlue2.setFillG(rectBlue2.getFillG() + 1);
-				rectBlue3.setFillB(rectBlue3.getFillB() - 1);
+				rectBlue1.getStyle().setFillR(rectBlue1.getStyle().getFillR() + 1);
+				rectBlue2.getStyle().setFillG(rectBlue2.getStyle().getFillG() + 1);
+				rectBlue3.getStyle().setFillB(rectBlue3.getStyle().getFillB() - 1);
 
 				if (circle.getR() > 0)
 				{
@@ -134,7 +134,7 @@ public class TestPanel extends APanel
 					circle.setR(360);
 				}
 
-				circle.setFillA(circle.getFillA() - 1);
+				circle.getStyle().setFillA(circle.getStyle().getFillA() - 1);
 
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);

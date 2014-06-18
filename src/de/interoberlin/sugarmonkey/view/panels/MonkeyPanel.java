@@ -39,124 +39,17 @@ public class MonkeyPanel extends APanel
 
 	public void onResume()
 	{
-		SugarMonkeyController.setFps(60);
-
+		SugarMonkeyController.setFps(30);
 		running = true;
 		thread = new Thread(this);
 		thread.start();
-
-		animateThread = new Thread(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				int fps = SugarMonkeyController.getFps();
-				long millisBefore = 0;
-				long millisAfter = 0;
-				long millisFrame = 1000 / fps;
-				
-				// Rotate arms und eyes
-				SVGGElement gArmLeft, gArmRight, gEyeLeft, gEyeRight;
-
-				// wait for svg
-				if (svg == null)
-					while (running)
-					{
-						try
-						{
-							Thread.sleep(millisFrame);
-						}
-						catch (InterruptedException e)
-						{
-							e.printStackTrace();
-						}
-					}
-				
-				if (svg != null)
-				{
-					synchronized (svg)
-					{
-						try
-						{
-							gArmLeft = (SVGGElement) svg.getElementById("gArmLeft");
-							gArmRight = (SVGGElement) svg.getElementById("gArmRight");
-							gEyeLeft = (SVGGElement) svg.getElementById("gEyeLeft");
-							gEyeRight = (SVGGElement) svg.getElementById("gEyeRight");
-						}
-						catch (NullPointerException e)
-						{
-							// Error, unable to animate
-							running = false;
-							return;
-						}
-						finally
-						{
-							// Find elements to animate
-							
-							gArmLeft = (SVGGElement) svg.getElementById("gArmLeft");
-							gArmRight = (SVGGElement) svg.getElementById("gArmRight");
-							gEyeLeft = (SVGGElement) svg.getElementById("gEyeLeft");
-							gEyeRight = (SVGGElement) svg.getElementById("gEyeRight");
-							
-							// Define animations
-							
-							gArmLeft.animate( new SVGTransformRotate(279f,370-211f,-0.01f) );
-							gArmRight.animate( new SVGTransformRotate(128f,370-205f,0.01f) );
-							gEyeLeft.animate( new SVGTransformRotate(231f,370-282f,0.05f) );
-							gEyeRight.animate( new SVGTransformRotate(179f,370-283f,-0.05f) );
-							
-							// Execute animations
-							
-							while (running)
-							{
-								if (millisAfter - millisBefore != 0)
-								{
-									SugarMonkeyController.setCurrentFps((int) (1000 / (millisAfter - millisBefore)));
-									DrawingActivity.uiDraw();
-								}
-			
-								millisBefore = System.currentTimeMillis();
-			
-								if (svg != null)
-								{
-									synchronized (svg)
-									{
-										gArmLeft.animateAgain();
-										gArmRight.animateAgain();
-										gEyeLeft.animateAgain();
-										gEyeRight.animateAgain();
-									}
-								}
-			
-								millisAfter = System.currentTimeMillis();
-			
-								if (millisAfter - millisBefore < millisFrame)
-								{
-									try
-									{
-										Thread.sleep(millisFrame - (millisAfter - millisBefore));
-									} catch (InterruptedException e)
-									{
-										e.printStackTrace();
-									}
-								}
-			
-								millisAfter = System.currentTimeMillis();
-							} // while running
-						} // elements found
-					} // synchronized svg
-				} // svg != null
-			} // run()
-		}); // animateThread
-		
-		animateThread.start();
 	}
 
 	public void onPause()
 	{
+		boolean retry = true;
 		running = false;
 
-		boolean retry = true;
 		while (retry)
 		{
 			try
@@ -183,22 +76,18 @@ public class MonkeyPanel extends APanel
 		long millisAfter = 0;
 		long millisFrame = 1000 / fps;
 		
-		synchronized (svg)
-		{
-			svg = SvgLoader.getSVGFromAsset(c, "yay.svg");
-		}
+		svg = SvgLoader.getSVGFromAsset(c, "yay.svg");
 		
 		while (!surfaceHolder.getSurface().isValid())
-		{
 			try
 			{
 				Thread.sleep(millisFrame);
-			} catch (InterruptedException e)
+			} catch (InterruptedException e1)
 			{
-				e.printStackTrace();
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-		}
-			
+		
 		// Set dimensions to fullscreen
 		Canvas canvas = surfaceHolder.lockCanvas();
 
@@ -208,52 +97,56 @@ public class MonkeyPanel extends APanel
 		SugarMonkeyController.setCanvasHeight(canvasHeight);
 		SugarMonkeyController.setCanvasWidth(canvasWidth);
 
-		synchronized (svg)
-		{
-			// Set scale mode
-			svg.setCanvasScaleMode(EScaleMode.FIT);
-			svg.scaleTo(canvasWidth, canvasHeight);
-		}
-
 		surfaceHolder.unlockCanvasAndPost(canvas);
+
+		// Set scale mode
+		svg.setCanvasScaleMode(EScaleMode.FIT);
+		//	svg.scaleTo(canvasWidth, canvasHeight);
+		
+		// Rotate arms und eyes
+		SVGGElement gArmLeft, gArmRight, gEyeLeft, gEyeRight;
+
+		// Find elements to animate
+		gArmLeft = (SVGGElement) svg.getElementById("gArmLeft");
+		gArmRight = (SVGGElement) svg.getElementById("gArmRight");
+		gEyeLeft = (SVGGElement) svg.getElementById("gEyeLeft");
+		gEyeRight = (SVGGElement) svg.getElementById("gEyeRight");
+		
+		// Define animations
+		gArmLeft.animate( new SVGTransformRotate(279f,370-211f,-0.0001f) );
+		gArmRight.animate( new SVGTransformRotate(128f,370-205f,0.0001f) );
+		gEyeLeft.animate( new SVGTransformRotate(231f,370-282f,0.0005f) );
+		gEyeRight.animate( new SVGTransformRotate(179f,370-283f,-0.0005f) );
 		
 		while (running)
 		{
+			millisBefore = System.currentTimeMillis();
+			
+			gArmLeft.animateAgain();
+			gArmRight.animateAgain();
+			gEyeLeft.animateAgain();
+			gEyeRight.animateAgain();
+			
 			if (surfaceHolder.getSurface().isValid())
 			{
-				millisBefore = System.currentTimeMillis();
-
+				// Render SVG
 				canvas = surfaceHolder.lockCanvas();
 
 				// Clear canvas
 				canvas.drawRGB(255, 255, 255);
-
 				// Render SVG
-				synchronized (svg)
-				{
-					canvas = SvgRenderer.renderToCanvas(canvas, svg);
-				}
+				canvas = SvgRenderer.renderToCanvas(canvas, svg);
 
 				surfaceHolder.unlockCanvasAndPost(canvas);
+			}
 
-				millisAfter = System.currentTimeMillis();
+			millisAfter = System.currentTimeMillis();
 
-				if (millisAfter - millisBefore < millisFrame)
-				{
-					try
-					{
-						Thread.sleep(millisFrame - (millisAfter - millisBefore));
-					} catch (InterruptedException e)
-					{
-						e.printStackTrace();
-					}
-				}
-
-				millisAfter = System.currentTimeMillis();
-			} else {
+			if (millisAfter - millisBefore < millisFrame)
+			{
 				try
 				{
-					Thread.sleep(millisFrame);
+					Thread.sleep(millisFrame - (millisAfter - millisBefore));
 				} catch (InterruptedException e)
 				{
 					e.printStackTrace();

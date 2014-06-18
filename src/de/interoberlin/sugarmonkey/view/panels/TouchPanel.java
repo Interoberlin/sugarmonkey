@@ -84,7 +84,7 @@ public class TouchPanel extends APanel
 
 		Paint blue = new Paint();
 		blue.setARGB(255, 0, 0, 255);
-		cBlue.setFill(blue);
+		cBlue.getStyle().setFill(blue);
 
 		// Add other elements
 //		SVGPath pBlue = new SVGPath();
