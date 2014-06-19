@@ -101,37 +101,61 @@ public class MonkeyPanel extends APanel
 
 		// Set scale mode
 		svg.setCanvasScaleMode(EScaleMode.FIT);
-		svg.scaleTo(canvasWidth, canvasHeight);
+		svg.scaleTo(canvasWidth*0.8f, canvasHeight*0.8f);
 		
 		// Rotate arms und eyes
-		SVGGElement gArmLeft, gArmRight, gEyeLeft, gEyeRight;
+		SVGGElement gMain, gArmLeft, gArmRight, gEyeLeft, gEyeRight, gFootLeft, gFootRight;
 
 		// Find elements to animate
 		gArmLeft = (SVGGElement) svg.getElementById("gArmLeft");
 		gArmRight = (SVGGElement) svg.getElementById("gArmRight");
 		gEyeLeft = (SVGGElement) svg.getElementById("gEyeLeft");
 		gEyeRight = (SVGGElement) svg.getElementById("gEyeRight");
-
-		// Transform rotation centers
+		gFootLeft = (SVGGElement) svg.getElementById("gFootLeft");
+		gFootRight = (SVGGElement) svg.getElementById("gFootRight");
+		gMain = (SVGGElement) svg.getElementById("main");
+		
+		/*
+		 * Define rotation centers
+		 * 
+		 * The coordinates refer to userspace.
+		 * applyCTM transforms them to viewport coordinates. 
+		 */
 		Vector2 c1 = (new Vector2(275f, 177f)).applyCTM(svg.getCTM());
 		Vector2 c2 = (new Vector2(135f, 177f)).applyCTM(svg.getCTM());
-		Vector2 c3 = (new Vector2(230f, 078f)).applyCTM(svg.getCTM());
-		Vector2 c4 = (new Vector2(181f, 078f)).applyCTM(svg.getCTM());
-
-		// Define animations
-		gArmLeft.animate( new SVGTransformRotate(c1, -1f) );
-		gArmRight.animate( new SVGTransformRotate(c2, +1f) );
-		gEyeLeft.animate( new SVGTransformRotate(c3, -1f) );
-		gEyeRight.animate( new SVGTransformRotate(c4, +1f) );
+		Vector2 c3 = (new Vector2(230f, 085f)).applyCTM(svg.getCTM());
+		Vector2 c4 = (new Vector2(181f, 085f)).applyCTM(svg.getCTM());
+		Vector2 c5 = (new Vector2(150f, 260f)).applyCTM(svg.getCTM());
+		Vector2 c6 = (new Vector2(265f, 260f)).applyCTM(svg.getCTM());
+		Vector2 c7 = (new Vector2(150f, 170f)).applyCTM(svg.getCTM());
+		
+		int frame = 0;
 		
 		while (running)
 		{
 			millisBefore = System.currentTimeMillis();
 			
-			gArmLeft.animateAgain();
-			gArmRight.animateAgain();
-			gEyeLeft.animateAgain();
-			gEyeRight.animateAgain();
+			if (Math.round(frame/30) % 2 == 0)
+			{
+				gArmLeft.animate( new SVGTransformRotate(c1, +3f) );
+				gArmRight.animate( new SVGTransformRotate(c2, -3f) );
+			} else {
+				gArmLeft.animate( new SVGTransformRotate(c1, -3f) );
+				gArmRight.animate( new SVGTransformRotate(c2, +3f) );
+			}
+			if (Math.round(frame/10) % 2 == 0)
+			{
+				gFootLeft.animate( new SVGTransformRotate(c5, -2f) );
+				gFootRight.animate( new SVGTransformRotate(c6, +2f) );
+			} else {
+				gFootLeft.animate( new SVGTransformRotate(c5, +2f) );
+				gFootRight.animate( new SVGTransformRotate(c6, -2f) );
+			}
+			frame = (frame+1) % 1000;
+
+			gEyeLeft.animate( new SVGTransformRotate(c3, -20f) );
+			gEyeRight.animate( new SVGTransformRotate(c4, +20f) );
+			//gMain.animate( new SVGTransformRotate(c7, 4f) );
 			
 			if (surfaceHolder.getSurface().isValid() && svg.needsRedraw())
 			{

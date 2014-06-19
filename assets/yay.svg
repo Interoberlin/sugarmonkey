@@ -22,13 +22,13 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1280"
-     inkscape:window-height="973"
+     inkscape:window-width="1024"
+     inkscape:window-height="549"
      id="namedview70"
      showgrid="false"
-     inkscape:zoom="5.4387127"
+     inkscape:zoom="2.5125498"
      inkscape:cx="184.70223"
-     inkscape:cy="258.60497"
+     inkscape:cy="66.25443"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -49,7 +49,7 @@
   </metadata>
   <g
      transform="translate(-10.242959,50.999999)"
-     id="g123">
+     id="main">
     <title
        id="title125">Layer 1</title>
     <g
@@ -70,7 +70,7 @@
       <g
          id="g248">
         <path
-           d="M 86.292374,11.071544 C 73.816727,-1.392665 165.90033,94.311104 131.93187,128.37711 105.42353,154.96275 81.978272,167.62015 72.412697,158.56407 l 6.377052,-25.15581 c 0,0 29.759581,-20.12465 20.194,-29.18074 -9.565582,-9.056094 -20.194,-19.118419 -20.194,-28.17451"
+           d="M 86.292374,11.071544 C 73.816727,-1.392665 165.90033,94.311104 131.93187,128.37711 105.42353,154.96275 81.978272,167.62015 72.412697,158.56407 l 6.377052,-25.15581 c 0,0 29.759581,-20.12465 20.194,-29.18074 -9.565582,-9.056094 -20.194,-19.118419 -20.194,-28.17451 z"
            id="path250"
            style="fill:#794522;stroke:#010101;stroke-width:5;stroke-linecap:round" />
         <path
@@ -112,7 +112,7 @@
       <g
          id="g264">
         <path
-           d="m 347.522,-3.000999 c 11.73801,-12.386 -74.901,82.724998 -42.94101,116.578999 24.94101,26.42099 47,39 56,30 l -6,-25 c 0,0 -28,-19.999997 -19,-28.999997 9,-9 19,-19 19,-28"
+           d="m 347.522,-3.000999 c 11.73801,-12.386 -74.901,82.724998 -42.94101,116.578999 24.94101,26.42099 47,39 56,30 l -6,-25 c 0,0 -28,-19.999997 -19,-28.999997 9,-9 19,-19 19,-28 z"
            id="path266"
            style="fill:#794522;stroke:#010101;stroke-width:5;stroke-linecap:round" />
       </g>
@@ -286,21 +286,23 @@
      cy="78"
      r="2"
      id="rotEyeLeft"
-     sodipodi:cx="279"
-     sodipodi:cy="159"
+     sodipodi:cx="181"
+     sodipodi:cy="78"
      sodipodi:rx="2"
      sodipodi:ry="2"
-     style="fill:#0000ff" />
+     style="fill:#0000ff"
+     transform="translate(-0.38256884,8.7990834)" />
   <circle
      cx="230"
      cy="78"
      r="2"
      id="rotEyeRight"
-     sodipodi:cx="279"
-     sodipodi:cy="159"
+     sodipodi:cx="230"
+     sodipodi:cy="78"
      sodipodi:rx="2"
      sodipodi:ry="2"
-     style="fill:#0000ff" />
+     style="fill:#0000ff"
+     transform="translate(-0.38256884,8.7990834)" />
   <circle
      cx="135"
      cy="177"
@@ -318,6 +320,26 @@
      id="rotArmLeft"
      sodipodi:cx="279"
      sodipodi:cy="159"
+     sodipodi:rx="2"
+     sodipodi:ry="2"
+     style="fill:#0000ff" />
+  <circle
+     cx="265"
+     cy="260"
+     r="2"
+     id="rotFootRight"
+     sodipodi:cx="275"
+     sodipodi:cy="177"
+     sodipodi:rx="2"
+     sodipodi:ry="2"
+     style="fill:#0000ff" />
+  <circle
+     cx="150"
+     cy="260"
+     r="2"
+     id="rotFootLeft"
+     sodipodi:cx="275"
+     sodipodi:cy="177"
      sodipodi:rx="2"
      sodipodi:ry="2"
      style="fill:#0000ff" />
