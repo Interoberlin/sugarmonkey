@@ -7,9 +7,10 @@ import de.interoberlin.sauvignon.controller.loader.SvgLoader;
 import de.interoberlin.sauvignon.controller.renderer.SvgRenderer;
 import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
-import de.interoberlin.sauvignon.model.svg.transform.SVGTransformRotate;
 import de.interoberlin.sauvignon.model.svg.elements.SVGGElement;
-import de.interoberlin.sauvignon.model.svg.elements.rect.SVGRect;
+import de.interoberlin.sauvignon.model.svg.transform.SVGTransformRotate;
+import de.interoberlin.sauvignon.model.svg.transform.SVGTransformTranslate;
+import de.interoberlin.sauvignon.model.util.Vector2;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
 public class MonkeyPanel extends APanel
@@ -111,14 +112,18 @@ public class MonkeyPanel extends APanel
 		gArmRight = (SVGGElement) svg.getElementById("gArmRight");
 		gEyeLeft = (SVGGElement) svg.getElementById("gEyeLeft");
 		gEyeRight = (SVGGElement) svg.getElementById("gEyeRight");
-		SVGRect gTestRect = (SVGRect) svg.getElementById("test");
-		
+
+		// Transform rotation centers
+		Vector2 c1 = (new Vector2(275f, 177f)).applyCTM(svg.getCTM());
+		Vector2 c2 = (new Vector2(135f, 177f)).applyCTM(svg.getCTM());
+		Vector2 c3 = (new Vector2(230f, 078f)).applyCTM(svg.getCTM());
+		Vector2 c4 = (new Vector2(181f, 078f)).applyCTM(svg.getCTM());
+
 		// Define animations
-		gArmLeft.animate( new SVGTransformRotate(279f, 370-211f, -1f) );
-		gArmRight.animate( new SVGTransformRotate(128f, 370-205f, 1f) );
-		gEyeLeft.animate( new SVGTransformRotate(231f, 370-282f, 1f) );
-		gEyeRight.animate( new SVGTransformRotate(179f, 370-283f, -1f) );
-		gTestRect.animate( new SVGTransformRotate(1f) );
+		gArmLeft.animate( new SVGTransformTranslate(1f, 1f) );
+		gArmRight.animate( new SVGTransformTranslate(1f, 1f) );
+		gEyeLeft.animate( new SVGTransformTranslate(1f, 1f) );
+		gEyeRight.animate( new SVGTransformTranslate(1f, 1f) );
 		
 		while (running)
 		{
@@ -128,9 +133,8 @@ public class MonkeyPanel extends APanel
 			gArmRight.animateAgain();
 			gEyeLeft.animateAgain();
 			gEyeRight.animateAgain();
-			gTestRect.animateAgain();
 			
-			if (surfaceHolder.getSurface().isValid())
+			if (surfaceHolder.getSurface().isValid() && svg.needsRedraw())
 			{
 				// Render SVG
 				canvas = surfaceHolder.lockCanvas();
