@@ -8,9 +8,7 @@ import de.interoberlin.sauvignon.controller.renderer.SvgRenderer;
 import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sauvignon.model.svg.elements.SVGGElement;
-import de.interoberlin.sauvignon.model.svg.transform.SVGTransformRotate;
 import de.interoberlin.sauvignon.model.svg.transform.SVGTransformTranslate;
-import de.interoberlin.sauvignon.model.util.Vector2;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
 public class MonkeyPanel extends APanel
@@ -114,10 +112,10 @@ public class MonkeyPanel extends APanel
 		gEyeRight = (SVGGElement) svg.getElementById("gEyeRight");
 
 		// Transform rotation centers
-		Vector2 c1 = (new Vector2(275f, 177f)).applyCTM(svg.getCTM());
-		Vector2 c2 = (new Vector2(135f, 177f)).applyCTM(svg.getCTM());
-		Vector2 c3 = (new Vector2(230f, 078f)).applyCTM(svg.getCTM());
-		Vector2 c4 = (new Vector2(181f, 078f)).applyCTM(svg.getCTM());
+		// Vector2 c1 = (new Vector2(275f, 177f)).applyCTM(svg.getCTM());
+		// Vector2 c2 = (new Vector2(135f, 177f)).applyCTM(svg.getCTM());
+		// Vector2 c3 = (new Vector2(230f, 078f)).applyCTM(svg.getCTM());
+		// Vector2 c4 = (new Vector2(181f, 078f)).applyCTM(svg.getCTM());
 
 		// Define animations
 		gArmLeft.animate( new SVGTransformTranslate(1f, 1f) );
@@ -134,7 +132,7 @@ public class MonkeyPanel extends APanel
 			gEyeLeft.animateAgain();
 			gEyeRight.animateAgain();
 			
-			if (surfaceHolder.getSurface().isValid() && svg.needsRedraw())
+			if (surfaceHolder.getSurface().isValid() && svg.isChanged())
 			{
 				// Render SVG
 				canvas = surfaceHolder.lockCanvas();
