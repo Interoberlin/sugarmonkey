@@ -9,7 +9,6 @@ import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sauvignon.model.svg.elements.SVGGElement;
 import de.interoberlin.sauvignon.model.svg.transform.SVGTransformRotate;
-import de.interoberlin.sauvignon.model.svg.transform.SVGTransformTranslate;
 import de.interoberlin.sauvignon.model.util.Vector2;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
@@ -120,10 +119,10 @@ public class MonkeyPanel extends APanel
 		Vector2 c4 = (new Vector2(181f, 078f)).applyCTM(svg.getCTM());
 
 		// Define animations
-		gArmLeft.animate( new SVGTransformTranslate(1f, 1f) );
-		gArmRight.animate( new SVGTransformTranslate(1f, 1f) );
-		gEyeLeft.animate( new SVGTransformTranslate(1f, 1f) );
-		gEyeRight.animate( new SVGTransformTranslate(1f, 1f) );
+		gArmLeft.animate( new SVGTransformRotate(c1, -1f) );
+		gArmRight.animate( new SVGTransformRotate(c2, +1f) );
+		gEyeLeft.animate( new SVGTransformRotate(c3, -1f) );
+		gEyeRight.animate( new SVGTransformRotate(c4, +1f) );
 		
 		while (running)
 		{
