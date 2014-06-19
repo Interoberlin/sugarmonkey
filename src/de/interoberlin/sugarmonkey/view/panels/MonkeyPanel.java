@@ -9,6 +9,7 @@ import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sauvignon.model.svg.transform.SVGTransformRotate;
 import de.interoberlin.sauvignon.model.svg.elements.SVGGElement;
+import de.interoberlin.sauvignon.model.svg.elements.rect.SVGRect;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
 public class MonkeyPanel extends APanel
@@ -100,7 +101,7 @@ public class MonkeyPanel extends APanel
 
 		// Set scale mode
 		svg.setCanvasScaleMode(EScaleMode.FIT);
-		//	svg.scaleTo(canvasWidth, canvasHeight);
+		svg.scaleTo(canvasWidth, canvasHeight);
 		
 		// Rotate arms und eyes
 		SVGGElement gArmLeft, gArmRight, gEyeLeft, gEyeRight;
@@ -110,12 +111,14 @@ public class MonkeyPanel extends APanel
 		gArmRight = (SVGGElement) svg.getElementById("gArmRight");
 		gEyeLeft = (SVGGElement) svg.getElementById("gEyeLeft");
 		gEyeRight = (SVGGElement) svg.getElementById("gEyeRight");
+		SVGRect gTestRect = (SVGRect) svg.getElementById("test");
 		
 		// Define animations
-		gArmLeft.animate( new SVGTransformRotate(279f,370-211f,-0.0001f) );
-		gArmRight.animate( new SVGTransformRotate(128f,370-205f,0.0001f) );
-		gEyeLeft.animate( new SVGTransformRotate(231f,370-282f,0.0005f) );
-		gEyeRight.animate( new SVGTransformRotate(179f,370-283f,-0.0005f) );
+		gArmLeft.animate( new SVGTransformRotate(279f, 370-211f, -1f) );
+		gArmRight.animate( new SVGTransformRotate(128f, 370-205f, 1f) );
+		gEyeLeft.animate( new SVGTransformRotate(231f, 370-282f, 1f) );
+		gEyeRight.animate( new SVGTransformRotate(179f, 370-283f, -1f) );
+		gTestRect.animate( new SVGTransformRotate(1f) );
 		
 		while (running)
 		{
@@ -125,6 +128,7 @@ public class MonkeyPanel extends APanel
 			gArmRight.animateAgain();
 			gEyeLeft.animateAgain();
 			gEyeRight.animateAgain();
+			gTestRect.animateAgain();
 			
 			if (surfaceHolder.getSurface().isValid())
 			{

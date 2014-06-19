@@ -27,6 +27,7 @@
      id="g123">
     <title
        id="title125">Layer 1</title>
+    <rect id="test" x="10" y="10" width="20" height="20"/>
     <g
        transform="matrix(0.0532928,-0.99857893,0.99857893,0.0532928,-172.68446,300.81186)"
        id="gTail">

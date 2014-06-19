@@ -126,12 +126,12 @@ public class TestPanel extends APanel
 				rectBlue2.getStyle().setFillG(rectBlue2.getStyle().getFillG() + 1);
 				rectBlue3.getStyle().setFillB(rectBlue3.getStyle().getFillB() - 1);
 
-				if (circle.getR() > 0)
+				if (circle.getRadius() > 0)
 				{
-					circle.setR(circle.getR() - 1);
+					circle.setRadius(circle.getRadius() - 1);
 				} else
 				{
-					circle.setR(360);
+					circle.setRadius(360);
 				}
 
 				circle.getStyle().setFillA(circle.getStyle().getFillA() - 1);
