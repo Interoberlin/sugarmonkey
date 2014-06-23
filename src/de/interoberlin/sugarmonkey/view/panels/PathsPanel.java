@@ -34,6 +34,7 @@ public class PathsPanel extends APanel
 
 	public void onResume()
 	{
+		SugarMonkeyController.setFps(30);
 		running = true;
 		thread = new Thread(this);
 		thread.start();
@@ -65,8 +66,40 @@ public class PathsPanel extends APanel
 	@Override
 	public void run()
 	{
+		int fps = SugarMonkeyController.getFps();
+//		long millisBefore = 0;
+//		long millisAfter = 0;
+		long millisFrame = 1000 / fps;
+
 		// Load SVG from file
 		SVG svg = SvgLoader.getSVGFromAsset(c, "paths.svg");
+
+		while (!surfaceHolder.getSurface().isValid())
+		{
+			try
+			{
+				Thread.sleep(millisFrame);
+			} catch (InterruptedException e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+		// Set dimensions to fullscreen
+		Canvas c = surfaceHolder.lockCanvas();
+
+		int canvasWidth = c.getWidth();
+		int canvasHeight = c.getHeight();
+
+		SugarMonkeyController.setCanvasHeight(canvasHeight);
+		SugarMonkeyController.setCanvasWidth(canvasWidth);
+
+		surfaceHolder.unlockCanvasAndPost(c);
+
+		// Set scale mode
+		svg.setCanvasScaleMode(EScaleMode.FIT);
+		svg.scaleTo(canvasWidth, canvasHeight);
 
 		while (running)
 		{
@@ -74,13 +107,6 @@ public class PathsPanel extends APanel
 			{
 				// Lock canvas
 				Canvas canvas = surfaceHolder.lockCanvas();
-
-				// Set dimensions
-				int canvasWidth = canvas.getWidth();
-				int canvasHeight = canvas.getHeight();
-
-				SugarMonkeyController.setCanvasHeight(canvasHeight);
-				SugarMonkeyController.setCanvasWidth(canvasWidth);
 
 				/**
 				 * Clear canvas
@@ -92,16 +118,12 @@ public class PathsPanel extends APanel
 				 * Actual drawing
 				 */
 
-				// Scale
-				svg.setCanvasScaleMode(EScaleMode.FIT);
-				svg.scaleTo(canvasWidth, canvasHeight);
-
 				// Load elements
-
 
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);
-
+				canvas = SvgRenderer.renderBoundingRectsToCanvas(canvas, svg);
+				
 				surfaceHolder.unlockCanvasAndPost(canvas);
 			}
 

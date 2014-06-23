@@ -141,7 +141,8 @@ public class MonkeyPanel extends APanel
 				canvas.drawRGB(255, 255, 255);
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);
-
+				canvas = SvgRenderer.renderBoundingRectsToCanvas(canvas, svg);
+				
 				surfaceHolder.unlockCanvasAndPost(canvas);
 			}
 

@@ -36,6 +36,7 @@ public class TestPanel extends APanel
 
 	public void onResume()
 	{
+		SugarMonkeyController.setFps(30);
 		running = true;
 		thread = new Thread(this);
 		thread.start();
@@ -67,22 +68,47 @@ public class TestPanel extends APanel
 	@Override
 	public void run()
 	{
+		int fps = SugarMonkeyController.getFps();
+//		long millisBefore = 0;
+//		long millisAfter = 0;
+		long millisFrame = 1000 / fps;
+		
 		// Load SVG from file
 		SVG svg = SvgLoader.getSVGFromAsset(c, "rectangle.svg");
 
+		while (!surfaceHolder.getSurface().isValid())
+		{
+			try
+			{
+				Thread.sleep(millisFrame);
+			} catch (InterruptedException e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+		// Set dimensions to fullscreen
+		Canvas c = surfaceHolder.lockCanvas();
+
+		int canvasWidth = c.getWidth();
+		int canvasHeight = c.getHeight();
+
+		SugarMonkeyController.setCanvasHeight(canvasHeight);
+		SugarMonkeyController.setCanvasWidth(canvasWidth);
+
+		surfaceHolder.unlockCanvasAndPost(c);
+
+		// Set scale mode
+		svg.setCanvasScaleMode(EScaleMode.FIT);
+		svg.scaleTo(canvasWidth, canvasHeight);
+		
 		while (running)
 		{
 			if (surfaceHolder.getSurface().isValid())
 			{
 				// Lock canvas
 				Canvas canvas = surfaceHolder.lockCanvas();
-
-				// Set dimensions
-				int canvasWidth = canvas.getWidth();
-				int canvasHeight = canvas.getHeight();
-
-				SugarMonkeyController.setCanvasHeight(canvasHeight);
-				SugarMonkeyController.setCanvasWidth(canvasWidth);
 
 				/**
 				 * Clear canvas
@@ -94,9 +120,6 @@ public class TestPanel extends APanel
 				 * Actual drawing
 				 */
 
-				// Scale
-				svg.setCanvasScaleMode(EScaleMode.FIT);
-				svg.scaleTo(canvasWidth, canvasHeight);
 
 				// Load elements
 				SVGRect rectRed1 = (SVGRect) svg.getElementById("rectRed1");
