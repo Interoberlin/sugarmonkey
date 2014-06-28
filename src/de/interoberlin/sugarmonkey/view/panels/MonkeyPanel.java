@@ -7,6 +7,7 @@ import de.interoberlin.sauvignon.controller.loader.SvgLoader;
 import de.interoberlin.sauvignon.controller.renderer.SvgRenderer;
 import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
+import de.interoberlin.sauvignon.model.svg.elements.AGeometric;
 import de.interoberlin.sauvignon.model.svg.elements.SVGGElement;
 import de.interoberlin.sauvignon.model.svg.transform.SVGTransformRotate;
 import de.interoberlin.sauvignon.model.util.Vector2;
@@ -100,8 +101,8 @@ public class MonkeyPanel extends APanel
 		surfaceHolder.unlockCanvasAndPost(canvas);
 
 		// Set scale mode
-		svg.setCanvasScaleMode(EScaleMode.FIT);
-		svg.scaleTo(canvasWidth*0.8f, canvasHeight*0.8f);
+		//svg.setCanvasScaleMode(EScaleMode.FIT);
+		//svg.scaleTo(canvasWidth*0.8f, canvasHeight*0.8f);
 		
 		// Rotate arms und eyes
 		SVGGElement gMain, gArmLeft, gArmRight, gEyeLeft, gEyeRight, gFootLeft, gFootRight;
@@ -121,41 +122,41 @@ public class MonkeyPanel extends APanel
 		 * The coordinates refer to userspace.
 		 * applyCTM transforms them to viewport coordinates. 
 		 */
-		Vector2 c1 = (new Vector2(275f, 177f)).applyCTM(svg.getCTM());
-		Vector2 c2 = (new Vector2(135f, 177f)).applyCTM(svg.getCTM());
-		Vector2 c3 = (new Vector2(230f, 085f)).applyCTM(svg.getCTM());
-		Vector2 c4 = (new Vector2(181f, 085f)).applyCTM(svg.getCTM());
-		Vector2 c5 = (new Vector2(150f, 260f)).applyCTM(svg.getCTM());
-		Vector2 c6 = (new Vector2(265f, 260f)).applyCTM(svg.getCTM());
-		Vector2 c7 = (new Vector2(150f, 170f)).applyCTM(svg.getCTM());
+		Vector2 c1 = (new Vector2(275f, 177f));
+		Vector2 c2 = (new Vector2(135f, 177f));
+		Vector2 c3 = (new Vector2(230f, 085f));
+		Vector2 c4 = (new Vector2(181f, 085f));
+		Vector2 c5 = (new Vector2(150f, 260f));
+		Vector2 c6 = (new Vector2(265f, 260f));
+		Vector2 c7 = (new Vector2(150f, 170f));
 		
 		int frame = 0;
+		int angle = 0;
 		
 		while (running)
 		{
 			millisBefore = System.currentTimeMillis();
 			
-			if (Math.round(frame/30) % 2 == 0)
+/*			if (Math.round(frame/30) % 2 == 0)
 			{
-				gArmLeft.animate( new SVGTransformRotate(c1, +3f) );
-				gArmRight.animate( new SVGTransformRotate(c2, -3f) );
+				angle += 1;
 			} else {
-				gArmLeft.animate( new SVGTransformRotate(c1, -3f) );
-				gArmRight.animate( new SVGTransformRotate(c2, +3f) );
-			}
-			if (Math.round(frame/10) % 2 == 0)
-			{
-				gFootLeft.animate( new SVGTransformRotate(c5, -2f) );
-				gFootRight.animate( new SVGTransformRotate(c6, +2f) );
-			} else {
-				gFootLeft.animate( new SVGTransformRotate(c5, +2f) );
-				gFootRight.animate( new SVGTransformRotate(c6, -2f) );
-			}
-			frame = (frame+1) % 1000;
+				angle -= 1;
+			}*/
+			angle += 1;
+			angle %= 360;
+			
+			frame += 1;
+			frame %= 1000;
 
-			gEyeLeft.animate( new SVGTransformRotate(c3, -20f) );
-			gEyeRight.animate( new SVGTransformRotate(c4, +20f) );
-			//gMain.animate( new SVGTransformRotate(c7, 4f) );
+			gArmLeft.setAnimation(  new SVGTransformRotate(c1, (float) -angle) );
+			gArmRight.setAnimation( new SVGTransformRotate(c2, (float) angle) );
+			gFootLeft.setAnimation( new SVGTransformRotate(c5, (float) angle) );
+			gFootRight.setAnimation(new SVGTransformRotate(c6, (float) -angle) );
+			gEyeLeft.setAnimation(  new SVGTransformRotate(c3, (float) angle) );
+			gEyeRight.setAnimation( new SVGTransformRotate(c4, (float) angle) );
+			
+//			gMain.setAnimation( new SVGTransformRotate(c7, angle) );
 			
 			if (surfaceHolder.getSurface().isValid() && svg.needsRedraw())
 			{
