@@ -101,8 +101,8 @@ public class MonkeyPanel extends APanel
 		surfaceHolder.unlockCanvasAndPost(canvas);
 
 		// Set scale mode
-		//svg.setCanvasScaleMode(EScaleMode.FIT);
-		//svg.scaleTo(canvasWidth*0.8f, canvasHeight*0.8f);
+		svg.setCanvasScaleMode(EScaleMode.FIT);
+		svg.scaleTo(canvasWidth*0.8f, canvasHeight*0.8f);
 		
 		// Rotate arms und eyes
 		SVGGElement gMain, gArmLeft, gArmRight, gEyeLeft, gEyeRight, gFootLeft, gFootRight;
