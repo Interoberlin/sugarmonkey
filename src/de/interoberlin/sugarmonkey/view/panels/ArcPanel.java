@@ -100,6 +100,7 @@ public class ArcPanel extends APanel
 
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);
+				canvas = SvgRenderer.renderBoundingRectsToCanvas(canvas, svg);
 
 				surfaceHolder.unlockCanvasAndPost(canvas);
 			}

@@ -10,6 +10,7 @@ import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sauvignon.model.svg.elements.AGeometric;
 import de.interoberlin.sauvignon.model.svg.elements.SVGGElement;
 import de.interoberlin.sauvignon.model.svg.transform.SVGTransformRotate;
+import de.interoberlin.sauvignon.model.svg.transform.SVGTransformTranslate;
 import de.interoberlin.sauvignon.model.util.Vector2;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 

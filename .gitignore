@@ -6,3 +6,7 @@ bin/*
 gen/*
 /bin
 /gen
+*.BACKUP.*
+*.orig
+*.LOCAL.*
+*.REMOTE.*
