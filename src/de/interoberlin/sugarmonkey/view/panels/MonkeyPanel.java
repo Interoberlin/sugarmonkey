@@ -102,7 +102,7 @@ public class MonkeyPanel extends APanel
 
 		// Set scale mode
 		svg.setCanvasScaleMode(EScaleMode.FIT);
-		svg.scaleTo(canvasWidth*0.8f, canvasHeight*0.8f);
+		svg.scaleTo(canvasWidth, canvasHeight);
 		
 		// Rotate arms und eyes
 		SVGGElement gMain, gArmLeft, gArmRight, gEyeLeft, gEyeRight, gFootLeft, gFootRight;
@@ -158,7 +158,7 @@ public class MonkeyPanel extends APanel
 			
 //			gMain.setAnimation( new SVGTransformRotate(c7, angle) );
 			
-			if (surfaceHolder.getSurface().isValid() && svg.needsRedraw())
+			if (surfaceHolder.getSurface().isValid() && svg.isChanged())
 			{
 				// Render SVG
 				canvas = surfaceHolder.lockCanvas();
@@ -167,6 +167,7 @@ public class MonkeyPanel extends APanel
 				canvas.drawRGB(255, 255, 255);
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);
+				//svg.setChanged(false);
 
 				surfaceHolder.unlockCanvasAndPost(canvas);
 			}

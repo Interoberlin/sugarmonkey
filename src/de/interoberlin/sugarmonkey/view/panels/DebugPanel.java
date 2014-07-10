@@ -104,7 +104,8 @@ public class DebugPanel extends APanel
 
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);
-				canvas = SvgRenderer.renderDebugToCanvas(canvas, svg);
+				
+				canvas = SvgRenderer.renderBoundingRectsToCanvas(canvas, svg);
 
 				surfaceHolder.unlockCanvasAndPost(canvas);
 			}
