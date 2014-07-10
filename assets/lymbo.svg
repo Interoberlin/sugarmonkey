@@ -186,13 +186,6 @@
          y="419.71857"
          id="tspan4276"
          style="font-size:100px;stroke:#a5ca39;stroke-width:5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none">LYMBO</tspan></text>
-    <circle
-       cx="249"
-       cy="348"
-       r="151.98718"
-       transform="matrix(1.5160849,0,0,1.5160849,-127.59895,261.96412)"
-       id="head"
-       style="fill:#a5ca39;fill-opacity:1;stroke:#9cbb35;stroke-width:20.58459854;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     <path
        d="m 118.42202,536.62247 c 39.15596,73.15595 39.15596,73.15595 39.15596,73.15595"
        id="path4018"
@@ -201,6 +194,13 @@
        d="M 328.18055,602.01992 C 367.81945,534.381 367.81945,534.381 367.81945,534.381"
        id="path4020"
        style="fill:#a5ca39;fill-opacity:1;stroke:#a5ca39;stroke-width:14.36100006;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <circle
+       cx="249"
+       cy="348"
+       r="151.98718"
+       transform="matrix(1.5160849,0,0,1.5160849,-127.59895,261.96412)"
+       id="head"
+       style="fill:#a5ca39;fill-opacity:1;stroke:#9cbb35;stroke-width:20.58459854;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     <circle
        cx="249"
        cy="348"
