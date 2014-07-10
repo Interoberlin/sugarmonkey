@@ -7,10 +7,8 @@ import de.interoberlin.sauvignon.controller.loader.SvgLoader;
 import de.interoberlin.sauvignon.controller.renderer.SvgRenderer;
 import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
-import de.interoberlin.sauvignon.model.svg.elements.AGeometric;
 import de.interoberlin.sauvignon.model.svg.elements.SVGGElement;
 import de.interoberlin.sauvignon.model.svg.transform.SVGTransformRotate;
-import de.interoberlin.sauvignon.model.svg.transform.SVGTransformTranslate;
 import de.interoberlin.sauvignon.model.util.Vector2;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
@@ -168,6 +166,7 @@ public class MonkeyPanel extends APanel
 				canvas.drawRGB(255, 255, 255);
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);
+				canvas = SvgRenderer.renderBoundingRectsToCanvas2(canvas, svg);
 				//svg.setChanged(false);
 
 				surfaceHolder.unlockCanvasAndPost(canvas);
