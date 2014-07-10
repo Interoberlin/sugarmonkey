@@ -67,8 +67,8 @@ public class PathsPanel extends APanel
 	public void run()
 	{
 		int fps = SugarMonkeyController.getFps();
-//		long millisBefore = 0;
-//		long millisAfter = 0;
+		// long millisBefore = 0;
+		// long millisAfter = 0;
 		long millisFrame = 1000 / fps;
 
 		// Load SVG from file
@@ -123,11 +123,9 @@ public class PathsPanel extends APanel
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);
 				canvas = SvgRenderer.renderBoundingRectsToCanvas(canvas, svg);
-				
+
 				surfaceHolder.unlockCanvasAndPost(canvas);
 			}
-
 		}
-
 	}
 }
