@@ -20,10 +20,11 @@ import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 import de.interoberlin.sugarmonkey.controller.accelerometer.AcceleratorListener;
 import de.interoberlin.sugarmonkey.view.panels.APanel;
 import de.interoberlin.sugarmonkey.view.panels.ArcPanel;
+import de.interoberlin.sugarmonkey.view.panels.DebugPanel;
 import de.interoberlin.sugarmonkey.view.panels.LymboPanel;
 import de.interoberlin.sugarmonkey.view.panels.MonkeyPanel;
-import de.interoberlin.sugarmonkey.view.panels.DebugPanel;
 import de.interoberlin.sugarmonkey.view.panels.PathsPanel;
+import de.interoberlin.sugarmonkey.view.panels.PolylinePanel;
 import de.interoberlin.sugarmonkey.view.panels.TestPanel;
 import de.interoberlin.sugarmonkey.view.panels.TouchPanel;
 
@@ -92,6 +93,11 @@ public class DrawingActivity extends Activity
 			case ARC:
 			{
 				panel = new ArcPanel(activity);
+				break;
+			}
+			case POLYLINE:
+			{
+				panel = new PolylinePanel(activity);
 				break;
 			}
 

@@ -9,4 +9,5 @@ public enum EPanel
 	LYMBO,
 	TOUCH,
 	ARC,
+	POLYLINE,
 }
