@@ -10,4 +10,5 @@ public enum EPanel
 	TOUCH,
 	ARC,
 	POLYLINE,
+	POLYGON;
 }

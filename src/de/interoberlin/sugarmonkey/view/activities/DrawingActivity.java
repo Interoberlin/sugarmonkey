@@ -24,6 +24,7 @@ import de.interoberlin.sugarmonkey.view.panels.DebugPanel;
 import de.interoberlin.sugarmonkey.view.panels.LymboPanel;
 import de.interoberlin.sugarmonkey.view.panels.MonkeyPanel;
 import de.interoberlin.sugarmonkey.view.panels.PathsPanel;
+import de.interoberlin.sugarmonkey.view.panels.PolygonPanel;
 import de.interoberlin.sugarmonkey.view.panels.PolylinePanel;
 import de.interoberlin.sugarmonkey.view.panels.TestPanel;
 import de.interoberlin.sugarmonkey.view.panels.TouchPanel;
@@ -100,7 +101,11 @@ public class DrawingActivity extends Activity
 				panel = new PolylinePanel(activity);
 				break;
 			}
-
+			case POLYGON:
+			{
+				panel = new PolygonPanel(activity);
+				break;
+			}
 		}
 
 		// Add surface view
