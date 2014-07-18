@@ -8,7 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.view.Surface;
-import de.interoberlin.sugarmonkey.view.activities.DrawingActivity;
+import de.interoberlin.sugarmonkey.view.activities.NewActivity;
 
 public class Accelerometer extends Observable implements SensorEventListener
 {
@@ -22,7 +22,7 @@ public class Accelerometer extends Observable implements SensorEventListener
 
 	private Accelerometer(Activity activity)
 	{
-		accelerometer = ((DrawingActivity) activity).getSensorManager().getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		accelerometer = ((NewActivity) activity).getSensorManager().getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		this.activity = activity;
 
 		addObserver(AcceleratorListener.getInstance(activity));
@@ -40,14 +40,14 @@ public class Accelerometer extends Observable implements SensorEventListener
 
 	public void start()
 	{
-		DrawingActivity.uiToast("Accelerometer started");
-		((DrawingActivity) activity).getSensorManager().registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+		NewActivity.uiToast("Accelerometer started");
+		((NewActivity) activity).getSensorManager().registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
 	}
 
 	public void stop()
 	{
-		DrawingActivity.uiToast("Accelerometer stopped");
-		((DrawingActivity) activity).getSensorManager().unregisterListener(this);
+		NewActivity.uiToast("Accelerometer stopped");
+		((NewActivity) activity).getSensorManager().unregisterListener(this);
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class Accelerometer extends Observable implements SensorEventListener
 			return;
 		}
 
-		switch (((DrawingActivity) activity).getDisplay().getRotation())
+		switch (((NewActivity) activity).getDisplay().getRotation())
 		{
 			case Surface.ROTATION_0:
 			{

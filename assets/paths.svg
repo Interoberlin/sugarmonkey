@@ -16,62 +16,6 @@
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="paths.svg"
    onload="load();">
-  <script
-     type="text/javascript"
-     id="script3">
-
-    parsePathData = function(path) {
-        if (typeof(path)!='object' || !path.hasAttribute('d'))
-            return;
-        var data = path.getAttribute('d');
-        console.log(data);
-
-        /**
-         * Insert spaces between things
-         * that don't belong together
-         */
-         
-        // turn commas into spaces
-        data = data.replace(/,/g, ' ');
-
-        // introduce a space before and after command chars 
-        data = data.replace(/([A-Z])/ig, ' $1 ');
-        
-        // remove superfluous whitespace
-        data = data.replace(/  /g, ' ').trim();
-        
-        /**
-         * Split
-         */
-        
-        var sequence = data.split(' ');
-        console.log(sequence);
-        
-        /**
-         * Sort, what belongs together
-         */
-
-        var commands = [];
-        for (i in sequence) {
-            var firstLetter = sequence[i].substr(0,1);
-            if (isNaN(firstLetter) &amp;&amp; firstLetter!='-') {
-                // it's a character, so append a new command array to the list of commands
-                commands.push( [sequence[i]] );
-            } else {
-                // it's a number, so append to current command
-                commands[commands.length-1].push(sequence[i]);
-            }
-        }
-        console.log(commands);
-    };
-
-    load = function() {
-        var paths = document.getElementsByTagName('path');
-        for (i in paths)
-            parsePathData(paths[i]);
-    };
-
-  </script>
   <defs
      id="defs4">
     <inkscape:path-effect
@@ -119,7 +63,7 @@
      id="layer1"
      transform="translate(0,0)">
     <rect
-       style="fill:#ff1b1b;fill-opacity:1;stroke:none"
+       style="fill:rgb(255,0,0);fill-opacity:1;stroke:none"
        id="rect2989"
        width="250"
        height="200"
@@ -127,8 +71,9 @@
        x="0"
        y="0" />
     <rect
-       style="fill:#ff1b1b;fill-opacity:1;stroke:none"
-       id="rect2989-1"
+	   style="fill:rgb(0,255,0);fill-opacity:1;stroke:none"
+       fill="rgb(0,0,255)"
+	   id="rect2989-1"
        width="250"
        height="200"
        x="250"
