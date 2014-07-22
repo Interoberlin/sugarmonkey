@@ -12,6 +12,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
+import de.interoberlin.sugarmonkey.view.activities.AnimateTransformActivity;
 import de.interoberlin.sugarmonkey.view.activities.DrawingActivity;
 import de.interoberlin.sugarmonkey.view.activities.NewActivity;
 import de.interoberlin.sugarmonkey.view.panels.EPanel;
@@ -73,6 +74,10 @@ public class SplashActivity extends Activity
 			tbl.addView(tr);
 		}
 		
+//		View v = new View(this);
+//		v.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 1));
+//		v.setBackgroundColor(Color.rgb(51, 51, 51));
+		
 		TableRow tr = new TableRow(context);
 		TextView tv = new TextView(context);
 		tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
@@ -89,6 +94,23 @@ public class SplashActivity extends Activity
 		});
 
 		tbl.addView(tr);
+		
+		TableRow trAT = new TableRow(context);
+		TextView tvAT = new TextView(context);
+		tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+		tv.setText("ANIMATE TRANSFORM");
+		tr.addView(tvAT);
+		tr.setOnClickListener(new OnClickListener()
+		{ 
+			@Override
+			public void onClick(View v)
+			{
+				Intent openStartingPoint = new Intent(SplashActivity.this, AnimateTransformActivity.class);
+				startActivity(openStartingPoint);
+			}
+		});
+
+		tbl.addView(trAT);
 	}
 
 	@Override
