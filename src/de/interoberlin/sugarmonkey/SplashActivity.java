@@ -12,6 +12,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
+import de.interoberlin.sugarmonkey.view.activities.AnimateColorActivity;
 import de.interoberlin.sugarmonkey.view.activities.AnimateTransformActivity;
 import de.interoberlin.sugarmonkey.view.activities.DrawingActivity;
 import de.interoberlin.sugarmonkey.view.activities.NewActivity;
@@ -60,7 +61,7 @@ public class SplashActivity extends Activity
 			tv.setText(p.toString());
 			tr.addView(tv);
 			tr.setOnClickListener(new OnClickListener()
-			{ 
+			{
 				@Override
 				public void onClick(View v)
 				{
@@ -73,18 +74,19 @@ public class SplashActivity extends Activity
 
 			tbl.addView(tr);
 		}
-		
-//		View v = new View(this);
-//		v.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 1));
-//		v.setBackgroundColor(Color.rgb(51, 51, 51));
-		
+
+		// View v = new View(this);
+		// v.setLayoutParams(new
+		// TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 1));
+		// v.setBackgroundColor(Color.rgb(51, 51, 51));
+
 		TableRow tr = new TableRow(context);
 		TextView tv = new TextView(context);
 		tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
 		tv.setText("NEW");
 		tr.addView(tv);
 		tr.setOnClickListener(new OnClickListener()
-		{ 
+		{
 			@Override
 			public void onClick(View v)
 			{
@@ -94,14 +96,16 @@ public class SplashActivity extends Activity
 		});
 
 		tbl.addView(tr);
-		
+
+		/* -------------------------------------------------- */
+
 		TableRow trAT = new TableRow(context);
 		TextView tvAT = new TextView(context);
-		tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
-		tv.setText("ANIMATE TRANSFORM");
-		tr.addView(tvAT);
-		tr.setOnClickListener(new OnClickListener()
-		{ 
+		tvAT.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+		tvAT.setText("ANIMATE TRANSFORM");
+		trAT.addView(tvAT);
+		trAT.setOnClickListener(new OnClickListener()
+		{
 			@Override
 			public void onClick(View v)
 			{
@@ -111,6 +115,25 @@ public class SplashActivity extends Activity
 		});
 
 		tbl.addView(trAT);
+
+		/* -------------------------------------------------- */
+
+		TableRow trAC = new TableRow(context);
+		TextView tvAC = new TextView(context);
+		tvAC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+		tvAC.setText("ANIMATE COLOR");
+		trAC.addView(tvAC);
+		trAC.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent openStartingPoint = new Intent(SplashActivity.this, AnimateColorActivity.class);
+				startActivity(openStartingPoint);
+			}
+		});
+
+		tbl.addView(trAC);
 	}
 
 	@Override

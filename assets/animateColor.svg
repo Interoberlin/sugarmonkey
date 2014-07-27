@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="720"
+   height="720"
+   id="svg2"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="rectangle.svg">
+  <rect
+     style="opacity:0.7;fill:#00ff00;fill-opacity:1;stroke:none"
+     id="rectGreen1"
+     y="1.63782"
+     x="240"
+     height="240"
+     width="240">
+     <animateColor attributeName="fill" 
+                      from="black"
+                      to="red"
+                      dur="10s"
+                      begin="0"
+                      repeatCount="indefinite"/>
+                      </rect>
+     
+  
+</svg>

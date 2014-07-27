@@ -8,7 +8,7 @@ import de.interoberlin.sauvignon.controller.renderer.SvgRenderer;
 import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sauvignon.model.svg.elements.SVGGElement;
-import de.interoberlin.sauvignon.model.svg.transform.SVGTransformRotate;
+import de.interoberlin.sauvignon.model.svg.transform.geometric.SVGTransformRotate;
 import de.interoberlin.sauvignon.model.util.Vector2;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
@@ -151,12 +151,12 @@ public class MonkeyPanel extends APanel
 			// frame += 1;
 			// frame %= 1000;
 
-			gArmLeft.setAnimation(new SVGTransformRotate(c1, (float) -angle));
-			gArmRight.setAnimation(new SVGTransformRotate(c2, (float) angle));
-			gFootLeft.setAnimation(new SVGTransformRotate(c5, (float) angle));
-			gFootRight.setAnimation(new SVGTransformRotate(c6, (float) -angle));
-			gEyeLeft.setAnimation(new SVGTransformRotate(c3, (float) angle));
-			gEyeRight.setAnimation(new SVGTransformRotate(c4, (float) angle));
+			gArmLeft.setAnimationTransform(new SVGTransformRotate(c1, (float) -angle));
+			gArmRight.setAnimationTransform(new SVGTransformRotate(c2, (float) angle));
+			gFootLeft.setAnimationTransform(new SVGTransformRotate(c5, (float) angle));
+			gFootRight.setAnimationTransform(new SVGTransformRotate(c6, (float) -angle));
+			gEyeLeft.setAnimationTransform(new SVGTransformRotate(c3, (float) angle));
+			gEyeRight.setAnimationTransform(new SVGTransformRotate(c4, (float) angle));
 
 			// gMain.setAnimation( new SVGTransformRotate(c7, angle) );
 

@@ -38,6 +38,10 @@
             android:name="de.interoberlin.sugarmonkey.view.activities.AnimateTransformActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="de.interoberlin.sugarmonkey.view.activities.AnimateColorActivity"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

@@ -20,7 +20,7 @@ import de.interoberlin.sauvignon.view.SVGPanel;
 import de.interoberlin.sugarmonkey.R;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
-public class AnimateTransformActivity extends Activity
+public class AnimateColorActivity extends Activity
 {
 	private static Context			context;
 	private static Activity			activity;
@@ -50,7 +50,7 @@ public class AnimateTransformActivity extends Activity
 		windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 		display = windowManager.getDefaultDisplay();
 
-		SVG svg = SvgLoader.getSVGFromAsset(context, "animateTransform.svg");
+		SVG svg = SvgLoader.getSVGFromAsset(context, "animateColor.svg");
 		
 		panel = new SVGPanel(activity);
 		panel.setSVG(svg);
