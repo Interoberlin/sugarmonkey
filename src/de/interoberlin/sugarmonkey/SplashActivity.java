@@ -16,6 +16,7 @@ import de.interoberlin.sugarmonkey.view.activities.AnimateColorActivity;
 import de.interoberlin.sugarmonkey.view.activities.AnimateTransformActivity;
 import de.interoberlin.sugarmonkey.view.activities.DrawingActivity;
 import de.interoberlin.sugarmonkey.view.activities.NewActivity;
+import de.interoberlin.sugarmonkey.view.activities.SugarMonkeyActivity;
 import de.interoberlin.sugarmonkey.view.panels.EPanel;
 
 public class SplashActivity extends Activity
@@ -134,6 +135,25 @@ public class SplashActivity extends Activity
 		});
 
 		tbl.addView(trAC);
+
+		/* -------------------------------------------------- */
+
+		TableRow trSM = new TableRow(context);
+		TextView tvSM = new TextView(context);
+		tvSM.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+		tvSM.setText("SUGAR MONKEY");
+		trSM.addView(tvSM);
+		trSM.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent openStartingPoint = new Intent(SplashActivity.this, SugarMonkeyActivity.class);
+				startActivity(openStartingPoint);
+			}
+		});
+
+		tbl.addView(trSM);
 	}
 
 	@Override
