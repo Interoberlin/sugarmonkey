@@ -15,6 +15,7 @@ import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 import de.interoberlin.sugarmonkey.view.activities.AnimateColorActivity;
 import de.interoberlin.sugarmonkey.view.activities.AnimateTransformActivity;
 import de.interoberlin.sugarmonkey.view.activities.DrawingActivity;
+import de.interoberlin.sugarmonkey.view.activities.LymboActivity;
 import de.interoberlin.sugarmonkey.view.activities.NewActivity;
 import de.interoberlin.sugarmonkey.view.activities.SugarMonkeyActivity;
 import de.interoberlin.sugarmonkey.view.panels.EPanel;
@@ -51,6 +52,25 @@ public class SplashActivity extends Activity
 
 		tbl.removeAllViews();
 
+		TableRow trLymbo = new TableRow(context);
+		TextView tvLymbo = new TextView(context);
+		tvLymbo.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+		tvLymbo.setText("* LYMBO");
+		trLymbo.addView(tvLymbo);
+		trLymbo.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent openStartingPoint = new Intent(SplashActivity.this, LymboActivity.class);
+				startActivity(openStartingPoint);
+			}
+		});
+
+		tbl.addView(trLymbo);
+
+		/* -------------------------------------------------- */
+
 		// Iterate over all enum values
 		for (EPanel p : EPanel.values())
 		{
@@ -84,7 +104,7 @@ public class SplashActivity extends Activity
 		TableRow tr = new TableRow(context);
 		TextView tv = new TextView(context);
 		tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
-		tv.setText("NEW");
+		tv.setText("* NEW");
 		tr.addView(tv);
 		tr.setOnClickListener(new OnClickListener()
 		{
@@ -103,7 +123,7 @@ public class SplashActivity extends Activity
 		TableRow trAT = new TableRow(context);
 		TextView tvAT = new TextView(context);
 		tvAT.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
-		tvAT.setText("ANIMATE TRANSFORM");
+		tvAT.setText("* ANIMATE TRANSFORM");
 		trAT.addView(tvAT);
 		trAT.setOnClickListener(new OnClickListener()
 		{
@@ -122,7 +142,7 @@ public class SplashActivity extends Activity
 		TableRow trAC = new TableRow(context);
 		TextView tvAC = new TextView(context);
 		tvAC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
-		tvAC.setText("ANIMATE COLOR");
+		tvAC.setText("* ANIMATE COLOR");
 		trAC.addView(tvAC);
 		trAC.setOnClickListener(new OnClickListener()
 		{
@@ -141,7 +161,7 @@ public class SplashActivity extends Activity
 		TableRow trSM = new TableRow(context);
 		TextView tvSM = new TextView(context);
 		tvSM.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
-		tvSM.setText("SUGAR MONKEY");
+		tvSM.setText("* SUGAR MONKEY");
 		trSM.addView(tvSM);
 		trSM.setOnClickListener(new OnClickListener()
 		{
@@ -154,6 +174,7 @@ public class SplashActivity extends Activity
 		});
 
 		tbl.addView(trSM);
+
 	}
 
 	@Override

@@ -6,7 +6,6 @@ public enum EPanel
 	MONKEY,
 	DEBUG,
 	PATHS,
-	LYMBO,
 	TOUCH,
 	ARC,
 	POLYLINE,

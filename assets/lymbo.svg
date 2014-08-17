@@ -40,7 +40,7 @@
        height="296.72659"
        x="-5.1279907"
        y="0.53100842"
-       id="rect3784-1-9-8-1-2-1"
+       id="background"
        style="fill:#c9df89;fill-opacity:1;stroke:none" />
     <rect
        width="493.88348"
@@ -89,28 +89,28 @@
        height="85.362114"
        x="24.532784"
        y="231.14764"
-       id="rect3784-1-9-8-4"
+       id="rect-parallax-1"
        style="fill:#b1d151;fill-opacity:1;stroke:none" />
     <rect
        width="143.83189"
        height="113.27341"
        x="295.99359"
        y="339.27744"
-       id="rect3784-2"
+       id="rect-parallax-9"
        style="fill:#809e2a;fill-opacity:1;stroke:none" />
     <rect
        width="126.19486"
        height="99.427544"
        x="5.1708984"
        y="384.81277"
-       id="rect3784-4"
+       id="rect-parallax-10"
        style="fill:#809e2a;fill-opacity:1;stroke:none" />
     <rect
        width="132.15192"
        height="166.27617"
        x="-38.440399"
        y="278.08279"
-       id="rect3784-7-0"
+       id="rect-parallax-7"
        style="fill:#9abd33;fill-opacity:1;stroke:none" />
     <path
        d="M 329.18055,600.01992 C 368.81945,532.381 368.81945,532.381 368.81945,532.381"
@@ -125,42 +125,42 @@
        height="107.47038"
        x="208.22565"
        y="254.90495"
-       id="rect3784"
+       id="rect-parallax-8"
        style="fill:#809e2a;fill-opacity:1;stroke:none" />
     <rect
        width="206.66046"
        height="149.96246"
        x="31.538269"
        y="307.056"
-       id="rect3784-1"
+       id="rect-parallax-3"
        style="fill:#a5ca39;fill-opacity:1;stroke:none" />
     <rect
        width="173.38461"
        height="151.46535"
        x="115.60352"
        y="346.28287"
-       id="rect3784-7"
+       id="rect-parallax-8"
        style="fill:#9abd33;fill-opacity:1;stroke:none" />
     <rect
        width="65.577301"
        height="56.043518"
        x="14.944519"
        y="514.0741"
-       id="rect3784-1-4"
+       id="rect-parallax-4"
        style="fill:#a5ca39;fill-opacity:1;stroke:none" />
     <rect
        width="195.6758"
        height="89.864754"
        x="224.18781"
        y="336.98062"
-       id="rect3784-1-9"
+       id="rect-parallax-6"
        style="fill:#adce4a;fill-opacity:1;stroke:none" />
     <rect
        width="185.64413"
        height="86.665039"
        x="157.63617"
        y="387.43979"
-       id="rect3784-1-4-8"
+       id="rect-parallax-5"
        style="fill:#a5ca39;fill-opacity:1;stroke:none" />
     <rect
        width="55.70657"
@@ -174,7 +174,7 @@
        height="75.15239"
        x="337.72571"
        y="290.99557"
-       id="rect3784-1-9-8-4-5"
+       id="rect-parallax-2"
        style="fill:#b1d151;fill-opacity:1;stroke:none" />
     <circle
        cx="249"

@@ -18,6 +18,7 @@ import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sauvignon.model.util.Vector2;
 import de.interoberlin.sauvignon.view.SVGPanel;
 import de.interoberlin.sugarmonkey.R;
+import de.interoberlin.sugarmonkey.controller.Simulation;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
 public class SugarMonkeyActivity extends Activity
@@ -31,9 +32,27 @@ public class SugarMonkeyActivity extends Activity
 	private static Display			display;
 
 	private static SVGPanel			panel;
+
 	private static LinearLayout		lnr;
-	private static TextView			tvLabel;
-	private static TextView			tvValue;
+
+	private static LinearLayout		zeroLnr;
+	private static TextView			zeroTvLabel;
+	private static TextView			zeroTvValue;
+
+	private static LinearLayout		oneLnr;
+	private static TextView			oneTvFirst;
+	private static TextView			oneTvSecond;
+	private static TextView			oneTvThird;
+
+	private static LinearLayout		threeLnr;
+	private static TextView			threeTvFirst;
+	private static TextView			threeTvSecond;
+	private static TextView			threeTvThird;
+
+	private static LinearLayout		fourLnr;
+	private static TextView			fourTvFirst;
+	private static TextView			fourTvSecond;
+	private static TextView			fourTvThird;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -77,13 +96,6 @@ public class SugarMonkeyActivity extends Activity
 			}
 		});
 
-		lnr = new LinearLayout(activity);
-		tvLabel = new TextView(activity);
-		tvValue = new TextView(activity);
-		lnr.addView(tvLabel, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
-		lnr.addView(tvValue, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
-		activity.addContentView(lnr, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-
 		// Get controller
 		// controller = (SugarMonkeyController) getApplicationContext();
 	}
@@ -92,6 +104,8 @@ public class SugarMonkeyActivity extends Activity
 	{
 		super.onResume();
 		panel.resume();
+
+		Simulation.getInstance(activity).start();
 	}
 
 	@Override
@@ -105,6 +119,7 @@ public class SugarMonkeyActivity extends Activity
 	protected void onDestroy()
 	{
 		super.onDestroy();
+		Simulation.getInstance(activity).stop();
 	}
 
 	public Display getDisplay()
@@ -117,6 +132,66 @@ public class SugarMonkeyActivity extends Activity
 		return sensorManager;
 	}
 
+	public static void draw()
+	{
+		if (lnr != null)
+		{
+			lnr.removeAllViews();
+
+			// Add text views
+			lnr = new LinearLayout(activity);
+			zeroTvLabel = new TextView(activity);
+			zeroTvValue = new TextView(activity);
+			zeroTvLabel.setText(R.string.fps);
+			zeroTvValue.setText(String.valueOf(SugarMonkeyController.getCurrentFps()));
+			lnr.addView(zeroTvLabel, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
+			lnr.addView(zeroTvValue, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
+
+			// Add text views
+			oneLnr = new LinearLayout(activity);
+			oneTvFirst = new TextView(activity);
+			oneTvSecond = new TextView(activity);
+			oneTvThird = new TextView(activity);
+			oneTvFirst.setText("Data");
+			oneTvSecond.setText(String.valueOf(Simulation.getDataX()));
+			oneTvThird.setText(String.valueOf(Simulation.getDataY()));
+			oneLnr.addView(oneTvFirst, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
+			oneLnr.addView(oneTvSecond, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
+			oneLnr.addView(oneTvThird, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
+
+			// Add text views
+			threeLnr = new LinearLayout(activity);
+			threeTvFirst = new TextView(activity);
+			threeTvSecond = new TextView(activity);
+			threeTvThird = new TextView(activity);
+			threeTvFirst.setText("Raw");
+			threeTvSecond.setText(String.valueOf(Simulation.getRawX()));
+			threeTvThird.setText(String.valueOf(Simulation.getRawY()));
+			threeLnr.addView(threeTvFirst, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
+			threeLnr.addView(threeTvSecond, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
+			threeLnr.addView(threeTvThird, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
+
+			// Add text views
+			fourLnr = new LinearLayout(activity);
+			fourTvFirst = new TextView(activity);
+			fourTvSecond = new TextView(activity);
+			fourTvThird = new TextView(activity);
+			fourTvFirst.setText("Values");
+			fourTvSecond.setText(String.valueOf(Simulation.getX()));
+			fourTvThird.setText(String.valueOf(Simulation.getY()));
+			fourLnr.addView(fourTvFirst, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
+			fourLnr.addView(fourTvSecond, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
+			fourLnr.addView(fourTvThird, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
+
+			lnr.setOrientation(1);
+			lnr.addView(zeroLnr, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+			lnr.addView(oneLnr, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+			lnr.addView(threeLnr, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+			lnr.addView(fourLnr, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+			activity.addContentView(lnr, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+		}
+	}
+
 	public static void uiDraw()
 	{
 		activity.runOnUiThread(new Runnable()
@@ -124,8 +199,7 @@ public class SugarMonkeyActivity extends Activity
 			@Override
 			public void run()
 			{
-				tvLabel.setText(R.string.fps);
-				tvValue.setText(String.valueOf(SugarMonkeyController.getCurrentFps()));
+				draw();
 			}
 		});
 	}

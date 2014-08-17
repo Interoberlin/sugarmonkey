@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,22 +11,21 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
+import de.interoberlin.sauvignon.controller.loader.SvgLoader;
+import de.interoberlin.sauvignon.model.smil.EAttributeName;
+import de.interoberlin.sauvignon.model.svg.SVG;
+import de.interoberlin.sauvignon.model.svg.elements.AGeometric;
+import de.interoberlin.sauvignon.model.svg.elements.rect.SVGRect;
+import de.interoberlin.sauvignon.model.svg.transform.set.SetOperator;
 import de.interoberlin.sauvignon.model.util.Vector2;
+import de.interoberlin.sauvignon.view.DebugLine;
+import de.interoberlin.sauvignon.view.SVGPanel;
 import de.interoberlin.sugarmonkey.R;
+import de.interoberlin.sugarmonkey.controller.Simulation;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
-import de.interoberlin.sugarmonkey.view.panels.APanel;
-import de.interoberlin.sugarmonkey.view.panels.ArcPanel;
-import de.interoberlin.sugarmonkey.view.panels.DebugPanel;
-import de.interoberlin.sugarmonkey.view.panels.MonkeyPanel;
-import de.interoberlin.sugarmonkey.view.panels.PathsPanel;
-import de.interoberlin.sugarmonkey.view.panels.PolygonPanel;
-import de.interoberlin.sugarmonkey.view.panels.PolylinePanel;
-import de.interoberlin.sugarmonkey.view.panels.TestPanel;
-import de.interoberlin.sugarmonkey.view.panels.TouchPanel;
 
-public class DrawingActivity extends Activity
+public class LymboActivity extends Activity
 {
 	private static Context			context;
 	private static Activity			activity;
@@ -37,10 +35,13 @@ public class DrawingActivity extends Activity
 	private WindowManager			windowManager;
 	private static Display			display;
 
-	private static APanel			panel;
+	private static SVGPanel			panel;
+	private static SVG				svg;
+
 	private static LinearLayout		lnr;
-	private static TextView			tvLabel;
-	private static TextView			tvValue;
+	private static DebugLine		dlFps;
+	private static DebugLine		dlData;
+	private static DebugLine		dlRaw;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -57,49 +58,10 @@ public class DrawingActivity extends Activity
 		windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 		display = windowManager.getDefaultDisplay();
 
-		switch (SugarMonkeyController.getCurrentPanel())
-		{
-			case TEST:
-			{
-				panel = new TestPanel(activity);
-				break;
-			}
-			case MONKEY:
-			{
-				panel = new MonkeyPanel(activity);
-				break;
-			}
-			case DEBUG:
-			{
-				panel = new DebugPanel(activity);
-				break;
-			}
-			case PATHS:
-			{
-				panel = new PathsPanel(activity);
-				break;
-			}
-			case TOUCH:
-			{
-				panel = new TouchPanel(activity);
-				break;
-			}
-			case ARC:
-			{
-				panel = new ArcPanel(activity);
-				break;
-			}
-			case POLYLINE:
-			{
-				panel = new PolylinePanel(activity);
-				break;
-			}
-			case POLYGON:
-			{
-				panel = new PolygonPanel(activity);
-				break;
-			}
-		}
+		svg = SvgLoader.getSVGFromAsset(context, "lymbo.svg");
+
+		panel = new SVGPanel(activity);
+		panel.setSVG(svg);
 
 		// Add surface view
 		activity.addContentView(panel, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -113,9 +75,6 @@ public class DrawingActivity extends Activity
 				float x = event.getX();
 				float y = event.getY();
 
-				// Vibrate
-				((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(100);
-
 				// Inform panel
 				panel.setTouch(new Vector2(x, y));
 
@@ -123,11 +82,8 @@ public class DrawingActivity extends Activity
 			}
 		});
 
+		// Add linear layout
 		lnr = new LinearLayout(activity);
-		tvLabel = new TextView(activity);
-		tvValue = new TextView(activity);
-		lnr.addView(tvLabel, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
-		lnr.addView(tvValue, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
 		activity.addContentView(lnr, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
 		// Get controller
@@ -137,20 +93,25 @@ public class DrawingActivity extends Activity
 	public void onResume()
 	{
 		super.onResume();
-		panel.onResume();
+		panel.resume();
+
+		draw();
+
+		Simulation.getInstance(activity).start();
 	}
 
 	@Override
 	protected void onPause()
 	{
 		super.onPause();
-		panel.onPause();
+		panel.pause();
 	}
 
 	@Override
 	protected void onDestroy()
 	{
 		super.onDestroy();
+		Simulation.getInstance(activity).stop();
 	}
 
 	public Display getDisplay()
@@ -163,6 +124,56 @@ public class DrawingActivity extends Activity
 		return sensorManager;
 	}
 
+	public static void draw()
+	{
+		if (lnr != null)
+		{
+			lnr.removeAllViews();
+
+			// Add debug lines
+			dlFps = new DebugLine(activity, "FPS", String.valueOf(SugarMonkeyController.getFps()), String.valueOf(SugarMonkeyController.getCurrentFps()));
+			dlData = new DebugLine(activity, "Data", String.valueOf(Simulation.getDataX()), String.valueOf(Simulation.getDataY()));
+			;
+			dlRaw = new DebugLine(activity, "Raw", String.valueOf(Simulation.getRawX()), String.valueOf(Simulation.getRawY()));
+			;
+
+			lnr.setOrientation(1);
+			lnr.addView(dlFps, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+			lnr.addView(dlData, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+			lnr.addView(dlRaw, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+		}
+	}
+
+	public static void uiUpdate()
+	{
+		Thread t = new Thread(new Runnable()
+		{
+
+			@Override
+			public void run()
+			{
+				for (AGeometric e : svg.getAllSubElements())
+				{
+					synchronized (svg)
+					{
+						if (e instanceof SVGRect)// && !
+													// e.getId().matches(".*parallax.*"))
+						{
+							float x = ((SVGRect) e).getX() + Simulation.getRawX() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
+							float y = ((SVGRect) e).getY() + Simulation.getRawY() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
+
+							e.getAnimationSets().clear();
+							e.addAnimationSet(new SetOperator(EAttributeName.X, x));
+							e.addAnimationSet(new SetOperator(EAttributeName.Y, y));
+						}
+					}
+				}
+			}
+		});
+
+		t.start();
+	}
+
 	public static void uiDraw()
 	{
 		activity.runOnUiThread(new Runnable()
@@ -170,8 +181,7 @@ public class DrawingActivity extends Activity
 			@Override
 			public void run()
 			{
-				tvLabel.setText(R.string.fps);
-				tvValue.setText(String.valueOf(SugarMonkeyController.getCurrentFps()));
+				draw();
 			}
 		});
 	}
