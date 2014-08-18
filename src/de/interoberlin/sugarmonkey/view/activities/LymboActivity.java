@@ -1,7 +1,11 @@
 package de.interoberlin.sugarmonkey.view.activities;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Display;
@@ -10,6 +14,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import de.interoberlin.sauvignon.controller.loader.SvgLoader;
@@ -35,8 +40,9 @@ public class LymboActivity extends Activity
 	private WindowManager			windowManager;
 	private static Display			display;
 
-	private static SVGPanel			panel;
 	private static SVG				svg;
+	private static SVGPanel			panel;
+	private static ImageView		ivLogo;
 
 	private static LinearLayout		lnr;
 	private static DebugLine		dlFps;
@@ -62,9 +68,13 @@ public class LymboActivity extends Activity
 
 		panel = new SVGPanel(activity);
 		panel.setSVG(svg);
+		
+		ivLogo = new ImageView(activity);
+		ivLogo.setImageDrawable(loadFromAssets("lymbo.png"));
 
 		// Add surface view
 		activity.addContentView(panel, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		activity.addContentView(ivLogo, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
 		panel.setOnTouchListener(new OnTouchListener()
 		{
@@ -105,13 +115,15 @@ public class LymboActivity extends Activity
 	{
 		super.onPause();
 		panel.pause();
+
+		Simulation.getInstance(activity).stop();
 	}
 
 	@Override
 	protected void onDestroy()
 	{
 		super.onDestroy();
-		Simulation.getInstance(activity).stop();
+
 	}
 
 	public Display getDisplay()
@@ -144,23 +156,39 @@ public class LymboActivity extends Activity
 		}
 	}
 
+	private Drawable loadFromAssets(String image)
+	{
+		try
+		{
+			InputStream is = getAssets().open("lymbo.png");
+			return Drawable.createFromStream(is, null);
+		} catch (IOException ex)
+		{
+			return null;
+		}
+	}
+
 	public static void uiUpdate()
 	{
 		Thread t = new Thread(new Runnable()
 		{
-
 			@Override
 			public void run()
 			{
-				for (AGeometric e : svg.getAllSubElements())
+				synchronized (svg)
 				{
-					synchronized (svg)
+					for (AGeometric e : svg.getAllSubElements())
 					{
-						if (e instanceof SVGRect)// && !
-													// e.getId().matches(".*parallax.*"))
+						// System.out.println("UPDATE");
+
+						if (e instanceof SVGRect && !e.getId().matches("background"))
 						{
 							float x = ((SVGRect) e).getX() + Simulation.getRawX() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
 							float y = ((SVGRect) e).getY() + Simulation.getRawY() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
+
+							// System.out.println(((SVGRect) e).getX());
+							// System.out.println("UPDATE x " + x);
+							// System.out.println("UPDATE y " + y);
 
 							e.getAnimationSets().clear();
 							e.addAnimationSet(new SetOperator(EAttributeName.X, x));

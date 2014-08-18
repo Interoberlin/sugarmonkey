@@ -7,10 +7,34 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    width="498"
    height="768"
-   id="svg2993">
+   id="svg2993"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="lymbo.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     id="namedview35"
+     showgrid="false"
+     inkscape:zoom="0.64579264"
+     inkscape:cx="249"
+     inkscape:cy="384"
+     inkscape:window-x="1912"
+     inkscape:window-y="304"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
   <defs
      id="defs2995">
     <linearGradient
@@ -29,7 +53,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -112,14 +136,6 @@
        y="278.08279"
        id="rect-parallax-7"
        style="fill:#9abd33;fill-opacity:1;stroke:none" />
-    <path
-       d="M 329.18055,600.01992 C 368.81945,532.381 368.81945,532.381 368.81945,532.381"
-       id="path4020-5"
-       style="fill:none;stroke:#9cbb35;stroke-width:50;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-    <path
-       d="M 154.03408,605.87342 C 117.96592,536.52747 117.96592,536.52747 117.96592,536.52747"
-       id="path4020-5-1"
-       style="fill:none;stroke:#9cbb35;stroke-width:48.29293442;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     <rect
        width="177.64923"
        height="107.47038"
@@ -139,7 +155,7 @@
        height="151.46535"
        x="115.60352"
        y="346.28287"
-       id="rect-parallax-8"
+       id="rect23"
        style="fill:#9abd33;fill-opacity:1;stroke:none" />
     <rect
        width="65.577301"
@@ -176,6 +192,14 @@
        y="290.99557"
        id="rect-parallax-2"
        style="fill:#b1d151;fill-opacity:1;stroke:none" />
+    <path
+       d="M 329.18055,600.01992 C 368.81945,532.381 368.81945,532.381 368.81945,532.381"
+       id="path4020-5"
+       style="fill:none;stroke:#9cbb35;stroke-width:50;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       d="M 154.03408,605.87342 C 117.96592,536.52747 117.96592,536.52747 117.96592,536.52747"
+       id="path4020-5-1"
+       style="fill:none;stroke:#9cbb35;stroke-width:48.29293442;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     <circle
        cx="249"
        cy="348"
