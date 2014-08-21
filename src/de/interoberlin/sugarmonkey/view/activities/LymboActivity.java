@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,7 +35,6 @@ public class LymboActivity extends Activity
 {
 	private static Context			context;
 	private static Activity			activity;
-	// private static SugarMonkeyController controller;
 
 	private static SensorManager	sensorManager;
 	private WindowManager			windowManager;
@@ -68,7 +68,7 @@ public class LymboActivity extends Activity
 
 		panel = new SVGPanel(activity);
 		panel.setSVG(svg);
-		
+
 		ivLogo = new ImageView(activity);
 		ivLogo.setImageDrawable(loadFromAssets("lymbo.png"));
 
@@ -92,12 +92,29 @@ public class LymboActivity extends Activity
 			}
 		});
 
+		panel.setOnTouchListener(new OnTouchListener()
+		{
+			@Override
+			public boolean onTouch(View v, MotionEvent event)
+			{
+				float x = event.getX();
+				float y = event.getY();
+
+				((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(100);
+
+				SugarMonkeyController.setOffsetX(Simulation.getDataX());
+				SugarMonkeyController.setOffsetY(Simulation.getDataY());
+
+				// Inform panel
+				panel.setTouch(new Vector2(x, y));
+
+				return true;
+			}
+		});
+
 		// Add linear layout
 		lnr = new LinearLayout(activity);
 		activity.addContentView(lnr, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-
-		// Get controller
-		// controller = (SugarMonkeyController) getApplicationContext();
 	}
 
 	public void onResume()
@@ -145,9 +162,7 @@ public class LymboActivity extends Activity
 			// Add debug lines
 			dlFps = new DebugLine(activity, "FPS", String.valueOf(SugarMonkeyController.getFps()), String.valueOf(SugarMonkeyController.getCurrentFps()));
 			dlData = new DebugLine(activity, "Data", String.valueOf(Simulation.getDataX()), String.valueOf(Simulation.getDataY()));
-			;
 			dlRaw = new DebugLine(activity, "Raw", String.valueOf(Simulation.getRawX()), String.valueOf(Simulation.getRawY()));
-			;
 
 			lnr.setOrientation(1);
 			lnr.addView(dlFps, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -179,16 +194,10 @@ public class LymboActivity extends Activity
 				{
 					for (AGeometric e : svg.getAllSubElements())
 					{
-						// System.out.println("UPDATE");
-
 						if (e instanceof SVGRect && !e.getId().matches("background"))
 						{
 							float x = ((SVGRect) e).getX() + Simulation.getRawX() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
 							float y = ((SVGRect) e).getY() + Simulation.getRawY() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
-
-							// System.out.println(((SVGRect) e).getX());
-							// System.out.println("UPDATE x " + x);
-							// System.out.println("UPDATE y " + y);
 
 							e.getAnimationSets().clear();
 							e.addAnimationSet(new SetOperator(EAttributeName.X, x));

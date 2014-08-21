@@ -57,8 +57,8 @@ public class Simulation implements Observer
 		float sensibilityX = 1.0f;
 		float sensibilityY = 1.0f;
 
-		float offsetX = 0.0f;
-		float offsetY = 0.0f;
+		float offsetX = SugarMonkeyController.getOffsetX();
+		float offsetY = SugarMonkeyController.getOffsetY();
 
 		// Retrieve values from observed AccelerationEvent
 		rawX = normalize(dataX - offsetX, sensibilityX);
