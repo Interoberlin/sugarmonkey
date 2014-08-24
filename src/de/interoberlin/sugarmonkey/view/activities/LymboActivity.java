@@ -81,22 +81,6 @@ public class LymboActivity extends Activity
 			@Override
 			public boolean onTouch(View v, MotionEvent event)
 			{
-				// Read values
-				float x = event.getX();
-				float y = event.getY();
-
-				// Inform panel
-				panel.setTouch(new Vector2(x, y));
-
-				return true;
-			}
-		});
-
-		panel.setOnTouchListener(new OnTouchListener()
-		{
-			@Override
-			public boolean onTouch(View v, MotionEvent event)
-			{
 				float x = event.getX();
 				float y = event.getY();
 
@@ -202,6 +186,7 @@ public class LymboActivity extends Activity
 							e.getAnimationSets().clear();
 							e.addAnimationSet(new SetOperator(EAttributeName.X, x));
 							e.addAnimationSet(new SetOperator(EAttributeName.Y, y));
+							e.addAnimationSet(new SetOperator(EAttributeName.FILL, 0));
 						}
 					}
 				}
