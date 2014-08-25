@@ -24,6 +24,7 @@ import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sauvignon.model.svg.elements.AGeometric;
 import de.interoberlin.sauvignon.model.svg.elements.rect.SVGRect;
 import de.interoberlin.sauvignon.model.svg.transform.set.SetOperator;
+import de.interoberlin.sauvignon.model.util.SVGPaint;
 import de.interoberlin.sauvignon.model.util.Vector2;
 import de.interoberlin.sauvignon.view.DebugLine;
 import de.interoberlin.sauvignon.view.SVGPanel;
@@ -68,6 +69,7 @@ public class LymboActivity extends Activity
 
 		panel = new SVGPanel(activity);
 		panel.setSVG(svg);
+		panel.setBackgroundColor(new SVGPaint(255, 208, 227, 153));
 
 		ivLogo = new ImageView(activity);
 		ivLogo.setImageDrawable(loadFromAssets("lymbo.png"));
