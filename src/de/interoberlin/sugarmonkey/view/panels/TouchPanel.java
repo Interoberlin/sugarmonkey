@@ -74,30 +74,30 @@ public class TouchPanel extends APanel
 		SVGCircle cBlue = (SVGCircle) svg.getElementById("dot");
 
 		// Clone elements
-//		SVGCircle cRed = null;
-//		cRed = new SVGCircle(cBlue, "newCircle");
-//		svg.addSubelement(cRed);
+		// SVGCircle cRed = null;
+		// cRed = new SVGCircle(cBlue, "newCircle");
+		// svg.addSubelement(cRed);
 
-//		Paint red = new Paint();
-//		red.setARGB(255, 255, 0, 0);
-//		cRed.setFill(red);
+		// Paint red = new Paint();
+		// red.setARGB(255, 255, 0, 0);
+		// cRed.setFill(red);
 
 		Paint blue = new Paint();
 		blue.setARGB(255, 0, 0, 255);
-		cBlue.getStyle().setFill(blue);
+		cBlue.getStyle().getFill().set(blue);
 
 		// Add other elements
-//		SVGPath pBlue = new SVGPath();
-//		pBlue.setFill(blue);
-//		pBlue.setStroke(blue);
-//		pBlue.addAbsoluteMoveTo(new Vector2(cBlue.getCx(), cBlue.getCy()));
-//		svg.addSubelement(pBlue);
+		// SVGPath pBlue = new SVGPath();
+		// pBlue.setFill(blue);
+		// pBlue.setStroke(blue);
+		// pBlue.addAbsoluteMoveTo(new Vector2(cBlue.getCx(), cBlue.getCy()));
+		// svg.addSubelement(pBlue);
 
-//		SVGPath pRed = new SVGPath();
-//		pRed.setFill(red);
-//		pRed.setStroke(red);
-//		pRed.addAbsoluteMoveTo(new Vector2(cRed.getCx(), cRed.getCy()));
-//		svg.addSubelement(pRed);
+		// SVGPath pRed = new SVGPath();
+		// pRed.setFill(red);
+		// pRed.setStroke(red);
+		// pRed.addAbsoluteMoveTo(new Vector2(cRed.getCx(), cRed.getCy()));
+		// svg.addSubelement(pRed);
 
 		while (running)
 		{
@@ -134,11 +134,15 @@ public class TouchPanel extends APanel
 					cBlue.setCy(super.getTouch().getY());
 				}
 
-//				cRed.setCx(SugarMonkeyController.getAccelerometerX() / 10 * canvasWidth);
-//				cRed.setCy(SugarMonkeyController.getAccelerometerY() / 10 * canvasHeight);
-//
-//				pBlue.addAbsoluteLineTo(new Vector2(cBlue.getCx(), cBlue.getCy()));
-//				pRed.addAbsoluteLineTo(new Vector2(cRed.getCx(), cRed.getCy()));
+				// cRed.setCx(SugarMonkeyController.getAccelerometerX() / 10 *
+				// canvasWidth);
+				// cRed.setCy(SugarMonkeyController.getAccelerometerY() / 10 *
+				// canvasHeight);
+				//
+				// pBlue.addAbsoluteLineTo(new Vector2(cBlue.getCx(),
+				// cBlue.getCy()));
+				// pRed.addAbsoluteLineTo(new Vector2(cRed.getCx(),
+				// cRed.getCy()));
 
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);

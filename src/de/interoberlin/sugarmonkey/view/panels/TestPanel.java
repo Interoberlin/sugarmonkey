@@ -69,10 +69,10 @@ public class TestPanel extends APanel
 	public void run()
 	{
 		int fps = SugarMonkeyController.getFps();
-//		long millisBefore = 0;
-//		long millisAfter = 0;
+		// long millisBefore = 0;
+		// long millisAfter = 0;
 		long millisFrame = 1000 / fps;
-		
+
 		// Load SVG from file
 		SVG svg = SvgLoader.getSVGFromAsset(c, "rectangle.svg");
 
@@ -102,7 +102,7 @@ public class TestPanel extends APanel
 		// Set scale mode
 		svg.setCanvasScaleMode(EScaleMode.FIT);
 		svg.scaleTo(canvasWidth, canvasHeight);
-		
+
 		while (running)
 		{
 			if (surfaceHolder.getSurface().isValid())
@@ -120,7 +120,6 @@ public class TestPanel extends APanel
 				 * Actual drawing
 				 */
 
-
 				// Load elements
 				SVGRect rectRed1 = (SVGRect) svg.getElementById("rectRed1");
 				SVGRect rectRed2 = (SVGRect) svg.getElementById("rectRed2");
@@ -137,17 +136,17 @@ public class TestPanel extends APanel
 				SVGCircle circle = (SVGCircle) svg.getElementById("circle");
 
 				// Manipulate elements
-				rectRed1.getStyle().setFillR(rectRed1.getStyle().getFillR() - 1);
-				rectRed2.getStyle().setFillG(rectRed2.getStyle().getFillG() + 1);
-				rectRed3.getStyle().setFillB(rectRed3.getStyle().getFillB() + 1);
+				rectRed1.getStyle().getFill().setR(rectRed1.getStyle().getFill().getR() - 1);
+				rectRed2.getStyle().getFill().setG(rectRed2.getStyle().getFill().getG() + 1);
+				rectRed3.getStyle().getFill().setB(rectRed3.getStyle().getFill().getB() + 1);
 
-				rectGreen1.getStyle().setFillR(rectGreen1.getStyle().getFillR() + 1);
-				rectGreen2.getStyle().setFillG(rectGreen2.getStyle().getFillG() - 1);
-				rectGreen3.getStyle().setFillB(rectGreen3.getStyle().getFillB() + 1);
+				rectGreen1.getStyle().getFill().setR(rectGreen1.getStyle().getFill().getR() + 1);
+				rectGreen2.getStyle().getFill().setG(rectGreen2.getStyle().getFill().getG() - 1);
+				rectGreen3.getStyle().getFill().setB(rectGreen3.getStyle().getFill().getB() + 1);
 
-				rectBlue1.getStyle().setFillR(rectBlue1.getStyle().getFillR() + 1);
-				rectBlue2.getStyle().setFillG(rectBlue2.getStyle().getFillG() + 1);
-				rectBlue3.getStyle().setFillB(rectBlue3.getStyle().getFillB() - 1);
+				rectBlue1.getStyle().getFill().setR(rectBlue1.getStyle().getFill().getR() + 1);
+				rectBlue2.getStyle().getFill().setG(rectBlue2.getStyle().getFill().getG() + 1);
+				rectBlue3.getStyle().getFill().setB(rectBlue3.getStyle().getFill().getB() - 1);
 
 				if (circle.getRadius() > 0)
 				{
@@ -157,7 +156,7 @@ public class TestPanel extends APanel
 					circle.setRadius(360);
 				}
 
-				circle.getStyle().setFillA(circle.getStyle().getFillA() - 1);
+				circle.getStyle().getFill().setA(circle.getStyle().getFill().getA() - 1);
 
 				// Render SVG
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);

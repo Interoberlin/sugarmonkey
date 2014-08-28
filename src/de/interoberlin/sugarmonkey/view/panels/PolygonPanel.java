@@ -9,7 +9,7 @@ import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
-public class LymboPanel extends APanel
+public class PolygonPanel extends APanel
 {
 	Thread					thread	= null;
 	SurfaceHolder			surfaceHolder;
@@ -19,7 +19,7 @@ public class LymboPanel extends APanel
 
 	// private static Resources r;
 
-	public LymboPanel(Context context)
+	public PolygonPanel(Context context)
 	{
 		super(context);
 		surfaceHolder = getHolder();
@@ -72,7 +72,7 @@ public class LymboPanel extends APanel
 		long millisFrame = 1000 / fps;
 
 		// Load SVG from file
-		SVG svg = SvgLoader.getSVGFromAsset(c, "lymbo.svg");
+		SVG svg = SvgLoader.getSVGFromAsset(c, "polygon.svg");
 
 		while (!surfaceHolder.getSurface().isValid())
 		{

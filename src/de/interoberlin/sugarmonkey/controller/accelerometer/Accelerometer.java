@@ -8,7 +8,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.view.Surface;
-import de.interoberlin.sugarmonkey.view.activities.DrawingActivity;
+import de.interoberlin.sugarmonkey.controller.Simulation;
+import de.interoberlin.sugarmonkey.view.activities.LymboActivity;
 
 public class Accelerometer extends Observable implements SensorEventListener
 {
@@ -22,10 +23,10 @@ public class Accelerometer extends Observable implements SensorEventListener
 
 	private Accelerometer(Activity activity)
 	{
-		accelerometer = ((DrawingActivity) activity).getSensorManager().getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		accelerometer = ((LymboActivity) activity).getSensorManager().getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		this.activity = activity;
 
-		addObserver(AcceleratorListener.getInstance(activity));
+		addObserver(Simulation.getInstance(activity));
 	}
 
 	public static Accelerometer getInstance(Activity activity)
@@ -40,14 +41,14 @@ public class Accelerometer extends Observable implements SensorEventListener
 
 	public void start()
 	{
-		DrawingActivity.uiToast("Accelerometer started");
-		((DrawingActivity) activity).getSensorManager().registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+		LymboActivity.uiToast("Accelerometer started");
+		((LymboActivity) activity).getSensorManager().registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
 	}
 
 	public void stop()
 	{
-		DrawingActivity.uiToast("Accelerometer stopped");
-		((DrawingActivity) activity).getSensorManager().unregisterListener(this);
+		LymboActivity.uiToast("Accelerometer stopped");
+		((LymboActivity) activity).getSensorManager().unregisterListener(this);
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class Accelerometer extends Observable implements SensorEventListener
 			return;
 		}
 
-		switch (((DrawingActivity) activity).getDisplay().getRotation())
+		switch (((LymboActivity) activity).getDisplay().getRotation())
 		{
 			case Surface.ROTATION_0:
 			{
@@ -87,7 +88,10 @@ public class Accelerometer extends Observable implements SensorEventListener
 		}
 
 		setChanged();
+
 		notifyObservers(new AccelerationEvent(sensorX, sensorY));
+		LymboActivity.uiUpdate();
+		LymboActivity.uiDraw();
 	}
 
 	@Override

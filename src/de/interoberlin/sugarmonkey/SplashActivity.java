@@ -12,7 +12,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
+import de.interoberlin.sugarmonkey.view.activities.AnimateColorActivity;
+import de.interoberlin.sugarmonkey.view.activities.AnimateTransformActivity;
 import de.interoberlin.sugarmonkey.view.activities.DrawingActivity;
+import de.interoberlin.sugarmonkey.view.activities.LymboActivity;
+import de.interoberlin.sugarmonkey.view.activities.NewActivity;
+import de.interoberlin.sugarmonkey.view.activities.SugarMonkeyActivity;
 import de.interoberlin.sugarmonkey.view.panels.EPanel;
 
 public class SplashActivity extends Activity
@@ -47,6 +52,25 @@ public class SplashActivity extends Activity
 
 		tbl.removeAllViews();
 
+		TableRow trLymbo = new TableRow(context);
+		TextView tvLymbo = new TextView(context);
+		tvLymbo.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+		tvLymbo.setText("* LYMBO");
+		trLymbo.addView(tvLymbo);
+		trLymbo.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent openStartingPoint = new Intent(SplashActivity.this, LymboActivity.class);
+				startActivity(openStartingPoint);
+			}
+		});
+
+		tbl.addView(trLymbo);
+
+		/* -------------------------------------------------- */
+
 		// Iterate over all enum values
 		for (EPanel p : EPanel.values())
 		{
@@ -71,6 +95,86 @@ public class SplashActivity extends Activity
 
 			tbl.addView(tr);
 		}
+
+		// View v = new View(this);
+		// v.setLayoutParams(new
+		// TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 1));
+		// v.setBackgroundColor(Color.rgb(51, 51, 51));
+
+		TableRow tr = new TableRow(context);
+		TextView tv = new TextView(context);
+		tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+		tv.setText("* NEW");
+		tr.addView(tv);
+		tr.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent openStartingPoint = new Intent(SplashActivity.this, NewActivity.class);
+				startActivity(openStartingPoint);
+			}
+		});
+
+		tbl.addView(tr);
+
+		/* -------------------------------------------------- */
+
+		TableRow trAT = new TableRow(context);
+		TextView tvAT = new TextView(context);
+		tvAT.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+		tvAT.setText("* ANIMATE TRANSFORM");
+		trAT.addView(tvAT);
+		trAT.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent openStartingPoint = new Intent(SplashActivity.this, AnimateTransformActivity.class);
+				startActivity(openStartingPoint);
+			}
+		});
+
+		tbl.addView(trAT);
+
+		/* -------------------------------------------------- */
+
+		TableRow trAC = new TableRow(context);
+		TextView tvAC = new TextView(context);
+		tvAC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+		tvAC.setText("* ANIMATE COLOR");
+		trAC.addView(tvAC);
+		trAC.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent openStartingPoint = new Intent(SplashActivity.this, AnimateColorActivity.class);
+				startActivity(openStartingPoint);
+			}
+		});
+
+		tbl.addView(trAC);
+
+		/* -------------------------------------------------- */
+
+		TableRow trSM = new TableRow(context);
+		TextView tvSM = new TextView(context);
+		tvSM.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+		tvSM.setText("* SUGAR MONKEY");
+		trSM.addView(tvSM);
+		trSM.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent openStartingPoint = new Intent(SplashActivity.this, SugarMonkeyActivity.class);
+				startActivity(openStartingPoint);
+			}
+		});
+
+		tbl.addView(trSM);
+
 	}
 
 	@Override

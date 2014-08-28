@@ -9,7 +9,7 @@ import de.interoberlin.sauvignon.model.svg.EScaleMode;
 import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
-public class DebugPanel extends APanel
+public class PolylinePanel extends APanel
 {
 	Thread					thread	= null;
 	SurfaceHolder			surfaceHolder;
@@ -19,7 +19,7 @@ public class DebugPanel extends APanel
 
 	// private static Resources r;
 
-	public DebugPanel(Context context)
+	public PolylinePanel(Context context)
 	{
 		super(context);
 		surfaceHolder = getHolder();
@@ -67,12 +67,12 @@ public class DebugPanel extends APanel
 	public void run()
 	{
 		int fps = SugarMonkeyController.getFps();
-//		long millisBefore = 0;
-//		long millisAfter = 0;
+		// long millisBefore = 0;
+		// long millisAfter = 0;
 		long millisFrame = 1000 / fps;
 
 		// Load SVG from file
-		SVG svg = SvgLoader.getSVGFromAsset(c, "debug.svg");
+		SVG svg = SvgLoader.getSVGFromAsset(c, "polyline.svg");
 
 		while (!surfaceHolder.getSurface().isValid())
 		{
@@ -119,13 +119,8 @@ public class DebugPanel extends APanel
 				 */
 
 				// Load elements
-				// SVGGElement gArmLeft = (SVGGElement)
-				// svg.getElementById("gArmLeft");
-
-				// Manipulate elements
 
 				// Render SVG
-				 canvas = SvgRenderer.renderRasterToCanvas(canvas, svg);
 				canvas = SvgRenderer.renderToCanvas(canvas, svg);
 				canvas = SvgRenderer.renderBoundingRectsToCanvas(canvas, svg);
 

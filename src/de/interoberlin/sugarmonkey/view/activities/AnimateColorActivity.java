@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,20 +13,14 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import de.interoberlin.sauvignon.controller.loader.SvgLoader;
+import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sauvignon.model.util.Vector2;
+import de.interoberlin.sauvignon.view.SVGPanel;
 import de.interoberlin.sugarmonkey.R;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
-import de.interoberlin.sugarmonkey.view.panels.APanel;
-import de.interoberlin.sugarmonkey.view.panels.ArcPanel;
-import de.interoberlin.sugarmonkey.view.panels.DebugPanel;
-import de.interoberlin.sugarmonkey.view.panels.MonkeyPanel;
-import de.interoberlin.sugarmonkey.view.panels.PathsPanel;
-import de.interoberlin.sugarmonkey.view.panels.PolygonPanel;
-import de.interoberlin.sugarmonkey.view.panels.PolylinePanel;
-import de.interoberlin.sugarmonkey.view.panels.TestPanel;
-import de.interoberlin.sugarmonkey.view.panels.TouchPanel;
 
-public class DrawingActivity extends Activity
+public class AnimateColorActivity extends Activity
 {
 	private static Context			context;
 	private static Activity			activity;
@@ -37,7 +30,7 @@ public class DrawingActivity extends Activity
 	private WindowManager			windowManager;
 	private static Display			display;
 
-	private static APanel			panel;
+	private static SVGPanel			panel;
 	private static LinearLayout		lnr;
 	private static TextView			tvLabel;
 	private static TextView			tvValue;
@@ -57,49 +50,10 @@ public class DrawingActivity extends Activity
 		windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 		display = windowManager.getDefaultDisplay();
 
-		switch (SugarMonkeyController.getCurrentPanel())
-		{
-			case TEST:
-			{
-				panel = new TestPanel(activity);
-				break;
-			}
-			case MONKEY:
-			{
-				panel = new MonkeyPanel(activity);
-				break;
-			}
-			case DEBUG:
-			{
-				panel = new DebugPanel(activity);
-				break;
-			}
-			case PATHS:
-			{
-				panel = new PathsPanel(activity);
-				break;
-			}
-			case TOUCH:
-			{
-				panel = new TouchPanel(activity);
-				break;
-			}
-			case ARC:
-			{
-				panel = new ArcPanel(activity);
-				break;
-			}
-			case POLYLINE:
-			{
-				panel = new PolylinePanel(activity);
-				break;
-			}
-			case POLYGON:
-			{
-				panel = new PolygonPanel(activity);
-				break;
-			}
-		}
+		SVG svg = SvgLoader.getSVGFromAsset(context, "animateColor.svg");
+		
+		panel = new SVGPanel(activity);
+		panel.setSVG(svg);
 
 		// Add surface view
 		activity.addContentView(panel, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -114,7 +68,7 @@ public class DrawingActivity extends Activity
 				float y = event.getY();
 
 				// Vibrate
-				((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(100);
+				// ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(100);
 
 				// Inform panel
 				panel.setTouch(new Vector2(x, y));
@@ -137,14 +91,14 @@ public class DrawingActivity extends Activity
 	public void onResume()
 	{
 		super.onResume();
-		panel.onResume();
+		panel.resume();
 	}
 
 	@Override
 	protected void onPause()
 	{
 		super.onPause();
-		panel.onPause();
+		panel.pause();
 	}
 
 	@Override

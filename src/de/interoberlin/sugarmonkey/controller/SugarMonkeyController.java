@@ -19,6 +19,9 @@ public class SugarMonkeyController extends Application
 	private static int		fps;
 	private static int		currentFps;
 
+	private static float	offsetX	= 0F;
+	private static float	offsetY	= 0F;
+
 	@Override
 	public void onCreate()
 	{
@@ -105,5 +108,25 @@ public class SugarMonkeyController extends Application
 	public static void setCurrentFps(int currentFps)
 	{
 		SugarMonkeyController.currentFps = currentFps;
+	}
+
+	public static float getOffsetX()
+	{
+		return offsetX;
+	}
+
+	public static void setOffsetX(float offsetX)
+	{
+		SugarMonkeyController.offsetX = offsetX;
+	}
+
+	public static float getOffsetY()
+	{
+		return offsetY;
+	}
+
+	public static void setOffsetY(float offsetY)
+	{
+		SugarMonkeyController.offsetY = offsetY;
 	}
 }
