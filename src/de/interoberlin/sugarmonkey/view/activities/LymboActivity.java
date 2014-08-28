@@ -19,11 +19,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import de.interoberlin.sauvignon.controller.loader.SvgLoader;
-import de.interoberlin.sauvignon.model.smil.EAttributeName;
 import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sauvignon.model.svg.elements.AGeometric;
 import de.interoberlin.sauvignon.model.svg.elements.rect.SVGRect;
-import de.interoberlin.sauvignon.model.svg.transform.set.SetOperator;
+import de.interoberlin.sauvignon.model.svg.transform.transform.SVGTransformTranslate;
 import de.interoberlin.sauvignon.model.util.SVGPaint;
 import de.interoberlin.sauvignon.model.util.Vector2;
 import de.interoberlin.sauvignon.view.DebugLine;
@@ -182,13 +181,15 @@ public class LymboActivity extends Activity
 					{
 						if (e instanceof SVGRect && !e.getId().matches("background"))
 						{
-							float x = ((SVGRect) e).getX() + Simulation.getRawX() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
-							float y = ((SVGRect) e).getY() + Simulation.getRawY() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
+							float x = /* ((SVGRect) e).getX() + */Simulation.getRawX() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
+							float y = /* ((SVGRect) e).getY() + */Simulation.getRawY() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
 
-							e.getAnimationSets().clear();
-							e.addAnimationSet(new SetOperator(EAttributeName.X, x));
-							e.addAnimationSet(new SetOperator(EAttributeName.Y, y));
-							e.addAnimationSet(new SetOperator(EAttributeName.FILL, 0));
+							// e.getAnimationSets().clear();
+							e.setAnimationTransform(new SVGTransformTranslate(x, y));
+
+//							e.addAnimationSet(new SetOperator(EAttributeName.X, x));
+//							e.addAnimationSet(new SetOperator(EAttributeName.Y, y));
+//							e.addAnimationSet(new SetOperator(EAttributeName.FILL, 0));
 						}
 					}
 				}
