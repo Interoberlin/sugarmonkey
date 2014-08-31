@@ -9,7 +9,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.view.Surface;
 import de.interoberlin.sugarmonkey.controller.Simulation;
-import de.interoberlin.sugarmonkey.view.activities.LymboActivity;
+import de.interoberlin.sugarmonkey.view.activities.examples.LymboActivity;
 
 public class Accelerometer extends Observable implements SensorEventListener
 {

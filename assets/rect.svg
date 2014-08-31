@@ -16,19 +16,10 @@
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="rectangle.svg">
   <rect
-     style="opacity:0.7;fill:#00ff00;fill-opacity:1;stroke:none"
-     id="rectGreen1"
-     y="1.63782"
-     x="240"
-     height="240"
-     width="240">
-     <animateColor attributeName="fill" 
-                      from="black"
-                      to="red"
-                      dur="10s"
-                      begin="0"
-                      repeatCount="indefinite"/>
-                      </rect>
-     
-  
+     style="opacity:0.7;fill:#ff0000;fill-opacity:1;stroke:none"
+     id="r"
+     y="285"
+     x="285"
+     height="150"
+     width="150" />
 </svg>

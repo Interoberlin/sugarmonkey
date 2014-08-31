@@ -1,4 +1,4 @@
-package de.interoberlin.sugarmonkey.view.activities;
+package de.interoberlin.sugarmonkey.view.activities.examples;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,36 +11,25 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
+import de.interoberlin.sauvignon.controller.loader.SvgLoader;
+import de.interoberlin.sauvignon.model.svg.SVG;
+import de.interoberlin.sauvignon.model.util.SVGPaint;
 import de.interoberlin.sauvignon.model.util.Vector2;
+import de.interoberlin.sauvignon.view.SVGPanel;
 import de.interoberlin.sugarmonkey.R;
-import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
-import de.interoberlin.sugarmonkey.view.panels.APanel;
-import de.interoberlin.sugarmonkey.view.panels.ArcPanel;
-import de.interoberlin.sugarmonkey.view.panels.DebugPanel;
-import de.interoberlin.sugarmonkey.view.panels.MonkeyPanel;
-import de.interoberlin.sugarmonkey.view.panels.PathsPanel;
-import de.interoberlin.sugarmonkey.view.panels.PolygonPanel;
-import de.interoberlin.sugarmonkey.view.panels.PolylinePanel;
-import de.interoberlin.sugarmonkey.view.panels.TestPanel;
-import de.interoberlin.sugarmonkey.view.panels.TouchPanel;
 
-public class DrawingActivity extends Activity
+public class DebugActivity extends Activity
 {
 	private static Context			context;
 	private static Activity			activity;
-	// private static SugarMonkeyController controller;
 
 	private static SensorManager	sensorManager;
 	private WindowManager			windowManager;
 	private static Display			display;
 
-	private static APanel			panel;
-	private static LinearLayout		lnr;
-	private static TextView			tvLabel;
-	private static TextView			tvValue;
+	private static SVG				svg;
+	private static SVGPanel			panel;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -57,49 +46,11 @@ public class DrawingActivity extends Activity
 		windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 		display = windowManager.getDefaultDisplay();
 
-		switch (SugarMonkeyController.getCurrentPanel())
-		{
-			case TEST:
-			{
-				panel = new TestPanel(activity);
-				break;
-			}
-			case MONKEY:
-			{
-				panel = new MonkeyPanel(activity);
-				break;
-			}
-			case DEBUG:
-			{
-				panel = new DebugPanel(activity);
-				break;
-			}
-			case PATHS:
-			{
-				panel = new PathsPanel(activity);
-				break;
-			}
-			case TOUCH:
-			{
-				panel = new TouchPanel(activity);
-				break;
-			}
-			case ARC:
-			{
-				panel = new ArcPanel(activity);
-				break;
-			}
-			case POLYLINE:
-			{
-				panel = new PolylinePanel(activity);
-				break;
-			}
-			case POLYGON:
-			{
-				panel = new PolygonPanel(activity);
-				break;
-			}
-		}
+		svg = SvgLoader.getSVGFromAsset(context, "debug.svg");
+
+		panel = new SVGPanel(activity);
+		panel.setSVG(svg);
+		panel.setBackgroundColor(new SVGPaint(255, 200, 200, 200));
 
 		// Add surface view
 		activity.addContentView(panel, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -109,11 +60,9 @@ public class DrawingActivity extends Activity
 			@Override
 			public boolean onTouch(View v, MotionEvent event)
 			{
-				// Read values
 				float x = event.getX();
 				float y = event.getY();
 
-				// Vibrate
 				((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(100);
 
 				// Inform panel
@@ -123,34 +72,28 @@ public class DrawingActivity extends Activity
 			}
 		});
 
-		lnr = new LinearLayout(activity);
-		tvLabel = new TextView(activity);
-		tvValue = new TextView(activity);
-		lnr.addView(tvLabel, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
-		lnr.addView(tvValue, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
-		activity.addContentView(lnr, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-
-		// Get controller
-		// controller = (SugarMonkeyController) getApplicationContext();
+		// Initialize
+		uiInit();
 	}
 
 	public void onResume()
 	{
 		super.onResume();
-		panel.onResume();
+		panel.resume();
 	}
 
 	@Override
 	protected void onPause()
 	{
 		super.onPause();
-		panel.onPause();
+		panel.pause();
 	}
 
 	@Override
 	protected void onDestroy()
 	{
 		super.onDestroy();
+
 	}
 
 	public Display getDisplay()
@@ -163,6 +106,29 @@ public class DrawingActivity extends Activity
 		return sensorManager;
 	}
 
+	public static void uiInit()
+	{
+		synchronized (svg)
+		{
+		}
+	}
+
+	public static void uiUpdate()
+	{
+		Thread t = new Thread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				synchronized (svg)
+				{
+				}
+			}
+		});
+
+		t.start();
+	}
+
 	public static void uiDraw()
 	{
 		activity.runOnUiThread(new Runnable()
@@ -170,8 +136,6 @@ public class DrawingActivity extends Activity
 			@Override
 			public void run()
 			{
-				tvLabel.setText(R.string.fps);
-				tvValue.setText(String.valueOf(SugarMonkeyController.getCurrentFps()));
 			}
 		});
 	}

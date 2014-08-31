@@ -151,12 +151,12 @@ public class MonkeyPanel extends APanel
 			// frame += 1;
 			// frame %= 1000;
 
-			gArmLeft.setAnimationTransform(new SVGTransformRotate(c1, (float) -angle));
-			gArmRight.setAnimationTransform(new SVGTransformRotate(c2, (float) angle));
-			gFootLeft.setAnimationTransform(new SVGTransformRotate(c5, (float) angle));
-			gFootRight.setAnimationTransform(new SVGTransformRotate(c6, (float) -angle));
-			gEyeLeft.setAnimationTransform(new SVGTransformRotate(c3, (float) angle));
-			gEyeRight.setAnimationTransform(new SVGTransformRotate(c4, (float) angle));
+			gArmLeft.setAnimationTransform(new SVGTransformRotate((float) -angle, c1));
+			gArmRight.setAnimationTransform(new SVGTransformRotate((float) angle, c2));
+			gFootLeft.setAnimationTransform(new SVGTransformRotate((float) angle, c5));
+			gFootRight.setAnimationTransform(new SVGTransformRotate((float) -angle, c6));
+			gEyeLeft.setAnimationTransform(new SVGTransformRotate((float) angle, c3));
+			gEyeRight.setAnimationTransform(new SVGTransformRotate((float) angle, c4));
 
 			// gMain.setAnimation( new SVGTransformRotate(c7, angle) );
 

@@ -1,6 +1,0 @@
-<svg width="500" height="500">
-<rect id="huhu" x="0" y="0" width="200" height="200" fill="blue" stroke="black">
-<animateTransform repeatCount="indefinite" attributeName="transform" type="rotate" from="0" to="360" begin="0" dur="5s"/>
-</rect>
-<circle cx="250" cy="250" r="4" fill="firebrick"/>
-</svg>

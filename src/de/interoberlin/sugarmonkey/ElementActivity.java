@@ -12,7 +12,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SplashActivity extends Activity
+public class ElementActivity extends Activity
 {
 	private static TableLayout	tbl;
 
@@ -44,11 +44,12 @@ public class SplashActivity extends Activity
 
 		tbl.removeAllViews();
 
-		tbl.addView(getEntry("de.interoberlin.sugarmonkey.AnimationActivity"));
-		tbl.addView(getEntry("de.interoberlin.sugarmonkey.ElementActivity"));
-		tbl.addView(getEntry("de.interoberlin.sugarmonkey.ExampleActivity"));
+		tbl.addView(getEntry("de.interoberlin.sugarmonkey.view.activities.element.ArcActivity"));
+		tbl.addView(getEntry("de.interoberlin.sugarmonkey.view.activities.element.PathActivity"));
+		tbl.addView(getEntry("de.interoberlin.sugarmonkey.view.activities.element.PolygonActivity"));
+		tbl.addView(getEntry("de.interoberlin.sugarmonkey.view.activities.element.PolylineActivity"));
 	}
-	
+
 	private TableRow getEntry(final String c)
 	{
 		TableRow tr = new TableRow(context);
@@ -66,7 +67,7 @@ public class SplashActivity extends Activity
 			{
 				try
 				{
-					startActivity(new Intent(SplashActivity.this, Class.forName(c)));
+					startActivity(new Intent(ElementActivity.this, Class.forName(c)));
 				} catch (ClassNotFoundException e)
 				{
 					e.printStackTrace();

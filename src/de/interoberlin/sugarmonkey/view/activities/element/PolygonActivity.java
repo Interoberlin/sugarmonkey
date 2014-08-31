@@ -1,39 +1,35 @@
-package de.interoberlin.sugarmonkey.view.activities;
+package de.interoberlin.sugarmonkey.view.activities.element;
 
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 import de.interoberlin.sauvignon.controller.loader.SvgLoader;
 import de.interoberlin.sauvignon.model.svg.SVG;
+import de.interoberlin.sauvignon.model.util.SVGPaint;
 import de.interoberlin.sauvignon.model.util.Vector2;
 import de.interoberlin.sauvignon.view.SVGPanel;
 import de.interoberlin.sugarmonkey.R;
-import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
-public class AnimateColorActivity extends Activity
+public class PolygonActivity extends Activity
 {
 	private static Context			context;
 	private static Activity			activity;
-	// private static SugarMonkeyController controller;
 
 	private static SensorManager	sensorManager;
 	private WindowManager			windowManager;
 	private static Display			display;
 
+	private static SVG				svg;
 	private static SVGPanel			panel;
-	private static LinearLayout		lnr;
-	private static TextView			tvLabel;
-	private static TextView			tvValue;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -50,10 +46,11 @@ public class AnimateColorActivity extends Activity
 		windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 		display = windowManager.getDefaultDisplay();
 
-		SVG svg = SvgLoader.getSVGFromAsset(context, "animateColor.svg");
-		
+		svg = SvgLoader.getSVGFromAsset(context, "polygon.svg");
+
 		panel = new SVGPanel(activity);
 		panel.setSVG(svg);
+		panel.setBackgroundColor(new SVGPaint(255, 200, 200, 200));
 
 		// Add surface view
 		activity.addContentView(panel, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -63,12 +60,10 @@ public class AnimateColorActivity extends Activity
 			@Override
 			public boolean onTouch(View v, MotionEvent event)
 			{
-				// Read values
 				float x = event.getX();
 				float y = event.getY();
 
-				// Vibrate
-				// ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(100);
+				((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(100);
 
 				// Inform panel
 				panel.setTouch(new Vector2(x, y));
@@ -77,15 +72,8 @@ public class AnimateColorActivity extends Activity
 			}
 		});
 
-		lnr = new LinearLayout(activity);
-		tvLabel = new TextView(activity);
-		tvValue = new TextView(activity);
-		lnr.addView(tvLabel, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
-		lnr.addView(tvValue, new LayoutParams(200, LayoutParams.WRAP_CONTENT));
-		activity.addContentView(lnr, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-
-		// Get controller
-		// controller = (SugarMonkeyController) getApplicationContext();
+		// Initialize
+		uiInit();
 	}
 
 	public void onResume()
@@ -105,6 +93,7 @@ public class AnimateColorActivity extends Activity
 	protected void onDestroy()
 	{
 		super.onDestroy();
+
 	}
 
 	public Display getDisplay()
@@ -117,6 +106,29 @@ public class AnimateColorActivity extends Activity
 		return sensorManager;
 	}
 
+	public static void uiInit()
+	{
+		synchronized (svg)
+		{
+		}
+	}
+
+	public static void uiUpdate()
+	{
+		Thread t = new Thread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				synchronized (svg)
+				{
+				}
+			}
+		});
+
+		t.start();
+	}
+
 	public static void uiDraw()
 	{
 		activity.runOnUiThread(new Runnable()
@@ -124,8 +136,6 @@ public class AnimateColorActivity extends Activity
 			@Override
 			public void run()
 			{
-				tvLabel.setText(R.string.fps);
-				tvValue.setText(String.valueOf(SugarMonkeyController.getCurrentFps()));
 			}
 		});
 	}

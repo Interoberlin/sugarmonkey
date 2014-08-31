@@ -1,4 +1,4 @@
-package de.interoberlin.sugarmonkey.view.activities;
+package de.interoberlin.sugarmonkey.view.activities.examples;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -100,6 +100,9 @@ public class LymboActivity extends Activity
 		// Add linear layout
 		lnr = new LinearLayout(activity);
 		activity.addContentView(lnr, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+		// Initialize
+		uiInit();
 	}
 
 	public void onResume()
@@ -168,6 +171,22 @@ public class LymboActivity extends Activity
 		}
 	}
 
+	public static void uiInit()
+	{
+		synchronized (svg)
+		{
+			for (AGeometric e : svg.getAllSubElements())
+			{
+				if (e instanceof SVGRect && !e.getId().matches("background"))
+				{
+					SVGPaint p = e.getStyle().getFill();
+
+					e.getStyle().getFill().setS(p.getS() - (svg.getMaxZindex() - e.getzIndex()) * 2);
+				}
+			}
+		}
+	}
+
 	public static void uiUpdate()
 	{
 		Thread t = new Thread(new Runnable()
@@ -181,15 +200,10 @@ public class LymboActivity extends Activity
 					{
 						if (e instanceof SVGRect && !e.getId().matches("background"))
 						{
-							float x = /* ((SVGRect) e).getX() + */Simulation.getRawX() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
-							float y = /* ((SVGRect) e).getY() + */Simulation.getRawY() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
+							float x = Simulation.getRawX() * (e.getzIndex() - svg.getMaxZindex() / 2) * -3;
+							float y = Simulation.getRawY() * (e.getzIndex() - svg.getMaxZindex() / 2) * -3;
 
-							// e.getAnimationSets().clear();
 							e.setAnimationTransform(new SVGTransformTranslate(x, y));
-
-//							e.addAnimationSet(new SetOperator(EAttributeName.X, x));
-//							e.addAnimationSet(new SetOperator(EAttributeName.Y, y));
-//							e.addAnimationSet(new SetOperator(EAttributeName.FILL, 0));
 						}
 					}
 				}

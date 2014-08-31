@@ -26,6 +26,61 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Main Menu -->
+        <activity
+            android:name="de.interoberlin.sugarmonkey.AnimationActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="de.interoberlin.sugarmonkey.ElementActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="de.interoberlin.sugarmonkey.ExampleActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <!-- Animation -->
+        <activity
+            android:name="de.interoberlin.sugarmonkey.view.activities.animation.ColorActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="de.interoberlin.sugarmonkey.view.activities.animation.RotateActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- Element -->
+        <activity
+            android:name="de.interoberlin.sugarmonkey.view.activities.element.ArcActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="de.interoberlin.sugarmonkey.view.activities.element.PathActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="de.interoberlin.sugarmonkey.view.activities.element.PolygonActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="de.interoberlin.sugarmonkey.view.activities.element.PolylineActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <!-- Examples -->
+        <activity
+            android:name="de.interoberlin.sugarmonkey.view.activities.examples.DebugActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="de.interoberlin.sugarmonkey.view.activities.examples.LymboActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="de.interoberlin.sugarmonkey.view.activities.examples.MonkeyActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <!-- Other -->
         <activity
             android:name="de.interoberlin.sugarmonkey.view.activities.DrawingActivity"
             android:label="@string/app_name" >
@@ -33,23 +88,6 @@
         <activity
             android:name="de.interoberlin.sugarmonkey.view.activities.NewActivity"
             android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="de.interoberlin.sugarmonkey.view.activities.AnimateTransformActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="de.interoberlin.sugarmonkey.view.activities.AnimateColorActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="de.interoberlin.sugarmonkey.view.activities.SugarMonkeyActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="de.interoberlin.sugarmonkey.view.activities.LymboActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
         </activity>
     </application>
 
