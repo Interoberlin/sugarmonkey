@@ -51,7 +51,9 @@ public class DebugActivity extends Activity
 		panel = new SVGPanel(activity);
 		panel.setSVG(svg);
 		panel.setBackgroundColor(new SVGPaint(255, 200, 200, 200));
-
+		panel.setRaster(true);
+		panel.setBoundingRectsParallelToAxes(true);
+		
 		// Add surface view
 		activity.addContentView(panel, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 

@@ -21,6 +21,7 @@ import de.interoberlin.sauvignon.model.smil.AnimateTransform;
 import de.interoberlin.sauvignon.model.smil.EAnimateTransformType;
 import de.interoberlin.sauvignon.model.svg.SVG;
 import de.interoberlin.sauvignon.model.svg.elements.SVGGElement;
+import de.interoberlin.sauvignon.model.util.SVGPaint;
 import de.interoberlin.sauvignon.model.util.Vector2;
 import de.interoberlin.sauvignon.view.DebugLine;
 import de.interoberlin.sauvignon.view.SVGPanel;
@@ -62,6 +63,8 @@ public class MonkeyActivity extends Activity
 
 		panel = new SVGPanel(activity);
 		panel.setSVG(svg);
+		panel.setBackgroundColor(new SVGPaint(255, 200, 200, 200));
+		panel.setBoundingRectsParallelToAxes(true);
 
 		// Add surface view
 		activity.addContentView(panel, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));

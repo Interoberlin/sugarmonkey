@@ -1,9 +1,8 @@
 package de.interoberlin.sugarmonkey.controller;
 
-import de.interoberlin.sugarmonkey.controller.accelerometer.AcceleratorListener;
-import de.interoberlin.sugarmonkey.view.panels.EPanel;
 import android.app.Application;
 import android.content.Context;
+import de.interoberlin.sugarmonkey.controller.accelerometer.AcceleratorListener;
 
 public class SugarMonkeyController extends Application
 {
@@ -13,8 +12,6 @@ public class SugarMonkeyController extends Application
 
 	private static int		canvasHeight;
 	private static int		canvasWidth;
-
-	private static EPanel	currentPanel;
 
 	private static int		fps;
 	private static int		currentFps;
@@ -68,16 +65,6 @@ public class SugarMonkeyController extends Application
 	public static boolean isRunning()
 	{
 		return running;
-	}
-
-	public static EPanel getCurrentPanel()
-	{
-		return currentPanel;
-	}
-
-	public static void setCurrentPanel(EPanel currentPanel)
-	{
-		SugarMonkeyController.currentPanel = currentPanel;
 	}
 
 	public static float getAccelerometerX()
