@@ -80,6 +80,10 @@
             android:name="de.interoberlin.sugarmonkey.view.activities.examples.MonkeyActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="de.interoberlin.sugarmonkey.view.activities.examples.InteroberlinActivity"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

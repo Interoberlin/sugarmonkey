@@ -10,6 +10,7 @@ import android.view.Surface;
 import java.util.Observable;
 
 import de.interoberlin.sugarmonkey.controller.Simulation;
+import de.interoberlin.sugarmonkey.view.activities.examples.InteroberlinActivity;
 import de.interoberlin.sugarmonkey.view.activities.examples.LymboActivity;
 
 public class Accelerometer extends Observable implements SensorEventListener
@@ -24,8 +25,12 @@ public class Accelerometer extends Observable implements SensorEventListener
 
 	private Accelerometer(Activity activity)
 	{
-		accelerometer = ((LymboActivity) activity).getSensorManager().getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		this.activity = activity;
+        if (activity instanceof LymboActivity)
+            accelerometer = ((LymboActivity) activity).getSensorManager().getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        if (activity instanceof InteroberlinActivity)
+            accelerometer = ((InteroberlinActivity) activity).getSensorManager().getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        this.activity = activity;
 
 		addObserver(Simulation.getInstance(activity));
 	}
@@ -40,16 +45,26 @@ public class Accelerometer extends Observable implements SensorEventListener
 		return instance;
 	}
 
-	public void start()
-	{
-		LymboActivity.uiToast("Accelerometer started");
-		((LymboActivity) activity).getSensorManager().registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
-	}
+    public void start()
+    {
+        if (activity instanceof LymboActivity)
+        {
+            LymboActivity.uiToast("Accelerometer started");
+            ((LymboActivity) activity).getSensorManager().registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+        }
+        if (activity instanceof InteroberlinActivity)
+        {
+            InteroberlinActivity.uiToast("Accelerometer started");
+            ((InteroberlinActivity) activity).getSensorManager().registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+        }
+    }
 
 	public void stop()
 	{
-		LymboActivity.uiToast("Accelerometer stopped");
-		((LymboActivity) activity).getSensorManager().unregisterListener(this);
+        if (activity instanceof LymboActivity) {
+            LymboActivity.uiToast("Accelerometer stopped");
+            ((LymboActivity) activity).getSensorManager().unregisterListener(this);
+        }
 	}
 
 	@Override
@@ -59,40 +74,70 @@ public class Accelerometer extends Observable implements SensorEventListener
 		{
 			return;
 		}
+if (activity instanceof LymboActivity) {
+    switch (((LymboActivity) activity).getDisplay().getRotation()) {
+        case Surface.ROTATION_0: {
+            sensorX = event.values[0];
+            sensorY = -event.values[1];
+            break;
+        }
+        case Surface.ROTATION_90: {
+            sensorX = -event.values[1];
+            sensorY = -event.values[0];
+            break;
+        }
+        case Surface.ROTATION_180: {
+            sensorX = -event.values[0];
+            sensorY = event.values[1];
+            break;
+        }
+        case Surface.ROTATION_270: {
+            sensorX = event.values[1];
+            sensorY = event.values[0];
+            break;
+        }
+    }
+}
 
-		switch (((LymboActivity) activity).getDisplay().getRotation())
-		{
-			case Surface.ROTATION_0:
-			{
-				sensorX = event.values[0];
-				sensorY = -event.values[1];
-				break;
-			}
-			case Surface.ROTATION_90:
-			{
-				sensorX = -event.values[1];
-				sensorY = -event.values[0];
-				break;
-			}
-			case Surface.ROTATION_180:
-			{
-				sensorX = -event.values[0];
-				sensorY = event.values[1];
-				break;
-			}
-			case Surface.ROTATION_270:
-			{
-				sensorX = event.values[1];
-				sensorY = event.values[0];
-				break;
-			}
-		}
+        if (activity instanceof InteroberlinActivity) {
+            switch (((InteroberlinActivity) activity).getDisplay().getRotation()) {
+                case Surface.ROTATION_0: {
+                    sensorX = event.values[0];
+                    sensorY = -event.values[1];
+                    break;
+                }
+                case Surface.ROTATION_90: {
+                    sensorX = -event.values[1];
+                    sensorY = -event.values[0];
+                    break;
+                }
+                case Surface.ROTATION_180: {
+                    sensorX = -event.values[0];
+                    sensorY = event.values[1];
+                    break;
+                }
+                case Surface.ROTATION_270: {
+                    sensorX = event.values[1];
+                    sensorY = event.values[0];
+                    break;
+                }
+            }
+        }
 
 		setChanged();
 
 		notifyObservers(new AccelerationEvent(sensorX, sensorY));
-		LymboActivity.uiUpdate();
-		LymboActivity.uiDraw();
+
+        if (activity instanceof LymboActivity) {
+            LymboActivity.uiUpdate();
+            LymboActivity.uiDraw();
+        }
+
+
+        if (activity instanceof InteroberlinActivity)
+        {
+            InteroberlinActivity.uiUpdate();
+        }
 	}
 
 	@Override

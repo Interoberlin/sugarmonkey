@@ -22,7 +22,6 @@ import java.io.InputStream;
 import de.interoberlin.sauvignon.lib.controller.loader.SvgLoader;
 import de.interoberlin.sauvignon.lib.model.svg.SVG;
 import de.interoberlin.sauvignon.lib.model.svg.elements.AGeometric;
-import de.interoberlin.sauvignon.lib.model.svg.elements.rect.SVGRect;
 import de.interoberlin.sauvignon.lib.model.svg.transform.transform.SVGTransformTranslate;
 import de.interoberlin.sauvignon.lib.model.util.SVGPaint;
 import de.interoberlin.sauvignon.lib.model.util.Vector2;
@@ -34,207 +33,212 @@ import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
 public class LymboActivity extends Activity
 {
-	private static Context			context;
-	private static Activity			activity;
+    private static Context			context;
+    private static Activity			activity;
 
-	private static SensorManager	sensorManager;
-	private WindowManager			windowManager;
-	private static Display			display;
+    private static SensorManager	sensorManager;
+    private WindowManager			windowManager;
+    private static Display			display;
 
-	private static SVG svg;
-	private static SVGPanel			panel;
-	private static ImageView		ivLogo;
+    private static SVG svg;
+    private static SVGPanel			panel;
+    private static ImageView		ivLogo;
 
-	private static LinearLayout		lnr;
-	private static DebugLine dlFps;
-	private static DebugLine		dlData;
-	private static DebugLine		dlRaw;
+    private static LinearLayout		lnr;
+    private static DebugLine dlFps;
+    private static DebugLine		dlData;
+    private static DebugLine		dlRaw;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_splash);
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
 
-		// Get activity and context
-		activity = this;
-		context = getApplicationContext();
+        // Get activity and context
+        activity = this;
+        context = getApplicationContext();
 
-		// Get instances of managers
-		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-		display = windowManager.getDefaultDisplay();
+        // Get instances of managers
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        display = windowManager.getDefaultDisplay();
 
-		svg = SvgLoader.getSVGFromAsset(context, "lymbo.svg");
+        svg = SvgLoader.getSVGFromAsset(context, "lymbo.svg");
 
-		panel = new SVGPanel(activity);
-		panel.setSVG(svg);
-		panel.setBackgroundColor(new SVGPaint(255, 208, 227, 153));
+        panel = new SVGPanel(activity);
+        panel.setSVG(svg);
+        panel.setBackgroundColor(new SVGPaint(255, 208, 227, 153));
 
-		ivLogo = new ImageView(activity);
-		ivLogo.setImageDrawable(loadFromAssets("lymbo.png"));
+        ivLogo = new ImageView(activity);
+        ivLogo.setImageDrawable(loadFromAssets("lymbo.png"));
 
-		// Add surface view
-		activity.addContentView(panel, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		activity.addContentView(ivLogo, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        // Add surface view
+        activity.addContentView(panel, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        activity.addContentView(ivLogo, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-		panel.setOnTouchListener(new OnTouchListener()
-		{
-			@Override
-			public boolean onTouch(View v, MotionEvent event)
-			{
-				float x = event.getX();
-				float y = event.getY();
+        panel.setOnTouchListener(new OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                float x = event.getX();
+                float y = event.getY();
 
-				((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(100);
+                ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(100);
 
-				SugarMonkeyController.setOffsetX(Simulation.getDataX());
-				SugarMonkeyController.setOffsetY(Simulation.getDataY());
+                SugarMonkeyController.setOffsetX(Simulation.getDataX());
+                SugarMonkeyController.setOffsetY(Simulation.getDataY());
 
-				// Inform panel
-				panel.setTouch(new Vector2(x, y));
+                // Inform panel
+                panel.setTouch(new Vector2(x, y));
 
-				return true;
-			}
-		});
+                return true;
+            }
+        });
 
-		// Add linear layout
-		lnr = new LinearLayout(activity);
-		activity.addContentView(lnr, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        // Add linear layout
+        lnr = new LinearLayout(activity);
+        activity.addContentView(lnr, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
-		// Initialize
-		uiInit();
-	}
+        // Initialize
+        uiInit();
+    }
 
-	public void onResume()
-	{
-		super.onResume();
-		panel.resume();
+    public void onResume()
+    {
+        super.onResume();
+        panel.resume();
 
-		draw();
+        draw();
 
-		Simulation.getInstance(activity).start();
-	}
+        Simulation.getInstance(activity).start();
+    }
 
-	@Override
-	protected void onPause()
-	{
-		super.onPause();
-		panel.pause();
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        panel.pause();
 
-		Simulation.getInstance(activity).stop();
-	}
+        Simulation.getInstance(activity).stop();
+    }
 
-	@Override
-	protected void onDestroy()
-	{
-		super.onDestroy();
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
 
-	}
+    }
 
-	public Display getDisplay()
-	{
-		return display;
-	}
+    public Display getDisplay()
+    {
+        return display;
+    }
 
-	public SensorManager getSensorManager()
-	{
-		return sensorManager;
-	}
+    public SensorManager getSensorManager()
+    {
+        return sensorManager;
+    }
 
-	public static void draw()
-	{
-		if (lnr != null)
-		{
-			lnr.removeAllViews();
+    public static void draw()
+    {
+        if (lnr != null)
+        {
+            lnr.removeAllViews();
 
-			// Add debug lines
-			dlFps = new DebugLine(activity, "FPS", String.valueOf(SugarMonkeyController.getFps()), String.valueOf(SugarMonkeyController.getCurrentFps()));
-			dlData = new DebugLine(activity, "Data", String.valueOf(Simulation.getDataX()), String.valueOf(Simulation.getDataY()));
-			dlRaw = new DebugLine(activity, "Raw", String.valueOf(Simulation.getRawX()), String.valueOf(Simulation.getRawY()));
+            // Add debug lines
+            dlFps = new DebugLine(activity, "FPS", String.valueOf(SugarMonkeyController.getFps()), String.valueOf(SugarMonkeyController.getCurrentFps()));
+            dlData = new DebugLine(activity, "Data", String.valueOf(Simulation.getDataX()), String.valueOf(Simulation.getDataY()));
+            dlRaw = new DebugLine(activity, "Raw", String.valueOf(Simulation.getRawX()), String.valueOf(Simulation.getRawY()));
 
-			lnr.setOrientation(LinearLayout.VERTICAL);
-			lnr.addView(dlFps, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-			lnr.addView(dlData, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-			lnr.addView(dlRaw, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-		}
-	}
+            lnr.setOrientation(LinearLayout.VERTICAL);
+            lnr.addView(dlFps, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            lnr.addView(dlData, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            lnr.addView(dlRaw, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        }
+    }
 
-	private Drawable loadFromAssets(String image)
-	{
-		try
-		{
-			InputStream is = getAssets().open("lymbo.png");
-			return Drawable.createFromStream(is, null);
-		} catch (IOException ex)
-		{
-			return null;
-		}
-	}
+    private Drawable loadFromAssets(String image)
+    {
+        try
+        {
+            InputStream is = getAssets().open(image);
+            return Drawable.createFromStream(is, null);
+        } catch (IOException ex)
+        {
+            return null;
+        }
+    }
 
-	public static void uiInit()
-	{
-		synchronized (svg)
-		{
-			for (AGeometric e : svg.getAllSubElements())
-			{
-				if (e instanceof SVGRect && !e.getId().matches("background"))
-				{
-					SVGPaint p = e.getStyle().getFill();
+    public static void uiInit()
+    {
+//		synchronized (svg)
+//		{
+//			for (AGeometric e : svg.getAllSubElements())
+//			{
+//				if (e instanceof SVGRect && !e.getId().matches("background"))
+//				{
+//					SVGPaint p = e.getStyle().getFill();
+//
+//					e.getStyle().getFill().setS(p.getS() - (svg.getMaxZindex() - e.getzIndex()) * 2);
+//				}
+//			}
+//		}
+    }
 
-					e.getStyle().getFill().setS(p.getS() - (svg.getMaxZindex() - e.getzIndex()) * 2);
-				}
-			}
-		}
-	}
+    public static void uiUpdate()
+    {
+        Thread t = new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                synchronized (svg)
+                {
+                    for (AGeometric e : svg.getAllSubElements())
+                    {
+                        Vector2 screenCenter = new Vector2 (svg.getWidth()/2, svg.getHeight()/2);
+                        Vector2 elementCenter = e.getBoundingRect().getCenter();
 
-	public static void uiUpdate()
-	{
-		Thread t = new Thread(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				synchronized (svg)
-				{
-					for (AGeometric e : svg.getAllSubElements())
-					{
-						if (e instanceof SVGRect && !e.getId().matches("background"))
-						{
-							float x = Simulation.getRawX() * (e.getzIndex() - svg.getMaxZindex() / 2) * -3;
-							float y = Simulation.getRawY() * (e.getzIndex() - svg.getMaxZindex() / 2) * -3;
+                        Vector2 direction = elementCenter.substract(screenCenter);
+                        Vector2 directionUnit = direction.normalize();
 
-							e.setAnimationTransform(new SVGTransformTranslate(x, y));
-						}
-					}
-				}
-			}
-		});
+                        directionUnit = directionUnit.scale((float) e.getzIndex());
 
-		t.start();
-	}
+                        float x = directionUnit.getX();
+                        float y = directionUnit.getY();
 
-	public static void uiDraw()
-	{
-		activity.runOnUiThread(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				draw();
-			}
-		});
-	}
+                        e.setAnimationTransform(new SVGTransformTranslate(x, y));
+                    }
+                }
+            }
+        });
 
-	public static void uiToast(final String message)
-	{
-		activity.runOnUiThread(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-			}
-		});
-	}
+        t.start();
+    }
+
+    public static void uiDraw()
+    {
+        activity.runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                draw();
+            }
+        });
+    }
+
+    public static void uiToast(final String message)
+    {
+        activity.runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
