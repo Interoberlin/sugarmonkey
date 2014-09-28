@@ -22,7 +22,6 @@ import java.io.InputStream;
 import de.interoberlin.sauvignon.lib.controller.loader.SvgLoader;
 import de.interoberlin.sauvignon.lib.model.svg.SVG;
 import de.interoberlin.sauvignon.lib.model.svg.elements.AGeometric;
-import de.interoberlin.sauvignon.lib.model.svg.elements.rect.SVGRect;
 import de.interoberlin.sauvignon.lib.model.svg.transform.transform.SVGTransformTranslate;
 import de.interoberlin.sauvignon.lib.model.util.SVGPaint;
 import de.interoberlin.sauvignon.lib.model.util.Vector2;
@@ -32,7 +31,7 @@ import de.interoberlin.sugarmonkey.R;
 import de.interoberlin.sugarmonkey.controller.Simulation;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
-public class LymboActivity extends Activity
+public class LevelActivity extends Activity
 {
     private static Context			context;
     private static Activity			activity;
@@ -65,7 +64,7 @@ public class LymboActivity extends Activity
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         display = windowManager.getDefaultDisplay();
 
-        svg = SvgLoader.getSVGFromAsset(context, "lymbo.svg");
+        svg = SvgLoader.getSVGFromAsset(context, "level.svg");
 
         panel = new SVGPanel(activity);
         panel.setSVG(svg);
@@ -197,16 +196,12 @@ public class LymboActivity extends Activity
             {
                 synchronized (svg)
                 {
-                    for (AGeometric e : svg.getAllSubElements()) {
-                        if (e instanceof SVGRect) {
-                            float x = Simulation.getRawX() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
-                            float y = Simulation.getRawY() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
+                    for (AGeometric e : svg.getAllSubElements())
+                    {
+                        float x = Simulation.getX() * (e.getzIndex() - svg.getMaxZindex()) * 1;
+                        float y = Simulation.getY() * (e.getzIndex() - svg.getMaxZindex()) * 1;
 
-                            System.out.println("DEBUG " + svg.getMaxZindex());
-
-                            e.getAnimationSets().clear();
-                            e.setAnimationTransform(new SVGTransformTranslate(x, y));
-                        }
+                        e.setAnimationTransform(new SVGTransformTranslate(x, y));
                     }
                 }
             }
