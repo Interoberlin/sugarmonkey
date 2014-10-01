@@ -21,7 +21,7 @@ android {
     buildToolsVersion "19.1.0"
 
     defaultConfig {
-        applicationId "de.interoberlin.sugarmonkey"
+        applicationId "de.interoberlin." + artifactId
         minSdkVersion 15
         targetSdkVersion 19
         versionCode 1
@@ -35,7 +35,7 @@ android {
     }
 }
 
-def apkFile = file('build/outputs/apk/app-release-unsigned.apk')
+def apkFile = file('build/outputs/apk/app-debug.apk')
 artifacts {
     archives apkFile
 }
@@ -45,10 +45,19 @@ uploadArchives {
         mavenDeployer {
             repository url: 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath
             pom.groupId = 'de.interoberlin'
-            pom.artifactId = 'sugarmonkey'
+            pom.artifactId = artifactId
             pom.version = versionMajor + '.' + versionMinor + '.' + versionPatch
         }
     }
+}
+
+task publishFdroid(dependsOn: ':copyTask') {
+    println 'TO BE DONE'
+}
+
+task copyTask(type: Copy) {
+    from 'build/outputs/apk/app-debug.apk'
+    into System.getenv("FDROID_REPO") + '/' + artifactId + "-" + versionMajor + '.' + versionMinor + '.' + versionPatch + '.apk'
 }
 
 dependencies {
