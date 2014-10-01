@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'maven'
 
 buildscript {
     repositories {
@@ -24,12 +25,28 @@ android {
         minSdkVersion 15
         targetSdkVersion 19
         versionCode 1
-        versionName "1.0"
+        versionName versionMajor + "." + versionMinor + "." + versionPatch
     }
     buildTypes {
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+def apkFile = file('build/outputs/apk/app-release-unsigned.apk')
+artifacts {
+    archives apkFile
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository url: 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath
+            pom.groupId = 'de.interoberlin'
+            pom.artifactId = 'sugarmonkey'
+            pom.version = versionMajor + '.' + versionMinor + '.' + versionPatch
         }
     }
 }
