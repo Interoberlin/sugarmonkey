@@ -35,7 +35,9 @@ android {
     }
 }
 
-def apkFile = file('build/outputs/apk/app-debug.apk')
+def apkFile = file('build/outputs/apk/app-release-unsigned.apk')
+def apkTargetName =  artifactId + '-' + versionMajor + '.' + versionMinor + '.' + versionPatch
+
 artifacts {
     archives apkFile
 }
@@ -51,14 +53,28 @@ uploadArchives {
     }
 }
 
-task publishFdroid(dependsOn: ':copyTask') {
+task publishFdroid(dependsOn: 'copy') {
     println 'TO BE DONE'
 }
 
-task copyTask(type: Copy) {
-    from 'build/outputs/apk/app-debug.apk'
-    into System.getenv("FDROID_REPO") + '/' + artifactId + "-" + versionMajor + '.' + versionMinor + '.' + versionPatch + '.apk'
+task copy(type: Copy) {
+    println 'FROM build/outputs/apk/app-release-unsigned.apk'
+    println 'TO ' + System.getenv("FDROID_REPO")
+
+    from 'build/outputs/apk/app-release-unsigned.apk'
+    into System.getenv("FDROID_REPO")
+
+    rename { String fileName ->
+        fileName.replace('app-release-unsigned', apkTargetName)
+    }
 }
+
+task tidy(type: Delete) {
+    println 'DELETE ' + System.getenv("FDROID_REPO") + '/' + apkTargetName
+    delete System.getenv("FDROID_REPO") + '/' + apkTargetName + '.apk'
+}
+
+copy.dependsOn tidy
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
