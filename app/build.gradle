@@ -27,15 +27,25 @@ android {
         versionCode 1
         versionName versionMajor + "." + versionMinor + "." + versionPatch
     }
+    signingConfigs {
+        release {
+            storeFile file(System.getenv("KEYSTORE"))
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias System.getenv("KEY_ALIAS")
+            keyPassword System.getenv("KEY_PASSWORD")
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
-def apkFile = file('build/outputs/apk/app-release-unsigned.apk')
+def apkName = 'app-release'
+def apkFile = file('build/outputs/apk/' + apkName + '.apk')
 def apkTargetName =  artifactId + '-' + versionMajor + '.' + versionMinor + '.' + versionPatch
 
 artifacts {
@@ -58,14 +68,11 @@ task publishFdroid(dependsOn: 'copy') {
 }
 
 task copy(type: Copy) {
-    println 'FROM build/outputs/apk/app-release-unsigned.apk'
-    println 'TO ' + System.getenv("FDROID_REPO")
-
-    from 'build/outputs/apk/app-release-unsigned.apk'
+    from 'build/outputs/apk/' + apkName + '.apk'
     into System.getenv("FDROID_REPO")
 
     rename { String fileName ->
-        fileName.replace('app-release-unsigned', apkTargetName)
+        fileName.replace(apkName, apkTargetName)
     }
 }
 
