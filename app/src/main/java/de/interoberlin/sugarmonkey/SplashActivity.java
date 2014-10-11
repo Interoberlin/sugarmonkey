@@ -5,12 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import de.interoberlin.mate.lib.view.LogActivity;
+import de.interoberlin.mate.lib.view.SupportActivity;
 
 public class SplashActivity extends Activity
 {
@@ -88,6 +92,27 @@ public class SplashActivity extends Activity
 	{
 		super.onDestroy();
 	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_log: {
+                Intent i = new Intent(SplashActivity.this, LogActivity.class);
+                startActivity(i);
+                break;
+            }
+            case R.id.menu_support: {
+                Intent i = new Intent(SplashActivity.this, SupportActivity.class);
+                startActivity(i);
+                break;
+            }
+            default: {
+                return super.onOptionsItemSelected(item);
+            }
+        }
+
+        return false;
+    }
 
 	public static void uiToast(final String message)
 	{

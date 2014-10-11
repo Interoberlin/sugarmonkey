@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">Sugarmonkey</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="menu_log">Log</string>
+    <string name="menu_support">Support</string>
     <string name="action_settings">Settings</string>
     <string name="fps">FPS</string>
 
