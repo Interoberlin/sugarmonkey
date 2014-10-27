@@ -13,8 +13,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import de.interoberlin.mate.lib.view.AboutActivity;
 import de.interoberlin.mate.lib.view.LogActivity;
-import de.interoberlin.mate.lib.view.SupportActivity;
 
 public class SplashActivity extends Activity
 {
@@ -102,7 +102,7 @@ public class SplashActivity extends Activity
                 break;
             }
             case R.id.menu_support: {
-                Intent i = new Intent(SplashActivity.this, SupportActivity.class);
+                Intent i = new Intent(SplashActivity.this, AboutActivity.class);
                 startActivity(i);
                 break;
             }
