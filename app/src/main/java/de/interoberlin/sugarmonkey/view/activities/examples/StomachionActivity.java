@@ -2,6 +2,7 @@ package de.interoberlin.sugarmonkey.view.activities.examples;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -9,10 +10,8 @@ import android.os.Vibrator;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -24,7 +23,6 @@ import de.interoberlin.sauvignon.lib.controller.loader.SvgLoader;
 import de.interoberlin.sauvignon.lib.model.svg.SVG;
 import de.interoberlin.sauvignon.lib.model.svg.elements.AGeometric;
 import de.interoberlin.sauvignon.lib.model.svg.elements.polygon.SVGPolygon;
-import de.interoberlin.sauvignon.lib.model.svg.elements.rect.SVGRect;
 import de.interoberlin.sauvignon.lib.model.svg.transform.transform.SVGTransformTranslate;
 import de.interoberlin.sauvignon.lib.model.util.SVGPaint;
 import de.interoberlin.sauvignon.lib.model.util.Vector2;
@@ -34,27 +32,27 @@ import de.interoberlin.sugarmonkey.R;
 import de.interoberlin.sugarmonkey.controller.Simulation;
 import de.interoberlin.sugarmonkey.controller.SugarMonkeyController;
 
-public class StomachionActivity extends Activity
-{
-    private static Context			context;
-    private static Activity			activity;
+public class StomachionActivity extends Activity {
+    private static Context context;
+    private static Activity activity;
 
-    private static SensorManager	sensorManager;
-    private WindowManager			windowManager;
-    private static Display			display;
+    private static SensorManager sensorManager;
+    private WindowManager windowManager;
+    private static Display display;
 
     private static SVG svg;
-    private static SVGPanel			panel;
-    private static ImageView		ivLogo;
+    private static SVGPanel panel;
 
-    private static LinearLayout		lnr;
+    private static LinearLayout lnr;
     private static DebugLine dlFps;
-    private static DebugLine		dlData;
-    private static DebugLine		dlRaw;
+    private static DebugLine dlData;
+    private static DebugLine dlRaw;
+
+    private static float INITIAL_X = 5.0f;
+    private static float INITIAL_Y = 5.0f;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
@@ -76,11 +74,9 @@ public class StomachionActivity extends Activity
         // Add surface view
         activity.addContentView(panel, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-        panel.setOnTouchListener(new OnTouchListener()
-        {
+        panel.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
+            public boolean onTouch(View v, MotionEvent event) {
                 float x = event.getX();
                 float y = event.getY();
 
@@ -104,8 +100,7 @@ public class StomachionActivity extends Activity
         uiInit();
     }
 
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         panel.resume();
 
@@ -115,8 +110,7 @@ public class StomachionActivity extends Activity
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
         panel.pause();
 
@@ -124,26 +118,21 @@ public class StomachionActivity extends Activity
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
 
     }
 
-    public Display getDisplay()
-    {
+    public Display getDisplay() {
         return display;
     }
 
-    public SensorManager getSensorManager()
-    {
+    public SensorManager getSensorManager() {
         return sensorManager;
     }
 
-    public static void draw()
-    {
-        if (lnr != null)
-        {
+    public static void draw() {
+        if (lnr != null) {
             lnr.removeAllViews();
 
             // Add debug lines
@@ -158,50 +147,59 @@ public class StomachionActivity extends Activity
         }
     }
 
-    private Drawable loadFromAssets(String image)
-    {
-        try
-        {
+    private Drawable loadFromAssets(String image) {
+        try {
             InputStream is = getAssets().open(image);
             return Drawable.createFromStream(is, null);
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             return null;
         }
     }
 
-    public static void uiInit()
-    {
-		synchronized (svg)
-		{
+    public static void uiInit() {
+        synchronized (svg) {
+            Point size = new Point();
+            display.getSize(size);
+            int screenWidth = size.x;
+            int screenHeight = size.y;
+
+            float ZOOM_FACTOR = 3;
+
+            float ZOOM_FACTOR_X = ZOOM_FACTOR;
+            float ZOOM_FACTOR_Y = ZOOM_FACTOR * screenHeight / screenWidth;
+
+
+            INITIAL_X = 6.0f;
+            INITIAL_Y = -7.0f;
+
             float origWidth = svg.getWidth();
             float origHeight = svg.getHeight();
 
-			for (AGeometric e : svg.getAllSubElements())
-			{
-				if (e instanceof SVGRect && !e.getId().matches("background"))
-				{
-					SVGPaint p = e.getStyle().getFill();
+            svg.setWidth(origWidth * ZOOM_FACTOR);
+            svg.setHeight(origHeight * ZOOM_FACTOR);
 
-					e.getStyle().getFill().setS(p.getS() - (svg.getMaxZindex() - e.getzIndex()) * 2);
-				}
-			}
-		}
+
+            for (AGeometric e : svg.getAllSubElements()) {
+                if (e instanceof SVGPolygon) {
+                    for (Vector2 p : ((SVGPolygon) e).getPoints()) {
+                        float x = (svg.getWidth() - origWidth) / 2 * (ZOOM_FACTOR_X / ZOOM_FACTOR);
+                        float y = (svg.getHeight() - origHeight) / 2 * (ZOOM_FACTOR_Y / ZOOM_FACTOR);
+                        p.add(new Vector2(x, y));
+                    }
+                }
+            }
+        }
     }
 
-    public static void uiUpdate()
-    {
-        Thread t = new Thread(new Runnable()
-        {
+    public static void uiUpdate() {
+        Thread t = new Thread(new Runnable() {
             @Override
-            public void run()
-            {
-                synchronized (svg)
-                {
+            public void run() {
+                synchronized (svg) {
                     for (AGeometric e : svg.getAllSubElements()) {
                         if (e instanceof SVGPolygon) {
-                            float x = Simulation.getRawX() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
-                            float y = Simulation.getRawY() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
+                            float x = -INITIAL_X + Simulation.getRawX() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
+                            float y = -INITIAL_Y + Simulation.getRawY() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
 
                             Log.debug(new Integer(svg.getMaxZindex()).toString());
 
@@ -216,25 +214,19 @@ public class StomachionActivity extends Activity
         t.start();
     }
 
-    public static void uiDraw()
-    {
-        activity.runOnUiThread(new Runnable()
-        {
+    public static void uiDraw() {
+        activity.runOnUiThread(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 draw();
             }
         });
     }
 
-    public static void uiToast(final String message)
-    {
-        activity.runOnUiThread(new Runnable()
-        {
+    public static void uiToast(final String message) {
+        activity.runOnUiThread(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
             }
         });
