@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 
 import de.interoberlin.mate.lib.model.Log;
 import de.interoberlin.sauvignon.lib.controller.loader.SvgLoader;
@@ -48,8 +49,8 @@ public class StomachionActivity extends Activity {
     private static DebugLine dlData;
     private static DebugLine dlRaw;
 
-    private static float INITIAL_X = 5.0f;
-    private static float INITIAL_Y = 5.0f;
+    private static float INITIAL_X = 0.0f;
+    private static float INITIAL_Y = 0.0f;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -169,8 +170,11 @@ public class StomachionActivity extends Activity {
             float ZOOM_FACTOR_Y = ZOOM_FACTOR * screenHeight / screenWidth;
 
 
-            INITIAL_X = 6.0f;
-            INITIAL_Y = -7.0f;
+            float MAX = 10;
+            float MIN = -10;
+
+            INITIAL_X = new Random().nextFloat() * (MAX-MIN) + MIN;
+            INITIAL_Y = new Random().nextFloat() * (MAX-MIN) + MIN;
 
             float origWidth = svg.getWidth();
             float origHeight = svg.getHeight();
@@ -198,8 +202,8 @@ public class StomachionActivity extends Activity {
                 synchronized (svg) {
                     for (AGeometric e : svg.getAllSubElements()) {
                         if (e instanceof SVGPolygon) {
-                            float x = -INITIAL_X + Simulation.getRawX() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
-                            float y = -INITIAL_Y + Simulation.getRawY() * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
+                            float x = (-INITIAL_X + Simulation.getRawX()) * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
+                            float y = (-INITIAL_Y + Simulation.getRawY()) * (e.getzIndex() - svg.getMaxZindex() / 2) * -5;
 
                             Log.debug(new Integer(svg.getMaxZindex()).toString());
 
