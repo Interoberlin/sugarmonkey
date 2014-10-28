@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="120"
+   height="120"
+   id="svg"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="stochamion - 01 - triangle.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="865"
+     inkscape:window-height="729"
+     id="namedview34"
+     showgrid="false"
+     inkscape:zoom="2.7511411"
+     inkscape:cx="71.1481"
+     inkscape:cy="172.19636"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs4" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <polygon
+       points="60,60 60,0 40,40 "
+       style="fill:#5a5a5a;fill-opacity:1"
+       id="polygon12"
+       transform="translate(-1.6829584e-7,0.36348205)" />
+    <polygon
+       points="80,80 120,120 60,120 "
+       style="fill:#b4b4b4;fill-opacity:1"
+       id="polygon24"
+       transform="translate(-59.975113,-119.95023)" />
+    <polygon
+       points="80,80 120,120 90,60 "
+       style="fill:#a5a5a5;fill-opacity:1"
+       id="polygon22"
+       transform="translate(-59.975113,-119.95023)" />
+    <polygon
+       points="120,60 90,60 120,120 "
+       style="fill:#969696;fill-opacity:1;stroke:none"
+       id="polygon20"
+       transform="matrix(-1,0,0,-1,179.8307,120.0249)" />
+    <polygon
+       points="80,80 60,120 60,60 "
+       style="fill:#808080;fill-opacity:1;stroke:none"
+       id="polygon26"
+       transform="matrix(0.99999368,-0.00355508,0.00355508,0.99999368,-60.086837,-119.83071)" />
+    <polygon
+       points="90,60 120,40 120,60 "
+       style="fill:#878787;fill-opacity:1;stroke:none"
+       id="polygon18"
+       transform="matrix(-1,0,0,-1,179.8307,119.9917)" />
+    <polygon
+       points="90,60 60,0 120,0 120,40 "
+       style="fill:#787878;fill-opacity:1;stroke:none"
+       id="polygon16"
+       transform="matrix(-1,0,0,-1,179.63651,119.97511)" />
+    <polygon
+       points="80,80 90,60 60,0 60,60 "
+       style="fill:#696969;fill-opacity:1;stroke:none"
+       id="polygon14"
+       transform="translate(-59.975113,-119.95023)" />
+    <polygon
+       points="60,60 60,120 30,120 30,60 40,40 "
+       style="fill:#4b4b4b;fill-opacity:1;stroke:none"
+       id="polygon28"
+       transform="translate(-4.7357983e-8,-3.1123386e-6)" />
+    <polygon
+       points="30,60 30,120 20,80 "
+       style="fill:#3c3c3c;fill-opacity:1"
+       id="polygon30"
+       transform="translate(-1.6829584e-7,0.36348205)" />
+    <polygon
+       points="30,120 0,120 20,80 "
+       style="fill:#2d2d2d;fill-opacity:1"
+       id="polygon32"
+       transform="translate(-1.6829584e-7,0.36348205)" />
+    <polygon
+       points="40,40 0,120 20,20 "
+       style="fill:#1e1e1e;fill-opacity:1"
+       id="polygon10"
+       transform="translate(-1.6829584e-7,0.36348205)" />
+    <polygon
+       points="0,0 0,120 20,20 "
+       style="fill:#0f0f0f;fill-opacity:1"
+       id="polygon8"
+       transform="translate(-1.6829584e-7,0.36348205)" />
+    <polygon
+       points="0,0 60,0 40,40 "
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="polygon6"
+       transform="translate(-1.6829584e-7,0.36348205)" />
+  </g>
+</svg>
