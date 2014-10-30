@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.Random;
 
 import de.interoberlin.mate.lib.model.Log;
@@ -169,7 +170,6 @@ public class StomachionActivity extends Activity {
             float ZOOM_FACTOR_X = ZOOM_FACTOR;
             float ZOOM_FACTOR_Y = ZOOM_FACTOR * screenHeight / screenWidth;
 
-
             float MAX = 10;
             float MIN = -10;
 
@@ -182,6 +182,9 @@ public class StomachionActivity extends Activity {
             svg.setWidth(origWidth * ZOOM_FACTOR);
             svg.setHeight(origHeight * ZOOM_FACTOR);
 
+            // Shuffle all sub elements
+            long seed = System.nanoTime();
+            Collections.shuffle(svg.getAllSubElements(), new Random(seed));
 
             for (AGeometric e : svg.getAllSubElements()) {
                 if (e instanceof SVGPolygon) {
