@@ -51,6 +51,7 @@ public class ExampleActivity extends Activity
         tbl.addView(getEntry("de.interoberlin.sugarmonkey.view.activities.examples.LevelActivity"));
         tbl.addView(getEntry("de.interoberlin.sugarmonkey.view.activities.examples.StomachionActivity"));
         tbl.addView(getEntry("de.interoberlin.sugarmonkey.view.activities.examples.Stomachion2Activity"));
+        tbl.addView(getEntry("de.interoberlin.sugarmonkey.view.activities.examples.LogoActivity"));
 	}
 
 	private TableRow getEntry(final String c)
